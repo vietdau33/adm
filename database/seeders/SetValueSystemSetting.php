@@ -23,6 +23,8 @@ class SetValueSystemSetting extends Seeder
     }
 
     /**
+     * @param $type
+     * @param $value
      * @return void
      */
     private function insert($type, $value): void

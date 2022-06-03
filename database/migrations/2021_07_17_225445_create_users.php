@@ -20,8 +20,6 @@ class CreateUsers extends Migration
             $table->text("fullname");
             $table->string('email');
             $table->string("phone");
-            $table->string("phone_telegram");
-            $table->integer("login_fail")->default(0);
             $table->string("password_old")->default("[]");
             $table->string("otp_key")->default("");
             $table->timestamp_custom();
