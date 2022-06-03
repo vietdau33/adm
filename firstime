@@ -1,0 +1,9 @@
+<?php
+
+exec('php artisan db:seed --class=SetValueSystemSetting');
+exec('php artisan db:seed --class=AddMoneyToUser');
+exec('php artisan db:seed --class=AddDefaultAdminUser');
+
+// php artisan db:seed --class=SetValueSystemSetting
+// php artisan db:seed --class=AddMoneyToUser
+// php artisan db:seed --class=AddDefaultAdminUser

@@ -1,0 +1,58 @@
+#box-auth{
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+#box-auth .logo-auth,
+#box-auth .form-auth{
+    width: 50%;
+}
+#box-auth .form-auth{
+    background: none;
+}
+#box-auth .form-auth .form-auth-bg{
+    border-radius: 10px;
+    border: 2px solid #e3bd50;
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+#box-auth .logo-auth{
+    text-align: center;
+}
+
+#box-auth .logo-auth img{
+    width: 86% !important;
+}
+
+#box-auth .form-group label{
+    position: unset;
+    top: 0;
+    left: 0;
+    transform: scale(1);
+    cursor: default;
+    font-weight: 400;
+    font-size: 20px;
+    color: #fff;
+}
+
+@media (max-width: 996px){
+    #box-auth{
+        display: block;
+    }
+    #box-auth .logo-auth,
+    #box-auth .form-auth{
+        margin: auto;
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+#box-auth .form-group input{
+    padding-top: 7px;
+    padding-bottom: 7px;
+}

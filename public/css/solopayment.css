@@ -1,0 +1,177 @@
+#header-content{
+    display: none;
+}
+
+@media (max-width: 996px){
+    #header-content{
+        display: flex;
+    }
+}
+
+.left-navigation .left-logout-row{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    z-index: 2;
+}
+.left-navigation .left-logout{
+    display: flex;
+    cursor: pointer;
+    padding: 20px;
+    text-decoration: none;
+}
+
+.left-navigation .left-logout img{
+    width: 38px;
+    height: 30px;
+}
+
+.left-navigation .left-logout span{
+    color: #fff;
+    font-size: 27px;
+    line-height: 1;
+    padding-left: 15px;
+}
+
+.left-navigation .navigation ul li.active > a{
+    background: #00b0f0;
+    color: #fff;
+}
+
+.btn-export{
+    background: #00b050;
+    color: #fff;
+}
+
+.btn-export img{
+    width: 24px;
+    position: relative;
+    top: -3px;
+}
+
+@media (min-width: 576px){
+    .modal-dialog.modal-large {
+        max-width: 675px;
+    }
+}
+
+.modal-content .row-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.modal-content .row-group input{
+    width: 60%;
+    background: #fff;
+    border-width: 2px;
+}
+
+.form-verify-identity{
+    display: flex;
+    text-align: center;
+}
+
+.form-verify-identity .box{
+    width: 50%;
+}
+
+.form-verify-identity .box .box-image{
+    width: 80%;
+    height: 200px;
+    border: 1px solid #e3e3e3;
+    margin: auto;
+    border-radius: 7px;
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.3);
+}
+
+.form-verify-identity .box span{
+    display: block;
+    padding: 10px 0;
+}
+
+.modal-content .content-footer{
+    text-align: center;
+    margin-top: 12px;
+}
+
+.modal-content .content-footer .btn{
+    padding: .375rem 32px;
+}
+
+.list-left-menu-ul .menu-icon{
+    width: 27px;
+    margin-right: 8px;
+    position: relative;
+    top: -4px;
+}
+
+.box-edit-info{
+    width: 100%;
+    max-width: 550px;
+    color: #fff;
+    margin: 30px auto auto;
+}
+
+.box-edit-info .btn-submit{
+    padding: .375rem 22px;
+}
+
+.settings-display{
+    border: 2px solid #dbad27;
+    margin-bottom: 30px;
+    border-radius: 7px;
+}
+
+.multi-steps{
+    width: 100%;
+    max-width: 580px;
+    margin: auto;
+}
+
+.multi-steps .step{
+    text-align: center;
+    color: #fff;
+    display: none;
+}
+
+.multi-steps .step.active{
+    display: block;
+}
+
+.multi-steps .step-1 .box-info-verify{
+    border: 2px solid #dbad27;
+    border-radius: 7px;
+}
+
+.multi-steps .step-1 .box-images{
+    width: 40%;
+    margin: auto;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    padding: 30px 15px;
+}
+
+.box-setting{
+    color: #fff;
+    border-radius: 12px;
+    border: 2px solid #d4a412;
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+}
+
+.box-setting .heading{
+    text-align: center;
+}
+
+.box-setting .input-number-setting{
+    width: 70px;
+}
+
+.box-setting .box-info-setting span{
+    line-height: 2;
+    margin-right: 10px;
+}
