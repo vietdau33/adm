@@ -41,16 +41,16 @@ return [
     'reflink' => 'Reflink',
 
     'btn_create' => "Create",
-    'btn_login' => "Login",
+    'btn_login' => "Sign In",
     'btn_verify' => "Verify",
     'btn_forgot' => "Submit",
 
-    'login_header' => "Welcome Back",
+    'login_header' => "Sign In",
     'otp_header' => "Verify OTP",
     'forgot_password' => "Forgot Password?",
     'new_password' => "New Password",
 
     'logout' => "Logout",
-    'create_new_account' => "Create New Accout?",
+    'create_new_account' => "Create New Account?",
     'has_one_account' => "Has one account?",
 ];

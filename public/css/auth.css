@@ -8,10 +8,6 @@
     transition: ease-in-out .2s;
 }
 
-body{
-    background-image: url("../image/solopayment/FHC BG PC.jpg");
-}
-
 /* Chrome, Safari, Edge, Opera */
 input.number-only::-webkit-outer-spin-button,
 input.number-only::-webkit-inner-spin-button {
@@ -24,25 +20,8 @@ input.number-only {
     -moz-appearance: textfield;
 }
 
-#box-auth{
-    width: 450px;
-    padding-bottom: 50px;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#box-auth .logo-auth{
-    padding: 32px 0;
-}
-
 #box-auth .form-auth{
-    background: rgba(0,0,0, 0.25);
     padding: 20px;
-}
-
-#box-auth .form-auth h2{
-    color: #fff;
 }
 
 #box-auth .form-group{

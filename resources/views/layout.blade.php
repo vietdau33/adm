@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Solopayment</title>
+    <link rel="shortcut icon" href="{{ asset('image/home-page/icon-mini.png') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/solopayment.css') }}">
 </head>
 <body class="left-menu-mobile">
+@include('bg_particle')
 <div class="wrapper ready">
     <div class="left-navigation height-100vh">
         <div class="logo">

@@ -1,24 +1,22 @@
 #box-auth{
     width: 100%;
-    max-width: 1200px;
     display: flex;
-    margin-top: 20px;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-#box-auth .logo-auth,
 #box-auth .form-auth{
-    width: 50%;
+    max-width: 650px;
+    width: 100%;
 }
-#box-auth .form-auth{
-    background: none;
-}
+
 #box-auth .form-auth .form-auth-bg{
     border-radius: 10px;
-    border: 2px solid #e3bd50;
-    width: 90%;
-    margin: auto;
-    padding: 20px;
+    padding: 2.15rem 15px;
+    background: #fff;
+    color: #0b2e13;
+    box-shadow: 0 0 16px 2px rgba(0, 0, 0, 0.2);
 }
 
 #box-auth .logo-auth{
@@ -37,13 +35,9 @@
     cursor: default;
     font-weight: 400;
     font-size: 20px;
-    color: #fff;
 }
 
 @media (max-width: 996px){
-    #box-auth{
-        display: block;
-    }
     #box-auth .logo-auth,
     #box-auth .form-auth{
         margin: auto;
