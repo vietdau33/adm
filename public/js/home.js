@@ -3,26 +3,28 @@ const Home = {
     init : function(){
         this.calcHeightContent();
         this.setHeightAreaInfomation();
-        // this.removeLoadingSystem();
-        var self = this;
-        $(window).on('resize', function(){
-            self.calcHeightContent();
-        });
+        $(window).on('resize', this.calcHeightContent.bind(this));
     },
     calcHeightContent : function(){
-        var heightHeader    = $("#header-content")[0].offsetHeight;
-        var footerHeader    = $("#footer-content")[0].offsetHeight;
-        var height          = "calc(100vh - " + (heightHeader + footerHeader) + "px)";
+        const heightHeader = this.getFirstContextJqueryElement($("#header-content"), 'offsetHeight');
+        const footerHeader = this.getFirstContextJqueryElement($("#footer-content"), 'offsetHeight');
+        const height       = "calc(100vh - " + (heightHeader + footerHeader) + "px)";
         $("#main-content").css({
             height      : height,
             minHeight   : height,
             maxHeight   : height
         });
     },
+    getFirstContextJqueryElement: function(payload, context = null) {
+        if(payload.length <= 0) {
+            return null;
+        }
+        return context == null ? payload[0] : payload[0][context];
+    },
     setHeightAreaInfomation : function(){
-        var $infomationArea = $(".information-detail");
-        var $titleInfomation = $(".information-title");
-        var heightAreaInfo = $infomationArea.height();
+        const $infomationArea = $(".information-detail");
+        const $titleInfomation = $(".information-title");
+        const heightAreaInfo = $infomationArea.height();
         $infomationArea.animate({"height" : "15px"});
         $infomationArea.css("opacity", 1);
         $titleInfomation.on("click", function(){
@@ -33,23 +35,12 @@ const Home = {
             }
         });
     },
-    // removeLoadingSystem : function(){
-    //     window.addEventListener('DOMContentLoaded', function(){
-    //         $(".wrapper").addClass("ready");
-    //         setTimeout(function(){
-    //             var hiddenPromise = $(".loading-system").animate({'opacity' : 0}, 300);
-    //             hiddenPromise.promise().done(function(){
-    //                 $(".loading-system").addClass("hide");
-    //             });
-    //         }, 1000);
-    //     });
-    // },
     copyRefLink : function(){
         this.copyInForm('inputRefLink');
     },
     copyInForm : function(idInput){
-        var $input = $("#" + idInput);
-        var $buttonCopy = $input.next();
+        const $input = $("#" + idInput);
+        const $buttonCopy = $input.next();
         if($buttonCopy.hasClass("copied")){
             return;
         }
@@ -62,38 +53,8 @@ const Home = {
             $buttonCopy.removeClass('copied').text("Copy");
         }, 2000)
     },
-    setArrowValue : function(idInput, type){
-        var $input = $("#" + idInput);
-        var dataArrow = JSON.parse($input.attr('data-arrow'));
-        var inputVal = $input.val();
-        if(this.isFloat(inputVal)){
-            inputVal = parseFloat(inputVal);
-        }else{
-            inputVal = parseInt(inputVal);
-        }
-        if(type == 'up'){
-            inputVal += dataArrow.step;
-        }
-        if(type == 'down'){
-            inputVal -= dataArrow.step;
-        }
-        if(inputVal < dataArrow.min){
-            inputVal = dataArrow.min;
-        }
-        if(inputVal > dataArrow.max){
-            inputVal = dataArrow.max;
-        }
-        if(this.isFloat(inputVal)){
-            var toFix = typeof dataArrow.toFix != 'undefined' ? dataArrow.toFix : 1;
-            inputVal = inputVal.toFixed(toFix);
-        }
-        $input.val(inputVal);
-    },
-    isFloat : function(number){
-        return !isNaN(number) && number.toString().indexOf('.') != -1;
-    },
     showModalChangeIB : function(el, username, tree){
-        var $modal = $("#changeIBModal");
+        const $modal = $("#changeIBModal");
         $modal.find("form").trigger('reset');
         $modal.find('[name="username"]').val(username);
         $modal.find('[name="tree"]').val(JSON.stringify(tree));
@@ -102,10 +63,10 @@ const Home = {
         this.tableDetail = $(el).closest(".table-detail");
     },
     changeIB : function(el){
-        var $form = $(el).closest('form');
-        var formData = new FormData($form[0]);
-        var url = $form.attr('action');
-        var self = this;
+        const $form = $(el).closest('form');
+        const formData = new FormData($form[0]);
+        const url = $form.attr('action');
+        const self = this;
         Request.ajax(url, formData, function(result){
             alert(result.message);
             if(!result.success){
@@ -114,7 +75,7 @@ const Home = {
             if(self.tableDetail == null){
                 return;
             }
-            var $modal = $("#changeIBModal");
+            const $modal = $("#changeIBModal");
             $modal.find("form").trigger('reset');
             $modal.modal("hide");
             self.tableDetail.html(result.data.html);
@@ -122,8 +83,8 @@ const Home = {
     },
     getListUser : function(el){
         window.event && window.event.preventDefault();
-        var size = $(".search-form [name='size']").val();
-        var href = $(el).attr('data-href') + "?size=" + size;
+        const size = $(".search-form [name='size']").val();
+        const href = $(el).attr('data-href') + "?size=" + size;
         this.getListUserRequest(href);
     },
     getListUserRequest : function(href){
@@ -137,28 +98,28 @@ const Home = {
     },
     showUserInfo : function(el){
         window.event && window.event.preventDefault();
-        var href = $(el).attr("href");
+        const href = $(el).attr("href");
         Request.ajax(href, function(result){
             if(result.success === false){
                 return alert(result.message);
             }
 
-            var $memberOvl = $("#memberDetail");
-            var datas = result.datas;
-            var aryKey = Object.keys(datas);
+            const $memberOvl = $("#memberDetail");
+            const datas = result.datas;
+            const aryKey = Object.keys(datas);
 
-            for (var k in aryKey){
-                var key = aryKey[k];
-                var data = result.datas[key];
+            for (const k in aryKey){
+                const key = aryKey[k];
+                const data = result.datas[key];
                 $memberOvl.find(".info-" + key).val(data);
             }
             $memberOvl.modal("show");
         });
     },
     changePersonalInfo : function(el){
-        var $form = $(el).closest("form");
-        var href = $form.attr("action");
-        var formData = new FormData($form[0]);
+        const $form = $(el).closest("form");
+        const href = $form.attr("action");
+        const formData = new FormData($form[0]);
         Request.ajax(href, formData, function(result){
             alert(result.message);
         })

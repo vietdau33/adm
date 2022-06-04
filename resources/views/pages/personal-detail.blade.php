@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-group">
                         <label for="city">City/Town</label>
-                        <input type="text" class="form-control" name="city" id="city" value="{{ $user->addr()->city ?? '' }}">
+                        <input type="text" class="form-control" name="city" id="city" value="{{ $user->address ?? '' }}">
                     </div>
                     <div class="form-group text-center">
                         <button class="btn btn-primary btn-submit" onclick="Home.changePersonalInfo(this)">Submit</button>

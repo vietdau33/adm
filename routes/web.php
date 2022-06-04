@@ -6,7 +6,10 @@ use App\Http\Helpers\RouteHelper;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 
-Route::get('/', [HomeController::class, 'homePage'])->name("home-page");
+//Route::get('/', [HomeController::class, 'homePage'])->name("home-page");
+Route::get('/', function(){
+    return redirect()->route('home.page');
+})->name("home-page");
 
 Route::middleware('logined')->group(function(){
     Route::get('/home', [HomeController::class, 'home'])->name("home.page");

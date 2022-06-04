@@ -26,6 +26,7 @@ class HomeController extends Controller
         $sysSetting = SystemSetting::buildSetting();
 //        $interestHistory = HistorySystemSetting::getHistory('rate');
 //        return view('home', compact('sysSetting', 'interestHistory'));
+        session()->flash('menu-active', 'dashboard');
         return view('home', compact('sysSetting', 'userList', 'userTree'));
     }
 
@@ -45,6 +46,7 @@ class HomeController extends Controller
         }
         $userList = $userList->paginate($defaultSizePage);
         $userTree = [['username' => '', 'email' => '']];
+        session()->flash('menu-active', 'list-member');
         return view('pages.user-list', compact('userList', 'userTree'));
     }
 

@@ -616,6 +616,7 @@ class UserController extends Controller
         ]);
     }
     public function personalDetail(){
+        session()->flash('menu-active', 'setting');
         return view("pages.personal-detail");
     }
     public function changePasswordView(){

@@ -12,38 +12,66 @@
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/solopayment.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/adm.css') }}">
 </head>
 <body class="left-menu-mobile">
 @include('bg_particle')
-<div class="wrapper ready">
-    <div class="left-navigation height-100vh">
-        <div class="logo">
-            <img src="{{ asset('image/solopayment/Asset 22.png') }}" alt="">
-        </div>
-        <div class="navigation">
-            @include('pages.menu-left')
-        </div>
-        <div class="left-logout-row">
-            <a href="{{ route('auth.logout.get') }}" class="left-logout">
-                <img src="{{ asset('/image/solopayment/exit.png') }}" alt="logout">
-                <span>Logout</span>
-            </a>
-        </div>
-    </div>
-    <div class="overlay-left-menu" onclick="Main.hideLeftMenu()"></div>
+<div class="wrapper">
     <div class="content">
         <div class="header-nav" id="header-content">
-            <a class="btn-logout" href="{{ route('auth.logout.get') }}">Logout</a>
-            <div class="menu-icon-bars" onclick="Main.showLeftMenu()">
-                <i class="fas fa-bars"></i>
+            <div class="logo-header">
+                <img src="{{ asset('image/adm/ai_bg.png') }}" alt="AI">
             </div>
+            <div class="menu-header">
+                <ul>
+                    <li data-active="dashboard">
+                        <a href="{{ route('home.page') }}">
+                            <img src="{{ asset('image/adm/icon/dashboard.png') }}" alt="Dashboard">
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li data-active="list-member">
+                        <a href="{{ route('userlist') }}">
+                            <img src="{{ asset('image/adm/icon/people.png') }}" alt="List Member">
+                            <span>List Member</span>
+                        </a>
+                    </li>
+                    <li data-active="money">
+                        <a href="#">
+                            <img src="{{ asset('image/adm/icon/money.png') }}" alt="Money">
+                            <span>Money</span>
+                        </a>
+                    </li>
+                    <li data-active="history">
+                        <a href="#">
+                            <img src="{{ asset('image/adm/icon/history.png') }}" alt="History">
+                            <span>History</span>
+                        </a>
+                    </li>
+                    <li data-active="setting">
+                        <a href="{{ route('my-profile.personal-detail') }}">
+                            <img src="{{ asset('image/adm/icon/setting.png') }}" alt="Settings">
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('auth.logout.get') }}">
+                            <img src="{{ asset('image/adm/icon/logout.png') }}" alt="Logout">
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+{{--            <a class="btn-logout" href="{{ route('auth.logout.get') }}">Logout</a>--}}
+{{--            <div class="menu-icon-bars" onclick="Main.showLeftMenu()">--}}
+{{--                <i class="fas fa-bars"></i>--}}
+{{--            </div>--}}
         </div>
-        <div class="main-content" id="main-content">
+        <div class="container-fluid main-content pt-3 pb-3" id="main-content">
             @yield('contents')
         </div>
         <div class="footer-nav" id="footer-content">
-            Copyright &copy; 2021 Solopayment.co
+            Copyright &copy; 2022 {{ request()->getHost() }}
         </div>
     </div>
 </div>
@@ -52,19 +80,12 @@
     <div class="pending-ring"><div></div><div></div><div></div><div></div></div>
 </div>
 
-{{--<div class="loading-system">--}}
-{{--    <div class="loading-system--img">--}}
-{{--        <img src="{{ asset('image/loading.svg') }}" alt="Loading">--}}
-{{--    </div>--}}
-{{--</div>--}}
-
 @yield('modal')
 
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-{{--<script src="{{ asset('js/date.js') }}"></script>--}}
 <script src="{{ asset('js/request.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/home.js') }}"></script>
@@ -78,6 +99,10 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    const menuActive = '{{ session()->pull('menu-active') ?? '' }}';
+    if(menuActive != '') {
+        $('[data-active="' + menuActive + '"]').find('a').addClass('active');
+    }
 </script>
 @yield('script')
 </body>
