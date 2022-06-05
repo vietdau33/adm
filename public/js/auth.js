@@ -27,6 +27,7 @@ const Auth = {
         const formData = new FormData(form[0]);
         const urlReq = form.attr('action');
         const succFunc = function (result) {
+            $(btn).prop('disabled', false);
             if (typeof callback == "function") {
                 callback(result);
             }
@@ -48,6 +49,7 @@ const Auth = {
                     break;
             }
         };
+        $(btn).prop('disabled', true);
         Request.ajax(urlReq, formData, succFunc).fail(function(error){
             if(typeof error != "object"){
                 return alert("Unable to register at this time. Please reload the page and try again. Or report to the admin!");
