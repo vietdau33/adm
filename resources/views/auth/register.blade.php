@@ -19,7 +19,7 @@
                     name="email"
                     id="enter_email"
                     autocomplete="off"
-                    inline-input
+                    placeholder="abc@example.com"
                 />
             </div>
             <div class="form-group">
@@ -30,7 +30,7 @@
                     name="fullname"
                     id="enter_fullname"
                     autocomplete="off"
-                    inline-input
+                    placeholder="Michael Jackson"
                 />
             </div>
             <div class="form-group">
@@ -41,7 +41,7 @@
                     name="username"
                     id="enter_username"
                     autocomplete="off"
-                    inline-input
+                    placeholder="username"
                 />
             </div>
             <div class="form-group">
@@ -52,7 +52,7 @@
                     name="password"
                     id="enter_password"
                     autocomplete="off"
-                    inline-input
+                    placeholder="******"
                 />
             </div>
             <div class="form-group">
@@ -63,7 +63,7 @@
                     name="password-confirm"
                     id="enter_re_password"
                     autocomplete="off"
-                    inline-input
+                    placeholder="******"
                 />
             </div>
             <div class="form-group">
@@ -74,38 +74,15 @@
                     name="phone"
                     id="enter_phone"
                     autocomplete="off"
-                    inline-input
-                />
-            </div>
-            <div class="form-group">
-                <label for="enter_birthday">Date of Birthday</label>
-                <input
-                    type="text"
-                    class="form-control datepicker"
-                    name="birthday"
-                    id="enter_birthday"
-                    autocomplete="off"
-                    inline-input
+                    placeholder="0123456789"
                 />
             </div>
             <div class="form-group text-center">
-                <button class="btn btn-submit" onclick="Auth.register(this)">{{ __('auth.btn_create') }}</button>
+                <button class="btn btn-primary btn-gradient" onclick="Auth.register(this)">{{ __('auth.btn_create') }}</button>
             </div>
             <div class="form-group mb-0 text-right">
                 <a href="{{ route('auth.login.view') }}" class="color-href">{{ __("auth.has_one_account") }}</a>
             </div>
         </form>
     </div>
-@endsection
-@section('script')
-    <script>
-        $('#enter_birthday').datepicker({
-            dateFormat: "yy/mm/dd",
-            changeMonth: true,
-            changeYear: true,
-            defaultDate: "2000/01/01",
-            duration: "slow",
-            yearRange : "1900:2022"
-        });
-    </script>
 @endsection

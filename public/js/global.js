@@ -5,12 +5,3 @@ window.toggleInputLabel = function(el) {
         $(el).closest('.form-group').addClass("input-valid");
     }
 }
-
-$('[inline-input]').each(function(){
-    $(this).on('focus', function(){
-        this.parentNode.classList.add('input-valid');
-    });
-    $(this).on('change focusout', function(){
-        toggleInputLabel(this);
-    });
-});

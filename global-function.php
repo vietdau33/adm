@@ -9,13 +9,23 @@ function logined(): bool
     return auth()->check();
 }
 
-function user(): ?Authenticatable
+function user(): Authenticatable
 {
     if(!logined()) {
         echo '<script>alert("Not loggin! Please Login!")</script>';
         exit(1);
     }
     return auth()->user();
+}
+
+function is_admin(): bool
+{
+    return logined() && auth()->user()->role == 'admin';
+}
+
+function is_user(): bool
+{
+    return logined() && auth()->user()->role == 'user';
 }
 
 function jsonError($message, $redirect = null): JsonResponse

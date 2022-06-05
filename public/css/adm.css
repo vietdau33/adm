@@ -185,3 +185,18 @@
     line-height: 2;
     margin-right: 10px;
 }
+
+.banner-top {
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.area-advertisement-top {
+    height: 540px;
+    max-height: 540px;
+    min-height: 540px;
+    overflow: hidden;
+    border: 1px solid #0b2e13;
+    padding: 15px;
+    border-radius: 14px;
+}

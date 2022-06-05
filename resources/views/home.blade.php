@@ -1,5 +1,11 @@
 @extends('layout')
 @section("contents")
+    <div class="banner-top mb-3">
+        <img src="{{ asset('image/adm/bg_1.jpg') }}" alt="Bg 1" class="w-100">
+    </div>
+    <div class="area-advertisement area-advertisement-top mb-3">
+        <h3>Banner Quảng cáo PC: cao = 540px</h3>
+    </div>
     @if(user()->role == 'user')
         <div class="settings-display">
             <div class="box-money money-ib m-1">
@@ -7,29 +13,13 @@
                     {{ number_format((float)user()->money_ib, 2) }}
                 </a>
             </div>
-{{--            <div class="box-money money-invest m-1">--}}
-{{--                <span class="money-text">{{ number_format((float)user()->money_invest, 2) }}</span>--}}
-{{--            </div>--}}
             <div class="box-money money-wallet m-1">
-{{--                <a class="money-text" href="javascript:void(0)" data-toggle="modal" data-target="#transferToInvest">--}}
                 <a class="money-text" href="javascript:void(0)" data-toggle="modal">
                     {{ number_format((float)user()->money_wallet, 2) }}
                 </a>
             </div>
         </div>
     @endif
-{{--    <div class="internet-history table-content-custom">--}}
-{{--        <div class="title">--}}
-{{--            <i class="fas fa-calendar-alt"></i>--}}
-{{--            <span>Interest Rate History</span>--}}
-{{--        </div>--}}
-{{--        <div class="table-detail">--}}
-{{--            {!! view("pages.search-form", ['route' => "user.interest-rate-history-search.post"])->render() !!}--}}
-{{--            <div class="table-content" id="interest-rate-history">--}}
-{{--                @include('pages.interest.interest-table-history-table')--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
     <div class="table-content-custom">
         <div class="title">
             <i class="fas fa-calendar-alt"></i>

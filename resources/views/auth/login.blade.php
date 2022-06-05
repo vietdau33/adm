@@ -7,11 +7,11 @@
             <h5 class="text-center">With Your Account</h5>
             <div class="form-group">
                 <label for="enter_username">{{ __('auth.enter_username') }}</label>
-                <input type="text" class="form-control" name="username" id="enter_username" autocomplete="off" autofocus>
+                <input type="text" class="form-control" name="username" id="enter_username" placeholder="username" autocomplete="off" autofocus>
             </div>
             <div class="form-group">
                 <label for="enter_password">{{ __('auth.enter_password') }}</label>
-                <input type="password" class="form-control" name="password" id="enter_password" autocomplete="off">
+                <input type="password" class="form-control" name="password" id="enter_password" placeholder="******" autocomplete="off">
             </div>
             <div class="form-group text-center">
                 <button class="btn btn-primary btn-gradient" onclick="Auth.login(this)">{{ __('auth.btn_login') }}</button>
@@ -25,4 +25,3 @@
         </div>
     </form>
 @endsection
-{{--<p class="text-center">Don’t have an account? <a href="#">Sign up here</a></p>--}}

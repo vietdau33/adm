@@ -40,7 +40,7 @@ return [
     'otp_valid' => 'OTP verify success!',
     'reflink' => 'Reflink',
 
-    'btn_create' => "Create",
+    'btn_create' => "Sign Up",
     'btn_login' => "Sign In",
     'btn_verify' => "Verify",
     'btn_forgot' => "Submit",

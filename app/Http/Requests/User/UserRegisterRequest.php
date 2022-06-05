@@ -32,7 +32,6 @@ class UserRegisterRequest extends FormRequest
             "fullname"          => "required",
             "email"             => "required|email:rfc,dns|unique:users",
             "phone"             => "required",
-            "birthday"          => "required|date",
             "username"          => "required|unique:users",
         ];
     }

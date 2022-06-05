@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>SOLO PAYMENT</title>
-    <link rel="shortcut icon" href="{{ asset('image/home-page/icon-mini.png') }}">
+    <title>AI DIGITAL MEDIA</title>
+    <link rel="shortcut icon" href="{{ asset('image/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">

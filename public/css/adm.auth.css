@@ -27,6 +27,22 @@
     width: 86% !important;
 }
 
+#box-auth .form-group label{
+    position: unset;
+    top: 0;
+    left: 0;
+    transform: scale(1);
+    cursor: default;
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+#box-auth .form-group input {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
 @media (max-width: 996px){
     #box-auth .logo-auth,
     #box-auth .form-auth{
