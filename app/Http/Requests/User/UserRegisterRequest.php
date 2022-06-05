@@ -18,17 +18,6 @@ class UserRegisterRequest extends FormRequest
         return true;
     }
 
-    /**
-     * rebuild or add value before validate
-     *
-     * @return void
-     */
-    public function prepareForValidation(): void
-    {
-        if(isset($this->email)){
-            $this->username = Str::slug($this->email);
-        }
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -38,16 +27,17 @@ class UserRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "password"          => "required|max:50|min:4",
-            "password-confirm"  => "required|max:50|min:4|same:password",
+            "password"          => "required|string|max:50|min:4",
+            "password-confirm"  => "required|string|max:50|min:4|same:password",
             "fullname"          => "required",
             "email"             => "required|email:rfc,dns|unique:users",
             "phone"             => "required",
             "birthday"          => "required|date",
+            "username"          => "required|unique:users",
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'password.required'     => Lang::get("auth.password_required"),
@@ -57,7 +47,10 @@ class UserRegisterRequest extends FormRequest
             'fullname.required'     => Lang::get("auth.fullname_required"),
             'email.required'        => Lang::get("auth.email_required"),
             'email.email'           => Lang::get("auth.email_fail_type"),
+            'email.unique'          => 'Email has exists!',
             'phone.required'        => Lang::get("auth.phone_required"),
+            'username.required'     => 'Username is required!',
+            'username.unique'       => 'Username has exists!',
         ];
     }
 }

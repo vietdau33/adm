@@ -35,8 +35,8 @@ class OtpMail extends Mailable
     public function build(): self
     {
         return $this
-                ->from(env('MAIL_FROM_ADDRESS'), 'solopayment.notification')
-                ->subject('SOLOPAYMENT NOTIFICATION')
+                ->from(env('MAIL_FROM_ADDRESS'), 'OTP Verify')
+                ->subject('AI DIGITAL MEDIA')
                 ->view($this->mail->view);
     }
 }

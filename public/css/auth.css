@@ -30,17 +30,16 @@ input.number-only {
 
 #box-auth .form-group label{
     position: absolute;
-    top: 50%;
+    top: 28px;
     left: 15px;
     transform: translateY(-50%);
-    color: #ababab;
+    color: #2d3436;
     transition: ease-in-out .3s;
     cursor: text;
 }
 
 #box-auth .form-group input{
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 15px 20px;
 }
 
 #box-auth .form-group.validated label,

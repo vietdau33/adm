@@ -87,6 +87,7 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('js/request.js') }}"></script>
+<script src="{{ asset('js/global.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/home.js') }}"></script>
 <script src="{{ asset('js/SearchForm.js') }}"></script>

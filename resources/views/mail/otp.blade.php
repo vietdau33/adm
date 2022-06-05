@@ -1,4 +1,4 @@
-Hey <b>{{ $mail->username }}</b>!
+Hey <b>{{ $mail->fullname }}</b>!
 <br>
 <br>
 To complete the register, enter the verification code and submit button verify.
@@ -9,4 +9,4 @@ Verification code: {{ $mail->otp }}
 <br>
 Thanks!
 <br>
-The <b>Solopayment</b> Teams!
+The <b>AI DIGITAL MEDIA</b> Teams!

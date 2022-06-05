@@ -20,7 +20,7 @@
 
 <section id="box-auth" class="position-relative">
     <div class="form-auth">
-        <div class="header-img mb-4">
+        <div class="header-img mb-3">
             <img src="{{ asset('image/adm/ai_bg_pc.png') }}" alt="Bg" class="w-100">
         </div>
         <div class="form-auth-bg">
@@ -37,6 +37,7 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/request.js') }}"></script>
+<script src="{{ asset('js/global.js') }}"></script>
 <script src="{{ asset('js/auth.js') }}"></script>
 <script type="text/javascript">
     $.ajaxSetup({

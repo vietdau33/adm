@@ -6,9 +6,16 @@
             <h2 class="text-uppercase text-center font-weight-bold">{{ __('auth.otp_header') }}</h2>
             <div class="form-group mb-2">
                 <label for="enter_otp_code">{{ __('auth.enter_otp_code') }}</label>
-                <input type="text" class="form-control" name="otp_code" id="enter_otp_code" autocomplete="off">
+                <input
+                    type="text"
+                    class="form-control"
+                    name="otp_code"
+                    id="enter_otp_code"
+                    autocomplete="off"
+                    inline-input
+                />
             </div>
-            <div class="form-group text-right">
+            <div class="form-group d-flex justify-content-between">
                 <a href="#" class="color-href" onclick="Auth.reSendOtp()">{{ __("auth.btn_resend_otp") }}</a>
                 <a href="{{ route('auth.logout.get') }}" class="color-href ml-2">{{ __("auth.logout") }}</a>
             </div>

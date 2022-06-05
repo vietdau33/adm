@@ -65,7 +65,7 @@ class User extends Authenticatable
 
         MailHelper::sendOtp([
             'email' => $user->email,
-            'username' => $username,
+            'fullname' => $user->fullname,
             'otp' => $otp
         ]);
     }

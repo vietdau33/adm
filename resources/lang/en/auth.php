@@ -23,7 +23,7 @@ return [
     'login_success' => 'Login Success!',
     'register_success' => 'Register Success!',
 
-    'create_accout' => "Create Account",
+    'create_accout' => "Sign Up",
     'enter_username' => "Enter Username",
     'enter_password' => "Enter Password",
     'enter_new_password' => "Enter New Password",
@@ -52,5 +52,5 @@ return [
 
     'logout' => "Logout",
     'create_new_account' => "Create New Account?",
-    'has_one_account' => "Has one account?",
+    'has_one_account' => "You have a Account? Login",
 ];

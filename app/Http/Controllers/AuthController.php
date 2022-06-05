@@ -24,7 +24,7 @@ class AuthController extends Controller{
 
     public function loginPost(LoginRq $request): JsonResponse
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
             return response()->json([
@@ -40,21 +40,7 @@ class AuthController extends Controller{
         ]);
     }
 
-    /**
-     * @throws UserException
-     */
-    public function registerView(Request $request){
-        $refCode = $request->get('ref');
-        if($refCode == null){
-            dd("Can't create an account when you don't have a referral code!");
-        }
-        $userRef = User::getUserByReflink($refCode, true);
-        if($userRef == null){
-            dd("Can't create an account. Ref code not exists!");
-        }
-        if((int)$userRef->level >= 10){
-            dd("Can't create an account. Max level register is 10!");
-        }
+    public function registerView(){
         return view('auth.register');
     }
 
@@ -91,12 +77,11 @@ class AuthController extends Controller{
             'fullname'          => $request->fullname,
             'email'             => strtolower($request->email),
             'phone'             => $request->phone,
-            'phone_telegram'    => $request->phone,
             'password_old'      => json_encode([$request->password]),
             'upline_by'         => $reflink,
             'money_invest'      => '0',
             'money_wallet'      => '0',
-            'level'             => (int)$userRef->level + 1,
+            'level'             => (int)($userRef->level ?? 0) + 1,
             'super_parent'      => json_encode($superParentParent),
             'rate_ib'           => $refIsAdmin ? SystemSetting::getSetting('max-ib', 0) : 0,
             'ref_is_admin'      => $refIsAdmin

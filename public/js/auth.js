@@ -52,8 +52,14 @@ const Auth = {
             if(typeof error != "object"){
                 return alert("Unable to register at this time. Please reload the page and try again. Or report to the admin!");
             }
-            const aryErr = Object.values(error.responseJSON.errors);
-            alert(aryErr.join("\n"));
+            const errors = error.responseJSON.errors;
+            const $p = $('<p />').addClass('error mb-0 pl-3');
+            form.find('p.error').remove();
+            for(const key in errors) {
+                const formGroup = form.find('[name="'+key+'"]').closest('.form-group');
+                const errEl = $p.clone().text(errors[key][0]);
+                formGroup.append(errEl)
+            }
         });
     },
     reSendOtp : function(){
