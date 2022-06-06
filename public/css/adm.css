@@ -1,202 +1,347 @@
 .wrapper.maintenance {
-    min-width: 100vw;
-    min-height: 100vh;
-    background-image: url("/image/bg_maintenance.jpg");
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    justify-content: center;
-    align-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: url("/image/bg_maintenance.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  justify-content: center;
+  align-items: center;
 }
-
 .wrapper.maintenance .img-main {
-    width: 450px;
-    max-width: 95%;
+  width: 450px;
+  max-width: 95%;
 }
-
 .wrapper.maintenance .img-main img {
-    width: 100%;
+  width: 100%;
 }
 
-.left-navigation .left-logout-row{
-    position: absolute;
-    left: 0;
-    width: 100%;
-    bottom: 0;
-    z-index: 2;
+.left-navigation .left-logout-row {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  z-index: 2;
 }
-.left-navigation .left-logout{
-    display: flex;
-    cursor: pointer;
-    padding: 20px;
-    text-decoration: none;
+.left-navigation .left-logout {
+  display: flex;
+  cursor: pointer;
+  padding: 20px;
+  text-decoration: none;
 }
-
-.left-navigation .left-logout img{
-    width: 38px;
-    height: 30px;
+.left-navigation .left-logout img {
+  width: 38px;
+  height: 30px;
 }
-
-.left-navigation .left-logout span{
-    color: #fff;
-    font-size: 27px;
-    line-height: 1;
-    padding-left: 15px;
+.left-navigation .left-logout span {
+  color: #fff;
+  font-size: 27px;
+  line-height: 1;
+  padding-left: 15px;
 }
-
-.left-navigation .navigation ul li.active > a{
-    background: #00b0f0;
-    color: #fff;
+.left-navigation .navigation ul li.active > a {
+  background: #00b0f0;
+  color: #fff;
 }
 
-.btn-export{
-    background: #00b050;
-    color: #fff;
+.btn-export {
+  background: #00b050;
+  color: #fff;
+}
+.btn-export img {
+  width: 24px;
+  position: relative;
+  top: -3px;
 }
 
-.btn-export img{
-    width: 24px;
-    position: relative;
-    top: -3px;
+@media (min-width: 576px) {
+  .modal-dialog.modal-large {
+    max-width: 675px;
+  }
+}
+.modal-content .row-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+.modal-content .row-group input {
+  width: 60%;
+  background: #fff;
+  border-width: 2px;
 }
 
-@media (min-width: 576px){
-    .modal-dialog.modal-large {
-        max-width: 675px;
-    }
+.form-verify-identity {
+  display: flex;
+  text-align: center;
+}
+.form-verify-identity .box {
+  width: 50%;
+}
+.form-verify-identity .box .box-image {
+  width: 80%;
+  height: 200px;
+  border: 1px solid #e3e3e3;
+  margin: auto;
+  border-radius: 7px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+}
+.form-verify-identity .box span {
+  display: block;
+  padding: 10px 0;
 }
 
-.modal-content .row-group{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
+.modal-content .content-footer {
+  text-align: center;
+  margin-top: 12px;
+}
+.modal-content .content-footer .btn {
+  padding: 0.375rem 32px;
 }
 
-.modal-content .row-group input{
-    width: 60%;
-    background: #fff;
-    border-width: 2px;
+.list-left-menu-ul .menu-icon {
+  width: 27px;
+  margin-right: 8px;
+  position: relative;
+  top: -4px;
 }
 
-.form-verify-identity{
-    display: flex;
-    text-align: center;
+.box-edit-info {
+  width: 100%;
+  max-width: 550px;
+  color: #495057;
+  margin: 30px auto auto;
+}
+.box-edit-info .btn-submit {
+  padding: 0.375rem 22px;
 }
 
-.form-verify-identity .box{
-    width: 50%;
+.settings-display {
+  margin-bottom: 30px;
 }
 
-.form-verify-identity .box .box-image{
-    width: 80%;
-    height: 200px;
-    border: 1px solid #e3e3e3;
-    margin: auto;
-    border-radius: 7px;
-    box-shadow: 0 0 4px 1px rgba(0,0,0,0.3);
+.multi-steps {
+  width: 100%;
+  max-width: 580px;
+  margin: auto;
+}
+.multi-steps .step {
+  text-align: center;
+  color: #fff;
+  display: none;
+}
+.multi-steps .step.active {
+  display: block;
+}
+.multi-steps .step-1 .box-info-verify {
+  border: 2px solid #dbad27;
+  border-radius: 7px;
+}
+.multi-steps .step-1 .box-images {
+  width: 40%;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  padding: 30px 15px;
 }
 
-.form-verify-identity .box span{
-    display: block;
-    padding: 10px 0;
+.box-setting {
+  color: #fff;
+  border-radius: 12px;
+  border: 2px solid #d4a412;
+  width: 100%;
+  max-width: 850px;
+  margin: auto;
 }
-
-.modal-content .content-footer{
-    text-align: center;
-    margin-top: 12px;
+.box-setting .heading {
+  text-align: center;
 }
-
-.modal-content .content-footer .btn{
-    padding: .375rem 32px;
+.box-setting .input-number-setting {
+  width: 70px;
 }
-
-.list-left-menu-ul .menu-icon{
-    width: 27px;
-    margin-right: 8px;
-    position: relative;
-    top: -4px;
-}
-
-.box-edit-info{
-    width: 100%;
-    max-width: 550px;
-    color: #495057;
-    margin: 30px auto auto;
-}
-
-.box-edit-info .btn-submit{
-    padding: .375rem 22px;
-}
-
-.settings-display{
-    border: 2px solid #dbad27;
-    margin-bottom: 30px;
-    border-radius: 7px;
-}
-
-.multi-steps{
-    width: 100%;
-    max-width: 580px;
-    margin: auto;
-}
-
-.multi-steps .step{
-    text-align: center;
-    color: #fff;
-    display: none;
-}
-
-.multi-steps .step.active{
-    display: block;
-}
-
-.multi-steps .step-1 .box-info-verify{
-    border: 2px solid #dbad27;
-    border-radius: 7px;
-}
-
-.multi-steps .step-1 .box-images{
-    width: 40%;
-    margin: auto;
-    background: rgba(255,255,255,0.5);
-    border-radius: 50%;
-    padding: 30px 15px;
-}
-
-.box-setting{
-    color: #fff;
-    border-radius: 12px;
-    border: 2px solid #d4a412;
-    width: 100%;
-    max-width: 850px;
-    margin: auto;
-}
-
-.box-setting .heading{
-    text-align: center;
-}
-
-.box-setting .input-number-setting{
-    width: 70px;
-}
-
-.box-setting .box-info-setting span{
-    line-height: 2;
-    margin-right: 10px;
+.box-setting .box-info-setting span {
+  line-height: 2;
+  margin-right: 10px;
 }
 
 .banner-top {
-    border-radius: 14px;
-    overflow: hidden;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
-.area-advertisement-top {
-    height: 540px;
-    max-height: 540px;
-    min-height: 540px;
-    overflow: hidden;
-    border: 1px solid #0b2e13;
-    padding: 15px;
-    border-radius: 14px;
+.area-advertisement.area-advertisement-top {
+  height: 540px;
+  max-height: 540px;
+  min-height: 540px;
+  overflow: hidden;
+  border: 1px solid #0b2e13;
+  padding: 15px;
+  border-radius: 14px;
+  background: #fff;
+}
+.area-advertisement.area-advertisement-body {
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.box-money.money-invest {
+  background-image: url("/image/adm/wallet_bg.png");
+}
+
+.box-money.money-wallet {
+  background-image: url("/image/adm/wallet_bg.png");
+}
+
+.box-money.money-profit {
+  background-image: url("/image/adm/profit_bg.png");
+}
+
+.box-money.money-ib {
+  background-image: url("/image/adm/bonus_bg.png");
+}
+
+.area-investment .invest-title {
+  color: #c00000;
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-weight: bold;
+}
+.area-investment .investment-plan {
+  display: flex;
+  justify-content: center;
+}
+.area-investment .investment-plan .invest-box {
+  width: calc(25% - 20px);
+  max-width: 350px;
+  text-align: center;
+  min-height: 250px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 10px 10px 1.75rem;
+  border-radius: 10px;
+  position: relative;
+}
+.area-investment .investment-plan .invest-box h5 {
+  text-align: center;
+  color: #fff;
+  padding: 1.25rem 0;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.area-investment .investment-plan .invest-box ul {
+  list-style: none;
+  margin-bottom: 0;
+  position: absolute;
+  bottom: 35%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, 50%);
+}
+.area-investment .investment-plan .invest-box .btn {
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+.area-investment .investment-plan .invest-box.invest-box-bronze {
+  background-image: url("/image/adm/investment_1.png");
+}
+.area-investment .investment-plan .invest-box.invest-box-silver {
+  background-image: url("/image/adm/investment_2.png");
+}
+.area-investment .investment-plan .invest-box.invest-box-gold {
+  background-image: url("/image/adm/investment_3.png");
+}
+.area-investment .investment-plan .invest-box.invest-box-platinum {
+  background-image: url("/image/adm/investment_4.png");
+}
+.area-investment .investment-plan .invest-box.invest-box-bronze .btn {
+  background: rgb(5, 167, 255);
+  background: linear-gradient(180deg, rgb(5, 167, 255) 0%, rgb(0, 96, 161) 100%);
+}
+.area-investment .investment-plan .invest-box.invest-box-silver .btn {
+  background: rgb(255, 211, 43);
+  background: linear-gradient(180deg, rgb(255, 211, 43) 0%, rgb(161, 117, 0) 100%);
+}
+.area-investment .investment-plan .invest-box.invest-box-gold .btn {
+  background: rgb(206, 0, 0);
+  background: linear-gradient(180deg, rgb(206, 0, 0) 0%, rgb(121, 0, 0) 100%);
+}
+.area-investment .investment-plan .invest-box.invest-box-platinum .btn {
+  background: rgb(146, 217, 70);
+  background: linear-gradient(180deg, rgb(146, 217, 70) 0%, rgb(84, 127, 38) 100%);
+}
+
+.user-profile-card .area-qr-code {
+  max-width: 30%;
+  width: 350px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  padding: 30px;
+}
+.user-profile-card .area-qr-code .title-qr {
+  font-size: 20px;
+}
+.user-profile-card .area-qr-code .box-qr {
+  padding: 10px 0;
+}
+
+.menu-inline-blue ul {
+  list-style: none;
+  margin-bottom: 0;
+}
+.menu-inline-blue ul li {
+  display: inline-block;
+}
+.menu-inline-blue ul li a {
+  display: flex;
+  padding: 8px 12px;
+  border: 2px solid #16a3fe;
+  text-decoration: none;
+  border-radius: 7px;
+  transition: ease-in-out 0.2s;
+}
+.menu-inline-blue ul li a:not(.active):hover, .menu-inline-blue ul li a.active {
+  color: #fff;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2) 49%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.05));
+}
+.menu-inline-blue ul li a:not(.active):hover {
+  background-color: #16a3fe;
+}
+.menu-inline-blue ul li a.active {
+  background-color: #00b050;
+}
+.menu-inline-blue ul li img {
+  width: 24px;
+  margin-right: 4px;
+}
+
+.content-money .content-money--box .small-box {
+  width: 100%;
+  max-width: 650px;
+  padding: 20px;
+  border-radius: 7px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  margin-top: 1.25rem;
+}
+.content-money .content-money--box .group-deposit-text {
+  position: relative;
+}
+.content-money .content-money--box .group-deposit-text input {
+  padding-right: 42px;
+  background: none;
+}
+.content-money .content-money--box .group-deposit-text button {
+  width: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  top: 3px;
+  right: 2px;
 }

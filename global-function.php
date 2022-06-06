@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\SystemSetting;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 
 function logined(): bool
@@ -9,13 +8,17 @@ function logined(): bool
     return auth()->check();
 }
 
-function user(): Authenticatable
+function user($key = null, $default = null)
 {
     if(!logined()) {
         echo '<script>alert("Not loggin! Please Login!")</script>';
         exit(1);
     }
-    return auth()->user();
+    $user = auth()->user();
+    if($key == null) {
+        return $user;
+    }
+    return $user->{$key} ?? $default;
 }
 
 function is_admin(): bool

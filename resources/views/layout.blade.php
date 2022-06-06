@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('alertifyjs/css/alertify.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('alertifyjs/css/themes/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adm.css') }}">
@@ -37,7 +39,7 @@
                         </a>
                     </li>
                     <li data-active="money">
-                        <a href="#">
+                        <a href="{{ route('money.home') }}">
                             <img src="{{ asset('image/adm/icon/money.png') }}" alt="Money">
                             <span>Money</span>
                         </a>
@@ -86,6 +88,8 @@
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('js/QRCode/qrcode.min.js') }}"></script>
+<script src="{{ asset('alertifyjs/alertify.min.js') }}"></script>
 <script src="{{ asset('js/request.js') }}"></script>
 <script src="{{ asset('js/global.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
@@ -100,10 +104,26 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
     const menuActive = '{{ session()->pull('menu-active') ?? '' }}';
     if(menuActive != '') {
         $('[data-active="' + menuActive + '"]').find('a').addClass('active');
     }
+
+    $('[data-qr]').each(function(){
+        const text = $(this).attr('data-qr');
+        const width = $(this).attr('data-qr-width') || 200;
+        const height = $(this).attr('data-qr-height') || 200;
+        const level = QRCode.CorrectLevel.H;
+        new QRCode(this, {
+            width: parseInt(width),
+            height: parseInt(height),
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: level,
+            text: text
+        });
+    });
 </script>
 @yield('script')
 </body>

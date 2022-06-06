@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MoneyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Helpers\RouteHelper;
 use App\Http\Controllers\MailController;
@@ -42,6 +43,13 @@ Route::middleware('logined')->group(function(){
     Route::get("/crypto-withdraw-history", [UserController::class, "cryptoWithdrawHistory"])->name("user.crypto-withdraw-history.get");
     Route::post("/crypto-withdraw-history/search", [UserController::class, "cryptoWithdrawHistorySearch"])->name("user.crypto-withdraw-history-search.post");
     Route::post("/interest-rate-history/search", [UserController::class, "interestRateHistorySearch"])->name("user.interest-rate-history-search.post");
+
+    Route::prefix('money')->name('money.')->group(function(){
+        Route::get('/', [MoneyController::class, 'deposit'])->name('home');
+        Route::get('/deposit', [MoneyController::class, 'deposit'])->name('deposit');
+        Route::get('/transfer', [MoneyController::class, 'transfer'])->name('transfer');
+        Route::get('/withdraw', [MoneyController::class, 'withdraw'])->name('withdraw');
+    });
 });
 
 Route::middleware('is-admin')->group(function(){

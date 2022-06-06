@@ -1,53 +1,32 @@
 <table class="table table-bordered">
     <thead>
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">Date</th>
+        <th scope="col">No.</th>
         <th scope="col">Fullname</th>
-        <th scope="col">Email</th>
+        <th scope="col">Username</th>
         <th scope="col">Phone</th>
-        @if(user()->role == 'admin')
-            <th scope="col">Action</th>
-        @endif
-        <th scope="col">Downline</th>
+        <th scope="col">Email</th>
+        <th scope="col">Investment Plan</th>
+        <th scope="col">Staking</th>
+        <th scope="col">Patron</th>
+        <th scope="col">Registration Date</th>
     </tr>
     </thead>
     <tbody>
-    @php $count = 1 @endphp
+    @php($count = 1)
     @foreach($userList->items() as $user)
         <tr>
             <td>{{ $count++ }}</td>
-            <td>{{ __d($user->created_at) }}</td>
             <td>
                 <a href="{{ route('user.get-info', $user->reflink) }}" onclick="Home.showUserInfo(this)">{{ $user->fullname }}</a>
             </td>
-            <td>{{ $user->email }}</td>
+            <td>{{ $user->username }}</td>
             <td>{{ $user->phone }}</td>
-            @if(user()->role == 'admin')
-                <td style="min-width: 160px">
-                    @if(rand(1, 2) == 1)
-                        @if(rand(1, 2) == 1)
-                            <span class="text-danger">Cancel</span>
-                        @else
-                            <span class="text-success">Active</span>
-                        @endif
-                    @else
-                        <button class="btn btn-success">Active</button>
-                        <button class="btn btn-danger">Cancel</button>
-                    @endif
-                </td>
-            @endif
-            <td>
-                @if((int)$user->level < 10)
-                    <button
-                        data-href="{{ route('userlist.has_parent', $user->id) }}"
-                        class="btn btn-primary"
-                        onclick="Home.getListUser(this)"
-                        data-end-tag="true">
-                        View Downline
-                    </button>
-                @endif
-            </td>
+            <td>{{ $user->email }}</td>
+            <td>{{ '' }}</td>
+            <td>{{ '' }}</td>
+            <td>{{ '' }}</td>
+            <td>{{ __d($user->created_at) }}</td>
         </tr>
     @endforeach
     @if($userList->count() <= 0)

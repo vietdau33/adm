@@ -53,6 +53,38 @@ const Home = {
             $buttonCopy.removeClass('copied').text("Copy");
         }, 2000)
     },
+    copyReflinkWithButton: function(btn) {
+        const $buttonCopy = $(btn);
+        const text = $buttonCopy.attr('data-text');
+        Home.copyTextRaw(text, function(){
+            $buttonCopy.addClass('copied').text("Copied!");
+            clearTimeout(window.timeoutCopied);
+            window.timeoutCopied = setTimeout(function(){
+                $buttonCopy.removeClass('copied').text("Copy");
+            }, 2000)
+        });
+    },
+    copyTextRaw: function (text, callback) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            if(typeof callback == 'function') {
+                callback();
+            }
+        } catch (err) {
+            alert("Copy text error!");
+        }
+        document.body.removeChild(textArea);
+    },
     showModalChangeIB : function(el, username, tree){
         const $modal = $("#changeIBModal");
         $modal.find("form").trigger('reset');
