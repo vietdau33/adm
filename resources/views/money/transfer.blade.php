@@ -37,9 +37,8 @@
             <thead>
             <tr>
                 <th scope="col">No.</th>
+                <th scope="col">Username Receive / Send</th>
                 <th scope="col">Amount</th>
-                <th scope="col">Address</th>
-                <th scope="col">Status</th>
                 <th scope="col">Created Date</th>
             </tr>
             </thead>
@@ -60,7 +59,7 @@
             {{--    </tr>--}}
             {{--@endif--}}
             <tr>
-                <td colspan="5">No History</td>
+                <td colspan="4">No History</td>
             </tr>
             </tbody>
         </table>
