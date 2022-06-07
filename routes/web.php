@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MoneyController;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,12 @@ Route::middleware('logined')->group(function(){
         Route::get('/deposit', [MoneyController::class, 'deposit'])->name('deposit');
         Route::get('/transfer', [MoneyController::class, 'transfer'])->name('transfer');
         Route::get('/withdraw', [MoneyController::class, 'withdraw'])->name('withdraw');
+    });
+
+    Route::prefix('history')->name('history.')->group(function(){
+        Route::get('/', [HistoryController::class, 'profit'])->name('home');
+        Route::get('/profit', [HistoryController::class, 'profit'])->name('profit');
+        Route::get('/bonus', [HistoryController::class, 'bonus'])->name('bonus');
     });
 });
 

@@ -45,7 +45,7 @@
                         </a>
                     </li>
                     <li data-active="history">
-                        <a href="#">
+                        <a href="{{ route('history.home') }}">
                             <img src="{{ asset('image/adm/icon/history.png') }}" alt="History">
                             <span>History</span>
                         </a>
@@ -64,16 +64,16 @@
                     </li>
                 </ul>
             </div>
-{{--            <a class="btn-logout" href="{{ route('auth.logout.get') }}">Logout</a>--}}
-{{--            <div class="menu-icon-bars" onclick="Main.showLeftMenu()">--}}
-{{--                <i class="fas fa-bars"></i>--}}
-{{--            </div>--}}
+            {{--<a class="btn-logout" href="{{ route('auth.logout.get') }}">Logout</a>--}}
+            {{--<div class="menu-icon-bars" onclick="Main.showLeftMenu()">--}}
+            {{--    <i class="fas fa-bars"></i>--}}
+            {{--</div>--}}
         </div>
         <div class="container-fluid main-content pt-3 pb-3" id="main-content">
             @yield('contents')
         </div>
         <div class="footer-nav" id="footer-content">
-            Copyright &copy; 2022 {{ request()->getHost() }}
+            {{--Copyright &copy; 2022 {{ request()->getHost() }}--}}
         </div>
     </div>
 </div>

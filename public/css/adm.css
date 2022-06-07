@@ -304,11 +304,11 @@
   border-radius: 7px;
   transition: ease-in-out 0.2s;
 }
-.menu-inline-blue ul li a:not(.active):hover, .menu-inline-blue ul li a.active {
+.menu-inline-blue ul li a:not(.active):hover, .menu-inline-blue ul li a.active-bg, .menu-inline-blue ul li a.active {
   color: #fff;
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2) 49%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.05));
 }
-.menu-inline-blue ul li a:not(.active):hover {
+.menu-inline-blue ul li a:not(.active):hover, .menu-inline-blue ul li a.active-bg {
   background-color: #16a3fe;
 }
 .menu-inline-blue ul li a.active {

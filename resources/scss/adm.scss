@@ -347,12 +347,15 @@ $bgInvestBox: (
                 border-radius: 7px;
                 transition: ease-in-out .2s;
 
-                &:not(.active):hover, &.active {
+                &:not(.active):hover,
+                &.active-bg,
+                &.active {
                     color: #fff;
                     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2) 49%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.05));
                 }
 
-                &:not(.active):hover {
+                &:not(.active):hover,
+                &.active-bg {
                     background-color: #16a3fe;
                 }
 

@@ -142,6 +142,7 @@ body{
 }
 .header-nav .menu-header ul li a.active {
     background-color: #16a3fe;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2) 49%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.05));
     color: #fff;
 }
 .header-nav .menu-header img {
