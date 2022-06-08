@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adm.css') }}">
+    @if(is_admin())
+        <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    @endif
 </head>
 <body class="left-menu-mobile">
 @include('bg_particle')
@@ -25,44 +28,11 @@
                 <img src="{{ asset('image/adm/ai_bg.png') }}" alt="AI">
             </div>
             <div class="menu-header">
-                <ul>
-                    <li data-active="dashboard">
-                        <a href="{{ route('home.page') }}">
-                            <img src="{{ asset('image/adm/icon/dashboard.png') }}" alt="Dashboard">
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li data-active="list-member">
-                        <a href="{{ route('userlist') }}">
-                            <img src="{{ asset('image/adm/icon/people.png') }}" alt="List Member">
-                            <span>List Member</span>
-                        </a>
-                    </li>
-                    <li data-active="money">
-                        <a href="{{ route('money.home') }}">
-                            <img src="{{ asset('image/adm/icon/money.png') }}" alt="Money">
-                            <span>Money</span>
-                        </a>
-                    </li>
-                    <li data-active="history">
-                        <a href="{{ route('history.home') }}">
-                            <img src="{{ asset('image/adm/icon/history.png') }}" alt="History">
-                            <span>History</span>
-                        </a>
-                    </li>
-                    <li data-active="settings">
-                        <a href="{{ route('setting.home') }}">
-                            <img src="{{ asset('image/adm/icon/setting.png') }}" alt="Settings">
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('auth.logout.get') }}">
-                            <img src="{{ asset('image/adm/icon/logout.png') }}" alt="Logout">
-                            <span>Logout</span>
-                        </a>
-                    </li>
-                </ul>
+                @if(is_admin())
+                    @include('menu-header.admin')
+                @else
+                    @include('menu-header.user')
+                @endif
             </div>
             {{--<a class="btn-logout" href="{{ route('auth.logout.get') }}">Logout</a>--}}
             {{--<div class="menu-icon-bars" onclick="Main.showLeftMenu()">--}}
@@ -72,9 +42,9 @@
         <div class="container-fluid main-content pt-3 pb-3" id="main-content">
             @yield('contents')
         </div>
-        <div class="footer-nav" id="footer-content">
-            {{--Copyright &copy; 2022 {{ request()->getHost() }}--}}
-        </div>
+        {{--<div class="footer-nav" id="footer-content">--}}
+        {{--    Copyright &copy; 2022 {{ request()->getHost() }}--}}
+        {{--</div>--}}
     </div>
 </div>
 

@@ -4,6 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ExportController;
 
+Route::prefix('admin')->name('admin.')->group(function(){
+    Route::get('', [AdminController::class, 'home'])->name('home');
+    Route::get('list-member', [AdminController::class, 'listMember'])->name('list-member');
+    Route::get('money', [AdminController::class, 'money'])->name('money');
+    Route::get('report-transfer', [AdminController::class, 'reportTransfer'])->name('report-transfer');
+    Route::get('banner', [AdminController::class, 'banner'])->name('banner');
+    Route::get('link-mission', [AdminController::class, 'linkMission'])->name('link-mission');
+});
+
 Route::get("/admin/settings", [AdminController::class, "settingsView"])->name("admin.settings.get");
 Route::post("/admin/save-system-setting", [AdminController::class, "saveSystemSetting"])->name("admin.settings.save-system-setting");
 Route::post("/change-setting", [AdminController::class, "changeSetting"])->name("admin.change-setting.post");

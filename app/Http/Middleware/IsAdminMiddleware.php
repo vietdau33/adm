@@ -17,7 +17,7 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check() && Auth::user()->role == 'admin'){
+        if(is_admin()){
             return $next($request);
         }
         if(!$request->ajax()){

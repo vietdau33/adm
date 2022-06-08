@@ -392,17 +392,15 @@ $bgInvestBox: (
     }
 }
 
-.content-money {
-    .content-money--box {
-        .small-box {
-            width: 100%;
-            max-width: 650px;
-            padding: 20px;
-            border-radius: 7px;
-            box-shadow: 0 0 4px 1px rgb(0 0 0 / 20%);
-            background: #fff;
-            margin-top: 1.25rem;
-        }
+.content {
+    .small-box {
+        width: 100%;
+        max-width: 650px;
+        padding: 20px;
+        border-radius: 7px;
+        box-shadow: 0 0 4px 1px rgb(0 0 0 / 20%);
+        background: #fff;
+        margin-top: 1.25rem;
     }
 }
 
@@ -452,6 +450,19 @@ $bgInvestBox: (
                 width: calc(100% / 2 - 8px);
                 max-width: 350px;
             }
+        }
+    }
+}
+
+.menu-header {
+    ul {
+        padding-left: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        li {
+            margin: 4px;
         }
     }
 }

@@ -22,7 +22,7 @@
             </li>
         </ul>
     </div>
-    <div class="content-money">
+    <div class="content content-money">
         <div class="content-money--box">
             @include("money.$page")
         </div>

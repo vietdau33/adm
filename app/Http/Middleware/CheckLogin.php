@@ -20,6 +20,9 @@ class CheckLogin
         if(!Auth::check() && !$request->is('auth/login')){
             return redirect()->to('/auth/login');
         }
+        if(is_admin()) {
+            return redirect()->to('/admin');
+        }
         return $next($request);
     }
 }
