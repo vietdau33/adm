@@ -8,6 +8,7 @@ use App\Models\SystemSetting;
 use App\Models\User;
 use App\Http\Requests\User\UserLoginRequest as LoginRq;
 use App\Http\Requests\User\UserRegisterRequest as RegisterRq;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,7 @@ class AuthController extends Controller{
 
         return response()->json([
             'success' => false,
-            'message' => "Info login not correct",
+            'message' => "Username or password not correct",
         ]);
     }
 
@@ -248,14 +249,19 @@ class AuthController extends Controller{
         ]);
     }
 
-    public function changePasswordPost(Request $request){
+    /**
+     * @throws UserException
+     */
+    public function changePasswordPost(Request $request): JsonResponse
+    {
         $currentPass = trim($request->get('current-password', ''));
         $newPassword = trim($request->get('password', ''));
         $rePassword  = trim($request->get('re-password', ''));
         $otp        = (int)($request->otp_code ?? 0);
         $otpKey     = $request->otp_key ?? "";
+        $statusOnOtp = false;
 
-        if($otpKey == ""){
+        if($statusOnOtp && $otpKey == ""){
             return jsonError("You can get OTP key then enter OTP code to input before submit change password!");
         }
 
@@ -263,7 +269,7 @@ class AuthController extends Controller{
             $currentPass == ""
             || $newPassword == ""
             || $rePassword == ""
-            || $otp == ""
+            || ($statusOnOtp && $otp == "")
         ){
             return jsonError("Form not valid!");
         }
@@ -272,29 +278,82 @@ class AuthController extends Controller{
             return jsonError("New Password and Re-New Password not match!");
         }
 
-        if(!Hash::check($currentPass, Auth::user()->password)){
+        if(!Hash::check($currentPass, user()->password)){
             return jsonError("Current password not correct!");
         }
 
-        $user = User::getUserByUsername(Auth::user()->username);
-
-        $passOld = json_decode($user->password_old, 1);
-        if(in_array($newPassword, $passOld)){
-            return jsonError('The new password must be different from the last 3 passwords');
-        }
-
-        if(!OtpHelpers::verify($otp, $otpKey, true)->status){
+        if($statusOnOtp && !OtpHelpers::verify($otp, $otpKey, true)->status){
             return jsonError("OTP does not match or has expired!");
         }
 
-        if(count($passOld) == 3){
-            array_shift($passOld);
-        }
-        $passOld[] = $newPassword;
-
+        $user = user();
         $user->password = Hash::make($newPassword);
-        $user->password_old = json_encode($passOld);
         $user->save();
         return jsonSuccess("Change password success!");
+    }
+
+    public function generateGoogleAuthenSerect(): JsonResponse
+    {
+        try{
+            $google2fa = app('pragmarx.google2fa');
+            $serect = $google2fa->generateSecretKey();
+            $qrImage = $google2fa->getQRCodeInline(
+                config('app.name'),
+                user()->email,
+                $serect
+            );
+            return response()->json([
+                'success' => true,
+                'serect' => $serect,
+                'image' => $qrImage
+            ]);
+        }catch (Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => "Has error generate Google 2FA, please reload page!"
+            ]);
+        }
+    }
+
+    public function enable2FAAuthen(Request $request): JsonResponse
+    {
+        $serect = $request->serect;
+        $code = $request->code;
+        $google2fa = app('pragmarx.google2fa');
+
+        if(!$google2fa->verifyKey($serect, $code)){
+            return response()->json([
+                'success' => false,
+                'message' => "Code verify not match!"
+            ]);
+        }
+
+        $user = user();
+        $user->google2fa_secret = $serect;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "2FA enabled!"
+        ]);
+    }
+
+    public function deactive2FA(): JsonResponse
+    {
+        try{
+            $user = user();
+            $user->google2fa_secret = null;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => '2FA deactived!'
+            ]);
+        }catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Has error on deactive 2fa! Please reload page!'
+            ]);
+        }
     }
 }

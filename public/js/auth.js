@@ -1,6 +1,6 @@
 const Auth = {
     init : function(){
-        this.transitionFormInput();
+        //this.transitionFormInput();
     },
     transitionFormInput : function(){
         const self = this;
@@ -51,6 +51,7 @@ const Auth = {
         };
         $(btn).prop('disabled', true);
         Request.ajax(urlReq, formData, succFunc).fail(function(error){
+            $(btn).prop('disabled', false);
             if(typeof error != "object"){
                 return alert("Unable to register at this time. Please reload the page and try again. Or report to the admin!");
             }

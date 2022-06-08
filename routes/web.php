@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MoneyController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Helpers\RouteHelper;
 use App\Http\Controllers\MailController;
@@ -44,6 +46,9 @@ Route::middleware('logined')->group(function () {
     Route::get("/crypto-withdraw-history", [UserController::class, "cryptoWithdrawHistory"])->name("user.crypto-withdraw-history.get");
     Route::post("/crypto-withdraw-history/search", [UserController::class, "cryptoWithdrawHistorySearch"])->name("user.crypto-withdraw-history-search.post");
     Route::post("/interest-rate-history/search", [UserController::class, "interestRateHistorySearch"])->name("user.interest-rate-history-search.post");
+    Route::post('generate-google-authen-serect', [AuthController::class, 'generateGoogleAuthenSerect'])->name('generate-gg-auth');
+    Route::post('enable-google-authen-serect', [AuthController::class, 'enable2FAAuthen'])->name('enable-gg-auth');
+    Route::post('deactive-google-authen-serect', [AuthController::class, 'deactive2FA'])->name('deactive-gg-auth');
 
     Route::prefix('money')->name('money.')->group(function () {
         Route::get('/', [MoneyController::class, 'deposit'])->name('home');
@@ -59,7 +64,12 @@ Route::middleware('logined')->group(function () {
     });
 
     Route::prefix('settings')->name('setting.')->group(function () {
-        Route::get('/', [HistoryController::class, 'profit'])->name('home');
+        Route::get('/', [SettingController::class, 'profile'])->name('home');
+        Route::get('/profile', [SettingController::class, 'profile'])->name('profile');
+        Route::get('/kyc_account', [SettingController::class, 'kyc_account'])->name('kyc_account');
+        Route::get('/2fa', [SettingController::class, '_2fa'])->name('2fa');
+        Route::get('/change_password', [SettingController::class, 'change_password'])->name('change_password');
+        Route::get('/kyc_withdraw', [SettingController::class, 'kyc_withdraw'])->name('kyc_withdraw');
     });
 });
 

@@ -16,8 +16,8 @@
             </li>
         </ul>
     </div>
-    <div class="content-money">
-        <div class="content-money--box">
+    <div class="content-history">
+        <div class="content-history--box">
             @include("history.$page")
         </div>
     </div>

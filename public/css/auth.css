@@ -8,18 +8,6 @@
     transition: ease-in-out .2s;
 }
 
-/* Chrome, Safari, Edge, Opera */
-input.number-only::-webkit-outer-spin-button,
-input.number-only::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input.number-only {
-    -moz-appearance: textfield;
-}
-
 #box-auth .form-auth{
     padding: 20px;
 }

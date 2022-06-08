@@ -9,9 +9,10 @@ class MailHelper{
 
     /**
      * @param array $aryData
+     * @param string|null $view
      * @return void
      */
-    public static function sendOtp(array $aryData, $view = null): void
+    public static function sendOtp(array $aryData, string $view = null): void
     {
         if($view == null){
             $view = env('MAIL_VIEW');
@@ -19,6 +20,6 @@ class MailHelper{
         $aryData['view'] = $view;
         $mail = Helper::generateStdClass($aryData);
         $otpMail = new OtpMail($mail);
-        Mail::to($mail->email)->send($otpMail);
+        Mail::to($mail->email)->queue($otpMail);
     }
 }

@@ -319,6 +319,24 @@
   margin-right: 4px;
 }
 
+.input-canable-copy {
+  position: relative;
+}
+.input-canable-copy input {
+  padding-right: 42px;
+  background: none;
+}
+.input-canable-copy button {
+  width: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  top: 3px;
+  right: 2px;
+}
+
 .content-money .content-money--box .small-box {
   width: 100%;
   max-width: 650px;
@@ -328,20 +346,46 @@
   background: #fff;
   margin-top: 1.25rem;
 }
-.content-money .content-money--box .group-deposit-text {
-  position: relative;
+
+.content-setting .setting--box {
+  border-radius: 14px;
+  padding: 15px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+  margin-top: 1.75rem;
+  background-color: rgba(255, 255, 255, 0.7);
 }
-.content-money .content-money--box .group-deposit-text input {
-  padding-right: 42px;
-  background: none;
+.content-setting .setting--box .box-info {
+  background-color: #f2f4f5;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 14px;
 }
-.content-money .content-money--box .group-deposit-text button {
-  width: 32px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  outline: none;
-  position: absolute;
-  top: 3px;
-  right: 2px;
+.content-setting .setting--box .box-info .box-avatar--img {
+  border-radius: 50%;
+  overflow: hidden;
+  background: #1a202c;
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content-setting .setting--box .box-info h3 {
+  color: #d30808;
+  margin-top: 0.75rem;
+}
+.content-setting .setting--box .row-upload-image {
+  display: flex;
+  justify-content: center;
+}
+.content-setting .setting--box .row-upload-image .box-upload {
+  text-align: center;
+  background-color: #a8caea;
+  border-radius: 14px;
+  border: 2px solid #fbc00a;
+  margin: 4px;
+  padding: 8px;
+  width: calc(50% - 8px);
+  max-width: 350px;
 }

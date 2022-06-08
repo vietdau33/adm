@@ -372,6 +372,26 @@ $bgInvestBox: (
     }
 }
 
+.input-canable-copy {
+    position: relative;
+
+    input {
+        padding-right: 42px;
+        background: none;
+    }
+
+    button {
+        width: 32px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        outline: none;
+        position: absolute;
+        top: 3px;
+        right: 2px;
+    }
+}
+
 .content-money {
     .content-money--box {
         .small-box {
@@ -383,24 +403,54 @@ $bgInvestBox: (
             background: #fff;
             margin-top: 1.25rem;
         }
+    }
+}
 
-        .group-deposit-text {
-            position: relative;
+.content-setting {
+    .setting--box {
+        border-radius: 14px;
+        padding: 15px;
+        box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+        margin-top: 1.75rem;
+        background-color: rgba(255, 255, 255, 0.7);
 
-            input {
-                padding-right: 42px;
-                background: none;
+        .box-info {
+            background-color: #f2f4f5;
+            box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 14px;
+
+            .box-avatar--img {
+                border-radius: 50%;
+                overflow: hidden;
+                background: #1a202c;
+                width: 150px;
+                height: 150px;
+                margin: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
-            button {
-                width: 32px;
-                border: none;
-                background: none;
-                cursor: pointer;
-                outline: none;
-                position: absolute;
-                top: 3px;
-                right: 2px;
+            h3 {
+                color: #d30808;
+                margin-top: 0.75rem;
+            }
+        }
+
+        .row-upload-image {
+            display: flex;
+            justify-content: center;
+
+            .box-upload {
+                text-align: center;
+                background-color: #a8caea;
+                border-radius: 14px;
+                border: 2px solid #fbc00a;
+                margin: 4px;
+                padding: 8px;
+                width: calc(100% / 2 - 8px);
+                max-width: 350px;
             }
         }
     }

@@ -14,7 +14,7 @@
                     data-qr="{{ $stringRandom }}"></div>
                 <h3>QR CODE</h3>
             </div>
-            <div class="group-deposit-text">
+            <div class="input-canable-copy group-deposit-text">
                 <input type="text" id="btn-deposit-text" class="form-control" value="{{ $stringRandom }}" disabled>
                 <button onclick="Home.copyTextRaw('{{ $stringRandom }}', () => alertify.success('Copy Success'))">
                     <img src="{{ asset('image/adm/icon/copy-icon.png') }}" alt="Copy" class="w-100">

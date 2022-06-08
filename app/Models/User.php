@@ -27,7 +27,7 @@ class User extends Authenticatable
         'otp_key', 'otp_public_key', 'verified', 'remember_token',
         'created_at', 'updated_at', 'reflink', 'role', 'upline_by',
         'money_invest', 'money_wallet', 'bonus_received_type1', 'bonus_received_type2',
-        'level', 'rate_ib', 'money_ib', 'super_parent', 'ref_is_admin'
+        'level', 'rate_ib', 'money_ib', 'super_parent', 'ref_is_admin', 'google2fa_secret'
     ];
 
     /**
@@ -38,6 +38,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'google2fa_secret'
     ];
 
     /**
@@ -48,6 +49,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setGoogle2faSecretAttribute($value): void
+    {
+        $this->attributes['google2fa_secret'] = is_string($value) ? encrypt($value) : null;
+    }
+
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return is_string($value) ? decrypt($value) : null;
+    }
 
     /**
      * @throws UserException

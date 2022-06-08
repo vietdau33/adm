@@ -65,6 +65,9 @@ const Home = {
         });
     },
     copyTextRaw: function (text, callback) {
+        if(typeof text == 'object' && text instanceof HTMLElement) {
+            text = text.getAttribute('data-text') || 'No See text to copy!';
+        }
         const textArea = document.createElement("textarea");
         textArea.value = text;
         textArea.style.top = "0";

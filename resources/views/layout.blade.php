@@ -50,8 +50,8 @@
                             <span>History</span>
                         </a>
                     </li>
-                    <li data-active="setting">
-                        <a href="{{ route('my-profile.personal-detail') }}">
+                    <li data-active="settings">
+                        <a href="{{ route('setting.home') }}">
                             <img src="{{ asset('image/adm/icon/setting.png') }}" alt="Settings">
                             <span>Settings</span>
                         </a>

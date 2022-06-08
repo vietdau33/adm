@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.4",
         "ext-json": "*",
+        "bacon/bacon-qr-code": "^2.0",
         "botman/driver-telegram": "^1.6",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.4",
@@ -16,6 +17,7 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
+        "pragmarx/google2fa-laravel": "^2.0",
         "seshac/otp-generator": "^0.0.6"
     },
     "require-dev": {
