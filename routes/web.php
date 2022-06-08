@@ -9,11 +9,11 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 
 //Route::get('/', [HomeController::class, 'homePage'])->name("home-page");
-Route::get('/', function(){
+Route::get('/', function () {
     return redirect()->route('home.page');
 })->name("home-page");
 
-Route::middleware('logined')->group(function(){
+Route::middleware('logined')->group(function () {
     Route::get('/home', [HomeController::class, 'home'])->name("home.page");
     Route::get('/user-list', [HomeController::class, 'userList'])->name('userlist');
     Route::post('/user-list/{parent}', [HomeController::class, 'userListHasParent'])->name('userlist.has_parent');
@@ -45,29 +45,33 @@ Route::middleware('logined')->group(function(){
     Route::post("/crypto-withdraw-history/search", [UserController::class, "cryptoWithdrawHistorySearch"])->name("user.crypto-withdraw-history-search.post");
     Route::post("/interest-rate-history/search", [UserController::class, "interestRateHistorySearch"])->name("user.interest-rate-history-search.post");
 
-    Route::prefix('money')->name('money.')->group(function(){
+    Route::prefix('money')->name('money.')->group(function () {
         Route::get('/', [MoneyController::class, 'deposit'])->name('home');
         Route::get('/deposit', [MoneyController::class, 'deposit'])->name('deposit');
         Route::get('/transfer', [MoneyController::class, 'transfer'])->name('transfer');
         Route::get('/withdraw', [MoneyController::class, 'withdraw'])->name('withdraw');
     });
 
-    Route::prefix('history')->name('history.')->group(function(){
+    Route::prefix('history')->name('history.')->group(function () {
         Route::get('/', [HistoryController::class, 'profit'])->name('home');
         Route::get('/profit', [HistoryController::class, 'profit'])->name('profit');
         Route::get('/bonus', [HistoryController::class, 'bonus'])->name('bonus');
     });
+
+    Route::prefix('settings')->name('setting.')->group(function () {
+        Route::get('/', [HistoryController::class, 'profit'])->name('home');
+    });
 });
 
-Route::middleware('is-admin')->group(function(){
+Route::middleware('is-admin')->group(function () {
     RouteHelper::requireRoute("admin");
 });
 
-Route::prefix('/auth')->group(function(){
+Route::prefix('/auth')->group(function () {
     RouteHelper::requireRoute("auth");
 });
 
-Route::prefix('/social')->group(function(){
+Route::prefix('/social')->group(function () {
     RouteHelper::requireRoute("social");
 });
 
