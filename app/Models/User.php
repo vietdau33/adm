@@ -52,12 +52,12 @@ class User extends Authenticatable
 
     public function setGoogle2faSecretAttribute($value): void
     {
-        $this->attributes['google2fa_secret'] = is_string($value) ? encrypt($value) : null;
+        $this->attributes['google2fa_secret'] = empty($value) ? null : encrypt($value);
     }
 
     public function getGoogle2faSecretAttribute($value)
     {
-        return is_string($value) ? decrypt($value) : null;
+        return empty($value) ? null : decrypt($value);
     }
 
     /**

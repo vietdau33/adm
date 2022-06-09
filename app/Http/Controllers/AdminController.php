@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\UserException;
+use App\Http\Services\AdminService;
+use App\Models\BannerModel;
 use App\Models\CryptoWithdraw;
+use App\Models\LinkDaily;
 use App\Models\SystemSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -39,13 +42,57 @@ class AdminController extends Controller
     public function banner()
     {
         session()->flash('menu-active', 'banner');
-        return view('admin.banner');
+        $banners = BannerModel::paginate(5);
+        if ($banners->currentPage() > 1 && $banners->currentPage() > $banners->lastPage()) {
+            return redirect()->to($banners->url(1));
+        }
+        return view('admin.banner', compact('banners'));
+    }
+
+    public function bannerCreate(Request $request): JsonResponse
+    {
+        return AdminService::bannerCreate($request);
+    }
+
+    public function bannerDelete(Request $request): JsonResponse
+    {
+        return AdminService::deleteBanner($request->id);
+    }
+
+    public function bannerChangeStatus(Request $request): JsonResponse
+    {
+        return AdminService::bannerChangeStatus((int)$request->id, (int)$request->status);
+    }
+
+    public function settings()
+    {
+        session()->flash('menu-active', 'settings');
+        return view('admin.settings');
     }
 
     public function linkMission()
     {
         session()->flash('menu-active', 'link-mission');
-        return view('admin.link');
+        $links = LinkDaily::paginate(5);
+        if ($links->currentPage() > 1 && $links->currentPage() > $links->lastPage()) {
+            return redirect()->to($links->url(1));
+        }
+        return view('admin.link', compact('links'));
+    }
+
+    public function linkMissionCreate(Request $request): JsonResponse
+    {
+        return AdminService::linkDailyCreate($request);
+    }
+
+    public function linkMissionDelete(Request $request): JsonResponse
+    {
+        return AdminService::deleteLinkMission($request->id);
+    }
+
+    public function linkMissionChangeStatus(Request $request): JsonResponse
+    {
+        return AdminService::linkMissionChangeStatus((int)$request->id, (int)$request->status);
     }
 
     public function changeSetting(Request $request): JsonResponse

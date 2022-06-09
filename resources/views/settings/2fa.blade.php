@@ -45,3 +45,45 @@
         </div>
     @endif
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        $('.btn-active-2fa').on('click', function(){
+            const areaInfo = $('.area-info-active-2fa');
+            const areaDetail = $('.area-detail-active-2fa');
+            Request.ajax('{{ route('generate-gg-auth') }}', function(result){
+                if(result.success == false) {
+                    return alert(result.message);
+                }
+                areaDetail.find('[name="serect"]')
+                    .val(result.serect)
+                    .next('button')
+                    .attr('data-text', result.serect);
+                areaDetail.find('.img-qr-auth-2fa div').html(result.image);
+                areaInfo.hide(200);
+                areaDetail.show(200);
+            });
+        });
+        $('.btn-enable-2fa').on('click', function(){
+            const form = this.closest('form');
+            const formData = new FormData(form);
+            Request.ajax('{{ route('enable-gg-auth') }}', formData, function (result) {
+                alert(result.message);
+                if(result.success) {
+                    location.reload();
+                }
+            });
+        });
+        $('.btn-deactive-2fa').on('click', function(){
+            if(!confirm('Are you sure deactive 2FA ?')) {
+                return false;
+            }
+            Request.ajax('{{ route('deactive-gg-auth') }}', function (result) {
+                alert(result.message);
+                if(result.success) {
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>

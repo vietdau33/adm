@@ -5,7 +5,7 @@
             <button class="btn btn-success btn-gradient btn-create-link">Create Link</button>
         </div>
         <div class="area-link mt-2">
-            <table class="table table-striped" style="background: #fff">
+            <table class="table table-striped text-center" style="background: #fff">
                 <thead>
                 <tr>
                     <th scope="col">No.</th>
@@ -15,27 +15,30 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{--@php($count = 1)--}}
-                {{--@foreach($histories->items() as $history)--}}
-                {{--    <tr>--}}
-                {{--        <td>{{ $count++ }}</td>--}}
-                {{--        <td>{{ $history->amount }}</td>--}}
-                {{--        <td>{{ $history->note }}</td>--}}
-                {{--        <td>{{ $history->status }}</td>--}}
-                {{--        <td>{{ __d($user->created_at) }}</td>--}}
-                {{--    </tr>--}}
-                {{--@endforeach--}}
-                {{--@if($histories->count() <= 0)--}}
-                {{--    <tr>--}}
-                {{--        <td colspan="5">No User</td>--}}
-                {{--    </tr>--}}
-                {{--@endif--}}
-                <tr class="text-center">
-                    <td colspan="4">Dont have any data</td>
-                </tr>
+                @php($count = 1)
+                @foreach($links->items() as $link)
+                    <tr>
+                        <td>{{ $count++ }}</td>
+                        <td>{{ $link->link }}</td>
+                        <td>
+                            <select class="form-control status_link m-auto" style="width: 65px;" data-id="{{ $link->id }}">
+                                <option value="0" {{ $link->active === 0 ? 'selected' : '' }}>Off</option>
+                                <option value="1" {{ $link->active === 1 ? 'selected' : '' }}>On</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-gradient btn-delete-link" data-id="{{ $link->id }}">Delete</button>
+                        </td>
+                    </tr>
+                @endforeach
+                @if($links->count() <= 0)
+                    <tr class="text-center">
+                        <td colspan="4">Dont have any data</td>
+                    </tr>
+                @endif
                 </tbody>
             </table>
-            {{--{!! view('pages.pagination', ['datas' => $histories])->render() !!}--}}
+            {!! $links->links('vendor.pagination.bootstrap') !!}
         </div>
     </div>
 @endsection
@@ -50,14 +53,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
+                    <form action="" method="POST" onsubmit="return false">
                         <div class="form-group d-flex align-items-center">
                             <label for="link" class="mr-2">Link:</label>
                             <input type="text" class="form-control" name="link" id="link">
                         </div>
                         <hr>
                         <div class="text-center">
-                            <button class="btn btn-success btn-gradient">Create Link</button>
+                            <button class="btn btn-success btn-gradient btn-submit-create-link">Create Link</button>
                         </div>
                     </form>
                 </div>
@@ -69,6 +72,38 @@
         $('.btn-create-link').on('click', function(){
             const $modal = $('#createLink');
             $modal.modal();
+        });
+        $(".btn-submit-create-link").on('click', function () {
+            const $form = $(this).closest('form');
+            const formData = new FormData($form[0]);
+
+            Request.ajax('{{ route('admin.link-mission.create') }}', formData, function (result) {
+                alert(result.message);
+                if (result.success) {
+                    location.reload();
+                }
+            });
+        });
+        $('.status_link').on('change', function(){
+            const id = $(this).attr('data-id');
+            const status = $(this).val();
+            Request.requestHidden().ajax('{{ route('admin.link-mission.active') }}', { id, status }, function (result) {
+                if (!result.success) {
+                    alert(result.message);
+                }
+            });
+        });
+        $('.btn-delete-link').on('click', function(){
+            if(!confirm('Are you sure delete this link mission?')) {
+                return false;
+            }
+            const id = $(this).attr('data-id');
+            Request.ajax('{{ route('admin.link-mission.delete') }}', { id }, function (result) {
+                alert(result.message);
+                if (result.success) {
+                    location.reload();
+                }
+            });
         });
     </script>
 @endsection

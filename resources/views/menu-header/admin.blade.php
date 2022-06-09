@@ -24,7 +24,7 @@
         </a>
     </li>
     <li data-active="settings">
-        <a href="{{ route('setting.home') }}">
+        <a href="{{ route('admin.settings') }}">
             <img src="{{ asset('image/adm/icon/setting.png') }}" alt="Settings">
             <span>Settings</span>
         </a>

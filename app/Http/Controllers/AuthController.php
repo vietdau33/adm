@@ -317,25 +317,39 @@ class AuthController extends Controller{
 
     public function enable2FAAuthen(Request $request): JsonResponse
     {
-        $serect = $request->serect;
-        $code = $request->code;
-        $google2fa = app('pragmarx.google2fa');
+        try{
+            $serect = $request->serect;
+            $code = $request->code;
+            if(empty($code)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Please enter code before enable!"
+                ]);
+            }
 
-        if(!$google2fa->verifyKey($serect, $code)){
+            $google2fa = app('pragmarx.google2fa');
+
+            if(!$google2fa->verifyKey($serect, $code)){
+                return response()->json([
+                    'success' => false,
+                    'message' => "Code verify not match!"
+                ]);
+            }
+
+            $user = user();
+            $user->google2fa_secret = $serect;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => "2FA enabled!"
+            ]);
+        }catch (Exception $exception) {
             return response()->json([
                 'success' => false,
-                'message' => "Code verify not match!"
+                'message' => "Has error enable Google 2FA, please reload page!"
             ]);
         }
-
-        $user = user();
-        $user->google2fa_secret = $serect;
-        $user->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => "2FA enabled!"
-        ]);
     }
 
     public function deactive2FA(): JsonResponse

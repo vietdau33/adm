@@ -15,6 +15,10 @@ Route::get('/', function () {
     return redirect()->route('home.page');
 })->name("home-page");
 
+Route::post('generate-google-authen-serect', [AuthController::class, 'generateGoogleAuthenSerect'])->name('generate-gg-auth');
+Route::post('enable-google-authen-serect', [AuthController::class, 'enable2FAAuthen'])->name('enable-gg-auth');
+Route::post('deactive-google-authen-serect', [AuthController::class, 'deactive2FA'])->name('deactive-gg-auth');
+
 Route::middleware('logined')->group(function () {
     Route::get('/home', [HomeController::class, 'home'])->name("home.page");
     Route::get('/user-list', [HomeController::class, 'userList'])->name('userlist');
@@ -46,9 +50,6 @@ Route::middleware('logined')->group(function () {
     Route::get("/crypto-withdraw-history", [UserController::class, "cryptoWithdrawHistory"])->name("user.crypto-withdraw-history.get");
     Route::post("/crypto-withdraw-history/search", [UserController::class, "cryptoWithdrawHistorySearch"])->name("user.crypto-withdraw-history-search.post");
     Route::post("/interest-rate-history/search", [UserController::class, "interestRateHistorySearch"])->name("user.interest-rate-history-search.post");
-    Route::post('generate-google-authen-serect', [AuthController::class, 'generateGoogleAuthenSerect'])->name('generate-gg-auth');
-    Route::post('enable-google-authen-serect', [AuthController::class, 'enable2FAAuthen'])->name('enable-gg-auth');
-    Route::post('deactive-google-authen-serect', [AuthController::class, 'deactive2FA'])->name('deactive-gg-auth');
 
     Route::prefix('money')->name('money.')->group(function () {
         Route::get('/', [MoneyController::class, 'deposit'])->name('home');

@@ -1,11 +1,12 @@
 @extends('layout')
 @section("contents")
-    <div class="banner-top mb-3">
-        <img src="{{ asset('image/adm/bg_1.jpg') }}" alt="Bg 1" class="w-100">
-    </div>
-    <div class="area-advertisement area-advertisement-top mb-3">
-        <h3>Banner Quảng cáo PC: cao = 540px</h3>
-    </div>
+    @if(!empty($banners['top']))
+        <div class="banner banner-top mb-3">
+            @php($bannerTop = $banners['top']->random(1)->first())
+            <img src="{{ asset('storage/banner/' . $bannerTop->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
+            <img src="{{ asset('storage/banner/' . $bannerTop->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+        </div>
+    @endif
     <div class="area-investment">
         <h3 class="invest-title">INVESTMENT PLAN</h3>
         <div class="investment-plan mb-3">
@@ -46,11 +47,13 @@
             </div>
         </div>
     </div>
-    <div class="area-advertisement area-advertisement-body mb-3">
-        <div class="img-advertisement">
-            <img src="{{ asset('image/adm/meta_1.jpg') }}" alt="Advertisement" class="w-100">
+    @if(!empty($banners['center']))
+        <div class="banner banner-center mb-3">
+            @php($bannerCenter = $banners['center']->random(1)->first())
+            <img src="{{ asset('storage/banner/' . $bannerCenter->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
+            <img src="{{ asset('storage/banner/' . $bannerCenter->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
         </div>
-    </div>
+    @endif
     @if(user()->role == 'user')
         <div class="user-profile-card d-flex justify-content-around mb-3">
             <div class="area-qr-code">

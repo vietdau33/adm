@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\UserException;
+use App\Models\BannerModel;
 use App\Models\HistorySystemSetting;
 use App\Models\SystemSetting;
 use Illuminate\Http\JsonResponse;
@@ -15,19 +16,9 @@ use App\Http\Helpers\HistoryHelper;
 class HomeController extends Controller
 {
     public function home(){
-        $defaultSizePage = SystemSetting::getDefaultSizePagination();
-        if(Auth::user()->role == 'admin'){
-            $userList = User::where(['level' => 0, 'role' => 'admin', 'is_delete' => 0]);
-        }else{
-            $userList = User::where(['username' => Auth::user()->username, 'is_delete' => 0]);
-        }
-        $userList = $userList->paginate($defaultSizePage);
-        $userTree = [''];
-        $sysSetting = SystemSetting::buildSetting();
-//        $interestHistory = HistorySystemSetting::getHistory('rate');
-//        return view('home', compact('sysSetting', 'interestHistory'));
         session()->flash('menu-active', 'dashboard');
-        return view('home', compact('sysSetting', 'userList', 'userTree'));
+        $banners = BannerModel::getBanners();
+        return view('home', compact('banners'));
     }
 
     public function reflink($reflink): RedirectResponse

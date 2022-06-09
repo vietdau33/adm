@@ -1,4 +1,9 @@
 const Request = {
+    noPending: false,
+    requestHidden: function(){
+        this.noPending = true;
+        return this;
+    },
     ajax : function(url, param, succFunc, doneFunc){
         if(typeof param == 'undefined'){
             param = {};
@@ -14,7 +19,7 @@ const Request = {
             dataType : 'json',
             data : param,
             beforeSend : function(){
-                self.showPendingRequest();
+                !self.noPending && self.showPendingRequest();
             },
             success : function(result){
                 if(typeof succFunc == 'function'){
@@ -37,7 +42,8 @@ const Request = {
             if(typeof doneFunc == 'function'){
                 doneFunc(xhr);
             }
-            self.hidePendingRequest();
+            !self.noPending && self.hidePendingRequest();
+            self.noPending = false;
         });
 
         return ajaxResult;
