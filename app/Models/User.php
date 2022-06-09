@@ -7,6 +7,7 @@ use App\Http\Helpers\MailHelper;
 use App\Http\Helpers\OtpHelpers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -229,5 +230,9 @@ class User extends Authenticatable
             return true;
         }
         return $numDayBlock - $difference;
+    }
+
+    public function getMoneyAttribute() {
+        return $this->belongsTo(MoneyModel::class, 'id', 'user_id')->first();
     }
 }

@@ -72,6 +72,13 @@ Route::middleware('logined')->group(function () {
         Route::get('/change_password', [SettingController::class, 'change_password'])->name('change_password');
         Route::get('/kyc_withdraw', [SettingController::class, 'kyc_withdraw'])->name('kyc_withdraw');
     });
+
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::prefix('transfer')->name('transfer.')->group(function(){
+            Route::post('bonus', [MoneyController::class, 'transferBonusToWallet'])->name('bonus');
+            Route::post('profit', [MoneyController::class, 'transferProfitToWallet'])->name('profit');
+        });
+    });
 });
 
 Route::middleware('is-admin')->group(function () {

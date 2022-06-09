@@ -77,20 +77,20 @@
         <div class="settings-display">
             <div class="box-money money-ib m-1">
                 <p class="mb-0">Total bonus</p>
-                <a class="money-text" href="javascript:void(0)" data-toggle="modal" data-target="#transferIBToWallet">
-                    {{ number_format((float)user('money_ib', 0), 2) }}
+                <a class="money-text" href="javascript:void(0)" data-toggle="modal" data-target="#transferBonusToWallet">
+                    {{ number_format(user()->money->bonus, 2) }}
                 </a>
             </div>
             <div class="box-money money-profit m-1">
                 <p class="mb-0">Total Profit</p>
-                <a class="money-text" href="javascript:void(0)" data-toggle="modal">
-                    {{ number_format((float)user('money_profit', 0), 2) }}
+                <a class="money-text" href="javascript:void(0)" data-toggle="modal" data-target="#transferProfitToWallet">
+                    {{ number_format(user()->money->profit, 2) }}
                 </a>
             </div>
             <div class="box-money money-wallet m-1">
                 <p class="mb-0">Wallet</p>
-                <a class="money-text" href="javascript:void(0)" data-toggle="modal">
-                    {{ number_format((float)user('money_wallet', 0), 2) }}
+                <a class="money-text" href="javascript:void(0)">
+                    {{ number_format(user()->money->wallet, 2) }}
                 </a>
             </div>
         </div>
@@ -98,8 +98,7 @@
 @endsection
 
 @section('modal')
-    @include('modals.change-password')
     @include('modals.transfer-to-invest')
-    @include('modals.transfer-ib-to-wallet')
-    @include("modals.member-detail")
+    @include('modals.transfer-bonus-to-wallet')
+    @include('modals.transfer-profit-to-wallet')
 @endsection
