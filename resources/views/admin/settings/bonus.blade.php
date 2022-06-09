@@ -35,9 +35,9 @@
         </tr>
         </tbody>
     </table>
-    <div class="form-group">
-        <p>The condition for receiving the bonus of the upline is that the downline must enter the minimum package:</p>
-        <input type="text" class="form-control" name="" value="300">
+    <div class="form-group d-flex align-items-center flex-wrap">
+        <p class="mb-0 mr-2">The condition for receiving the bonus of the upline is that the downline must enter the minimum package:</p>
+        <input type="text" class="form-control number-only" name="" value="300" style="width: 60px">
     </div>
     <div class="text-center">
         <button class="btn btn-success btn-gradient">Update</button>

@@ -7,6 +7,7 @@ use App\Http\Services\AdminService;
 use App\Models\BannerModel;
 use App\Models\CryptoWithdraw;
 use App\Models\LinkDaily;
+use App\Models\Settings;
 use App\Models\SystemSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -67,7 +68,13 @@ class AdminController extends Controller
     public function settings()
     {
         session()->flash('menu-active', 'settings');
-        return view('admin.settings');
+        $settings = Settings::getSettings();
+        return view('admin.settings', compact('settings'));
+    }
+
+    public function settingSaveProfit(Request $request): JsonResponse
+    {
+        return AdminService::settingSaveProfit($request);
     }
 
     public function linkMission()

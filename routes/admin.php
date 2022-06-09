@@ -9,15 +9,25 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('list-member', [AdminController::class, 'listMember'])->name('list-member');
     Route::get('money', [AdminController::class, 'money'])->name('money');
     Route::get('report-transfer', [AdminController::class, 'reportTransfer'])->name('report-transfer');
-    Route::get('banner', [AdminController::class, 'banner'])->name('banner');
-    Route::post('banner/create', [AdminController::class, 'bannerCreate'])->name('banner.create');
-    Route::post('banner/delete', [AdminController::class, 'bannerDelete'])->name('banner.delete');
-    Route::post('banner/change-active', [AdminController::class, 'bannerChangeStatus'])->name('banner.active');
-    Route::get('settings', [AdminController::class, 'settings'])->name('settings');
-    Route::get('link-mission', [AdminController::class, 'linkMission'])->name('link-mission');
-    Route::post('link-mission/create', [AdminController::class, 'linkMissionCreate'])->name('link-mission.create');
-    Route::post('link-mission/delete', [AdminController::class, 'linkMissionDelete'])->name('link-mission.delete');
-    Route::post('link-mission/change-active', [AdminController::class, 'linkMissionChangeStatus'])->name('link-mission.active');
+
+    Route::prefix('banner')->group(function() {
+        Route::get('', [AdminController::class, 'banner'])->name('banner');
+        Route::post('create', [AdminController::class, 'bannerCreate'])->name('banner.create');
+        Route::post('delete', [AdminController::class, 'bannerDelete'])->name('banner.delete');
+        Route::post('change-active', [AdminController::class, 'bannerChangeStatus'])->name('banner.active');
+    });
+
+    Route::prefix('link-mission')->group(function(){
+        Route::get('', [AdminController::class, 'linkMission'])->name('link-mission');
+        Route::post('create', [AdminController::class, 'linkMissionCreate'])->name('link-mission.create');
+        Route::post('delete', [AdminController::class, 'linkMissionDelete'])->name('link-mission.delete');
+        Route::post('change-active', [AdminController::class, 'linkMissionChangeStatus'])->name('link-mission.active');
+    });
+
+    Route::prefix('settings')->group(function() {
+        Route::get('', [AdminController::class, 'settings'])->name('settings');
+        Route::post('profit', [AdminController::class, 'settingSaveProfit'])->name('settings.profit.save');
+    });
 });
 
 //Route::get("/admin/settings", [AdminController::class, "settingsView"])->name("admin.settings.get");

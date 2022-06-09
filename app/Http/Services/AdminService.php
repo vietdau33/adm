@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\BannerModel;
 use App\Models\LinkDaily;
+use App\Models\Settings;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -144,6 +145,24 @@ class AdminService
             return jsonSuccess('Change status Link success!');
         } catch (Exception $exception) {
             return jsonError('Cannot change status link. Please reload page and try again!');
+        }
+    }
+
+    public static function settingSaveProfit(Request $request): JsonResponse
+    {
+        $settings = $request->all();
+        $setting = Settings::whereGuard('admin')->whereType('profit')->first();
+        if ($setting == null) {
+            return jsonError('Setting not exists!');
+        }
+
+        try {
+            $setting->setting_data = json_encode($settings);
+            $setting->save();
+
+            return jsonSuccess('Save setting Profit success!');
+        } catch (Exception $exception) {
+            return jsonError('Cannot save setting profit. Please reload page and try again!');
         }
     }
 }

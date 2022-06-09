@@ -79,6 +79,12 @@
     font-size: 14px;
 }
 
+input.error,
+.error input,
+.error select{
+    border: 1px solid red;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input.number-only::-webkit-outer-spin-button,
 input.number-only::-webkit-inner-spin-button {
