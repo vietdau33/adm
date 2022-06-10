@@ -10,9 +10,8 @@ use App\Http\Helpers\RouteHelper;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 
-//Route::get('/', [HomeController::class, 'homePage'])->name("home-page");
 Route::get('/', function () {
-    return redirect()->route('home.page');
+    return redirect()->to('/welcome');
 })->name("home-page");
 
 Route::post('generate-google-authen-serect', [AuthController::class, 'generateGoogleAuthenSerect'])->name('generate-gg-auth');
