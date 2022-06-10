@@ -4,14 +4,14 @@
         <div class="text-right">
             <button class="btn btn-success btn-gradient btn-create-link">Create Link</button>
         </div>
-        <div class="area-link mt-2">
-            <table class="table table-striped text-center" style="background: #fff">
+        <div class="area-link form-radius mt-2">
+            <table class="table table-striped table-mini-size text-center">
                 <thead>
                 <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Link</th>
-                    <th scope="col">Display</th>
-                    <th scope="col">Action</th>
+                    <th class="border-top-0" scope="col">No.</th>
+                    <th class="border-top-0" scope="col">Link</th>
+                    <th class="border-top-0" scope="col">Display</th>
+                    <th class="border-top-0" scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>

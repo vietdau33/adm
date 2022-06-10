@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\UserException;
 use App\Models\BannerModel;
 use App\Models\HistorySystemSetting;
+use App\Models\Settings;
 use App\Models\SystemSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +19,8 @@ class HomeController extends Controller
     public function home(){
         session()->flash('menu-active', 'dashboard');
         $banners = BannerModel::getBanners();
-        return view('home', compact('banners'));
+        $settingProfit = Settings::getSettings()['profit']->setting;
+        return view('home', compact('banners', 'settingProfit'));
     }
 
     public function reflink($reflink): RedirectResponse

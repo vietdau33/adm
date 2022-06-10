@@ -164,7 +164,7 @@
   margin-right: 10px;
 }
 
-.banner {
+.banner-top {
   border-radius: 14px;
   overflow: hidden;
 }
@@ -256,19 +256,20 @@
 .area-investment .investment-plan .invest-box.invest-box-platinum {
   background-image: url("/image/adm/investment_4.png");
 }
-.area-investment .investment-plan .invest-box.invest-box-bronze .btn {
+
+.btn-buy-investment--bronze {
   background: rgb(5, 167, 255);
   background: linear-gradient(180deg, rgb(5, 167, 255) 0%, rgb(0, 96, 161) 100%);
 }
-.area-investment .investment-plan .invest-box.invest-box-silver .btn {
+.btn-buy-investment--silver {
   background: rgb(255, 211, 43);
   background: linear-gradient(180deg, rgb(255, 211, 43) 0%, rgb(161, 117, 0) 100%);
 }
-.area-investment .investment-plan .invest-box.invest-box-gold .btn {
+.btn-buy-investment--gold {
   background: rgb(206, 0, 0);
   background: linear-gradient(180deg, rgb(206, 0, 0) 0%, rgb(121, 0, 0) 100%);
 }
-.area-investment .investment-plan .invest-box.invest-box-platinum .btn {
+.btn-buy-investment--platinum {
   background: rgb(146, 217, 70);
   background: linear-gradient(180deg, rgb(146, 217, 70) 0%, rgb(84, 127, 38) 100%);
 }
@@ -398,4 +399,24 @@
 }
 .menu-header ul li {
   margin: 4px;
+}
+
+.alertify.alertify--success .ajs-header {
+  color: #155724;
+  background-color: #d4edda;
+}
+.alertify.alertify--danger .ajs-header {
+  color: #721c24;
+  background-color: #f8d7da;
+}
+.alertify .ajs-button {
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2) 49%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.05));
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #6c757d;
+}
+.alertify .ajs-button:focus {
+  outline: none;
+  box-shadow: initial;
 }

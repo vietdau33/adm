@@ -72,9 +72,14 @@ class AdminController extends Controller
         return view('admin.settings', compact('settings'));
     }
 
-    public function settingSaveProfit(Request $request): JsonResponse
+    public function saveSettingProfit(Request $request): JsonResponse
     {
-        return AdminService::settingSaveProfit($request);
+        return AdminService::saveSettings($request, 'profit');
+    }
+
+    public function saveSettingBonus(Request $request): JsonResponse
+    {
+        return AdminService::saveSettings($request, 'bonus');
     }
 
     public function linkMission()

@@ -74,6 +74,8 @@ Route::middleware('logined')->group(function () {
     });
 
     Route::prefix('user')->name('user.')->group(function () {
+        Route::post('buy-invest', [MoneyController::class, 'buyInvestment'])->name('buy-invest');
+
         Route::prefix('transfer')->name('transfer.')->group(function(){
             Route::post('bonus', [MoneyController::class, 'transferBonusToWallet'])->name('bonus');
             Route::post('profit', [MoneyController::class, 'transferProfitToWallet'])->name('profit');

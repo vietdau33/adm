@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InvestmentBought;
 use App\Models\MoneyModel;
+use App\Models\Settings;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MoneyController extends Controller
 {
@@ -37,13 +40,13 @@ class MoneyController extends Controller
         }
 
         $amount = (double)$request->amount;
-        if($amount < 100) {
+        if ($amount < 100) {
             return jsonError('Amount money minimum transfer is: 100');
         }
 
-        try{
+        try {
             $userMoney = user()->money;
-            if($amount > $userMoney->{$type}) {
+            if ($amount > $userMoney->{$type}) {
                 return jsonError("Amount money is bigger than money $type you have!");
             }
 
@@ -52,7 +55,7 @@ class MoneyController extends Controller
             $userMoney->save();
 
             return jsonSuccess('Transfer ' . ucfirst($type) . ' to Wallet success!');
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             return jsonError("Cannot transfer $type to wallet. Please reload page and try again!");
         }
     }
@@ -65,5 +68,52 @@ class MoneyController extends Controller
     public function transferProfitToWallet(Request $request): JsonResponse
     {
         return $this->transferToWallet($request, 'profit');
+    }
+
+    public function buyInvestment(Request $request): JsonResponse
+    {
+        DB::beginTransaction();
+        try {
+            $amount = trim($request->amount ?? '');
+            if (empty($amount)) {
+                return jsonError('Amount cannot empty!');
+            }
+
+            $amount = (double)$amount;
+            $type = $request->type;
+            if (!in_array($type, ['bronze', 'silver', 'gold', 'platinum'])) {
+                return jsonError('Package Investment not correct!');
+            }
+
+            $setting = Settings::getSettings()['profit']->setting->{$type};
+            $minAmount = (double)$setting->min_amount;
+            if ($amount < $minAmount) {
+                return jsonError("Amount minimum is: $minAmount");
+            }
+
+            $userMoney = user()->money;
+            if ((double)$userMoney->wallet < $amount) {
+                return jsonError('The amount left in the account is not enough to buy!');
+            }
+
+            $userMoney->wallet = (double)$userMoney->wallet - $amount;
+            $userMoney->save();
+
+            $investment = new InvestmentBought();
+            $investment->user_id = user()->id;
+            $investment->type = $type;
+            $investment->money_buy = $amount;
+            $investment->profit = $setting->profit;
+            $investment->days = $setting->days;
+            $investment->min_amount = $setting->min_amount;
+            $investment->max_withdraw = $setting->max_withdraw;
+            $investment->save();
+
+            DB::commit();
+            return jsonSuccess('You have successfully purchased the package! We\'ll do a page reload!');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return jsonError('There was an error during the purchase of the package. please reload the page and try again');
+        }
     }
 }

@@ -1,74 +1,76 @@
-<div class="area-deposit--list mt-3">
-    <form action="" method="POST" onsubmit="return SubmitSaveSettingProfit.apply(this)">
-        <table class="table table-striped text-center" style="background: #fff">
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Profit (%)</th>
-                <th scope="col">Days</th>
-                <th scope="col">Min Amout</th>
-                <th scope="col">Max Withdraw (%)</th>
-                <th scope="col">Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach(['bronze', 'silver', 'gold', 'platinum'] as $type)
-                @php($setting = $settings['profit']->setting->{$type})
+<div class="area-profit--list mt-3">
+    <div class="form-radius">
+        <form action="" method="POST" onsubmit="return SubmitSaveSettingProfit.apply(this)">
+            <table class="table table-striped table-mini-size text-center">
+                <thead>
                 <tr>
-                    <td>{{ strtoupper($type) }}</td>
-                    <td>
-                        <input
-                            type="text"
-                            class="form-control m-auto text-center number-only"
-                            style="width: 60px"
-                            name="{{ $type . "[profit]" }}"
-                            value="{{ $setting->profit }}"
-                        />
-                    </td>
-                    <td>
-                        <input
-                            type="text"
-                            class="form-control m-auto text-center number-only"
-                            style="width: 60px"
-                            name="{{ $type . "[days]" }}"
-                            value="{{ $setting->days }}"
-                        />
-                    </td>
-                    <td>
-                        <input
-                            type="text"
-                            class="form-control m-auto text-center number-only"
-                            style="width: 60px"
-                            name="{{ $type . "[min_amount]" }}"
-                            value="{{ $setting->min_amount }}"
-                        />
-                    </td>
-                    <td>
-                        <input
-                            type="text"
-                            class="form-control m-auto text-center number-only"
-                            style="width: 60px"
-                            name="{{ $type . "[max_withdraw]" }}"
-                            value="{{ $setting->max_withdraw }}"
-                        />
-                    </td>
-                    <td>
-                        <select name="{{ $type . "[active]" }}" class="form-control m-auto" style="width: 120px">
-                            <option value="0" {{ $setting->active == '0' ? 'selected' : '' }}>Deactive</option>
-                            <option value="1" {{ $setting->active == '1' ? 'selected' : '' }}>Active</option>
-                        </select>
-                    </td>
+                    <th class="border-top-0" scope="col">Name</th>
+                    <th class="border-top-0" scope="col">Profit (%)</th>
+                    <th class="border-top-0" scope="col">Days</th>
+                    <th class="border-top-0" scope="col">Min Amout</th>
+                    <th class="border-top-0" scope="col">Max Withdraw (%)</th>
+                    <th class="border-top-0" scope="col">Status</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
-        <div class="text-right">
-            <button class="btn btn-success btn-gradient">Save Setting</button>
-        </div>
-    </form>
+                </thead>
+                <tbody>
+                @foreach(['bronze', 'silver', 'gold', 'platinum'] as $type)
+                    @php($setting = $settings['profit']->setting->{$type})
+                    <tr>
+                        <td>{{ strtoupper($type) }}</td>
+                        <td>
+                            <input
+                                type="text"
+                                class="form-control m-auto text-center number-only"
+                                style="width: 60px"
+                                name="{{ $type . "[profit]" }}"
+                                value="{{ $setting->profit }}"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="form-control m-auto text-center number-only"
+                                style="width: 60px"
+                                name="{{ $type . "[days]" }}"
+                                value="{{ $setting->days }}"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="form-control m-auto text-center number-only"
+                                style="width: 60px"
+                                name="{{ $type . "[min_amount]" }}"
+                                value="{{ $setting->min_amount }}"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="form-control m-auto text-center number-only"
+                                style="width: 60px"
+                                name="{{ $type . "[max_withdraw]" }}"
+                                value="{{ $setting->max_withdraw }}"
+                            />
+                        </td>
+                        <td>
+                            <select name="{{ $type . "[active]" }}" class="form-control m-auto" style="width: 120px">
+                                <option value="0" {{ $setting->active == '0' ? 'selected' : '' }}>Deactive</option>
+                                <option value="1" {{ $setting->active == '1' ? 'selected' : '' }}>Active</option>
+                            </select>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+            <div class="text-center">
+                <button class="btn btn-success btn-gradient">Save Setting</button>
+            </div>
+        </form>
+    </div>
 </div>
 <script>
-    document.querySelectorAll('.area-deposit--list input').forEach(function (input) {
+    document.querySelectorAll('.area-profit--list input').forEach(function (input) {
         input.addEventListener('input', function () {
             this.closest('td').classList.remove('error');
         });

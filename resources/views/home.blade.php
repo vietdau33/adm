@@ -10,41 +10,25 @@
     <div class="area-investment">
         <h3 class="invest-title">INVESTMENT PLAN</h3>
         <div class="investment-plan mb-3">
-            <div class="invest-box invest-box-bronze">
-                <h5>BRONZE</h5>
-                <ul>
-                    <li>Profit 0.5% daily forever</li>
-                    <li>Withdraw: Instant</li>
-                </ul>
-                <button class="btn btn-light">INVEST NOW</button>
-            </div>
-            <div class="invest-box invest-box-silver">
-                <h5>SILVER</h5>
-                <ul>
-                    <li>Profit 1.3% daily for 90 days</li>
-                    <li>Total returns: 117%</li>
-                    <li>Withdraw: Instant</li>
-                </ul>
-                <button class="btn btn-light">INVEST NOW</button>
-            </div>
-            <div class="invest-box invest-box-gold">
-                <h5>GOLD</h5>
-                <ul>
-                    <li>Profit 0.8% daily for 180 days</li>
-                    <li>Total returns: 144%</li>
-                    <li>Withdraw: Instant</li>
-                </ul>
-                <button class="btn btn-light">INVEST NOW</button>
-            </div>
-            <div class="invest-box invest-box-platinum">
-                <h5>PLATINUM</h5>
-                <ul>
-                    <li>Profit 0.7% daily for 270 days</li>
-                    <li>Total returns: 189%</li>
-                    <li>Withdraw: Instant</li>
-                </ul>
-                <button class="btn btn-light">INVEST NOW</button>
-            </div>
+            @foreach(['bronze', 'silver', 'gold', 'platinum'] as $type)
+                @php($setting = $settingProfit->{$type})
+                <div class="invest-box invest-box-{{ $type }}">
+                    <h5>{{ strtoupper($type) }}</h5>
+                    <ul>
+                        <li>Profit {{ $setting->profit }}% daily {{ $setting->days == 0 ? 'forever' : "for $setting->days days" }}</li>
+                        @if($setting->days > 0)
+                            <li>Total returns: {{ $setting->profit * $setting->days }}%</li>
+                        @endif
+                        <li>Withdraw: Instant</li>
+                    </ul>
+                    <button
+                        class="btn btn-light btn-buy-investment btn-buy-investment--{{ $type }}"
+                        data-min-amount="{{ $setting->min_amount }}"
+                        data-type="{{ $type }}">
+                        INVEST NOW
+                    </button>
+                </div>
+            @endforeach
         </div>
     </div>
     @if(!empty($banners['center']))
@@ -98,7 +82,23 @@
 @endsection
 
 @section('modal')
-    @include('modals.transfer-to-invest')
+    @include('modals.buy-investment')
     @include('modals.transfer-bonus-to-wallet')
     @include('modals.transfer-profit-to-wallet')
+@endsection
+
+@section('script')
+    <script>
+        $('.btn-buy-investment').on('click', function() {
+            const type = $(this).attr('data-type');
+            const minAmount = $(this).attr('data-min-amount');
+            const modal = $('#buyInvestmentModal');
+            modal.find('.name-invest').text(type.toUpperCase());
+            modal.find('.min-invest').text(minAmount);
+            modal.find('[name="type"]').val(type);
+            modal.find('.modal-header').removeClassStartWith('btn-buy-investment--').addClass('btn-buy-investment--' + type);
+            modal.find('.btn-submit-buy-invest').removeClassStartWith('btn-buy-investment--').addClass('btn-buy-investment--' + type);
+            modal.modal();
+        });
+    </script>
 @endsection

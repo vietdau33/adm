@@ -287,27 +287,26 @@ $bgInvestBox: (
                     background-image: url("/image/adm/#{$icon}");
                 }
             }
-
-            &.invest-box-bronze .btn {
-                background: rgb(5, 167, 255);
-                background: linear-gradient(180deg, rgba(5, 167, 255, 1) 0%, rgba(0, 96, 161, 1) 100%);
-            }
-
-            &.invest-box-silver .btn {
-                background: rgb(255, 211, 43);
-                background: linear-gradient(180deg, rgba(255, 211, 43, 1) 0%, rgba(161, 117, 0, 1) 100%);
-            }
-
-            &.invest-box-gold .btn {
-                background: rgb(206, 0, 0);
-                background: linear-gradient(180deg, rgba(206, 0, 0, 1) 0%, rgba(121, 0, 0, 1) 100%);
-            }
-
-            &.invest-box-platinum .btn {
-                background: rgb(146, 217, 70);
-                background: linear-gradient(180deg, rgba(146, 217, 70, 1) 0%, rgba(84, 127, 38, 1) 100%);
-            }
         }
+    }
+}
+
+.btn-buy-investment-- {
+    &bronze {
+        background: rgb(5, 167, 255);
+        background: linear-gradient(180deg, rgba(5, 167, 255, 1) 0%, rgba(0, 96, 161, 1) 100%);
+    }
+    &silver {
+        background: rgb(255, 211, 43);
+        background: linear-gradient(180deg, rgba(255, 211, 43, 1) 0%, rgba(161, 117, 0, 1) 100%);
+    }
+    &gold {
+        background: rgb(206, 0, 0);
+        background: linear-gradient(180deg, rgba(206, 0, 0, 1) 0%, rgba(121, 0, 0, 1) 100%);
+    }
+    &platinum {
+        background: rgb(146, 217, 70);
+        background: linear-gradient(180deg, rgba(146, 217, 70, 1) 0%, rgba(84, 127, 38, 1) 100%);
     }
 }
 
@@ -463,6 +462,36 @@ $bgInvestBox: (
 
         li {
             margin: 4px;
+        }
+    }
+}
+
+
+.alertify{
+    &.alertify-- {
+        &success {
+            .ajs-header {
+                color: #155724;
+                background-color: #d4edda;
+            }
+        }
+        &danger {
+            .ajs-header {
+                color: #721c24;
+                background-color: #f8d7da;
+            }
+        }
+    }
+    .ajs-button {
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2) 49%, rgba(0,0,0,0.15) 51%, rgba(0,0,0,0.05));
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        background-color: #6c757d;
+
+        &:focus {
+            outline: none;
+            box-shadow: initial;
         }
     }
 }

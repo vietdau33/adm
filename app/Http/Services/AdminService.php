@@ -148,10 +148,10 @@ class AdminService
         }
     }
 
-    public static function settingSaveProfit(Request $request): JsonResponse
+    public static function saveSettings(Request $request, $type): JsonResponse
     {
         $settings = $request->all();
-        $setting = Settings::whereGuard('admin')->whereType('profit')->first();
+        $setting = Settings::whereGuard('admin')->whereType($type)->first();
         if ($setting == null) {
             return jsonError('Setting not exists!');
         }
@@ -160,9 +160,9 @@ class AdminService
             $setting->setting_data = json_encode($settings);
             $setting->save();
 
-            return jsonSuccess('Save setting Profit success!');
+            return jsonSuccess('Save setting ' . ucfirst($type) . ' success!');
         } catch (Exception $exception) {
-            return jsonError('Cannot save setting profit. Please reload page and try again!');
+            return jsonError("Cannot save setting $type. Please reload page and try again!");
         }
     }
 }

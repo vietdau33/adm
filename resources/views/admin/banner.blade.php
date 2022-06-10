@@ -4,16 +4,16 @@
         <div class="text-right">
             <button class="btn btn-success btn-gradient btn-create-banner">Create Banner</button>
         </div>
-        <div class="area-banner mt-2">
-            <table class="table text-center" style="background: #fff">
+        <div class="area-banner form-radius mt-2">
+            <table class="table table-mini-size text-center">
                 <thead>
                 <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Device</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Display</th>
-                    <th scope="col">Action</th>
+                    <th class="border-top-0" scope="col">No.</th>
+                    <th class="border-top-0" scope="col">Device</th>
+                    <th class="border-top-0" scope="col">Image</th>
+                    <th class="border-top-0" scope="col">Location</th>
+                    <th class="border-top-0" scope="col">Display</th>
+                    <th class="border-top-0" scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
