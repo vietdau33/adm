@@ -25,23 +25,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
 $.prototype.removeClassPattern = function (pattern) {
     if(pattern instanceof RegExp) {
         return this.removeClass (function (index, className) {
-            return (className.match (/(^|\s)btn-buy-investment--\S+/g) || []).join(' ');
+            return (className.match(pattern) || []).join(' ');
         });
     }
     return this;
 }
 
 $.prototype.removeClassStartWith = function (str_start) {
-    const regex = new RegExp('/(^|\\s)' + str_start + '\\S+/', 'g');
+    const regex = new RegExp('(^|\\s)' + str_start + '\\S+', 'g');
     return this.removeClassPattern(regex);
 }
 
-alertify.alertSuccess = function(...params) {
-    this.alert(...params);
-    $('.alertify').removeClassStartWith('alertify--').addClass('alertify--success');
+if(typeof alertify != 'undefined') {
+    alertify.alertSuccess = function(...params) {
+        this.alert(...params);
+        $('.alertify').removeClassStartWith('alertify--').addClass('alertify--success');
+    }
+    alertify.alertDanger = function(...params) {
+        this.alert(...params);
+        $('.alertify').removeClassStartWith('alertify--').addClass('alertify--danger');
+    }
 }
 
-alertify.alertDanger = function(...params) {
-    this.alert(...params);
-    $('.alertify').removeClassStartWith('alertify--').addClass('alertify--danger');
-}

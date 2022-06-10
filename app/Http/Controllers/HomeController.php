@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\UserException;
 use App\Models\BannerModel;
 use App\Models\HistorySystemSetting;
+use App\Models\InvestmentBought;
 use App\Models\Settings;
 use App\Models\SystemSetting;
 use Illuminate\Http\JsonResponse;
@@ -20,7 +21,13 @@ class HomeController extends Controller
         session()->flash('menu-active', 'dashboard');
         $banners = BannerModel::getBanners();
         $settingProfit = Settings::getSettings()['profit']->setting;
-        return view('home', compact('banners', 'settingProfit'));
+        $invest_bought_activing = InvestmentBought::getInvestBought(user()->id);
+
+        return view('home', compact(
+            'banners',
+            'settingProfit',
+            'invest_bought_activing'
+        ));
     }
 
     public function reflink($reflink): RedirectResponse

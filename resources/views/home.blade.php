@@ -1,11 +1,26 @@
 @extends('layout')
 @section("contents")
     @if(!empty($banners['top']))
-        <div class="banner banner-top mb-3">
-            @php($bannerTop = $banners['top']->random(1)->first())
-            <img src="{{ asset('storage/banner/' . $bannerTop->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
-            <img src="{{ asset('storage/banner/' . $bannerTop->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
-        </div>
+        @if(count($banners['top']) > 1)
+            <section class="mb-3 splide splide-banner splide-banner-top" aria-label="Banner Top Slide">
+                <div class="splide__track">
+                    <ul class="splide__list align-items-center">
+                        @foreach($banners['top'] as $banner)
+                            <li class="splide__slide" style="overflow: hidden; border-radius: 14px">
+                                <img src="{{ asset('storage/banner/' . $banner->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
+                                <img src="{{ asset('storage/banner/' . $banner->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </section>
+        @else
+            <div class="banner banner-top mb-3">
+                @php($bannerTop = $banners['top']->first())
+                <img src="{{ asset('storage/banner/' . $bannerTop->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
+                <img src="{{ asset('storage/banner/' . $bannerTop->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+            </div>
+        @endif
     @endif
     <div class="area-investment">
         <h3 class="invest-title">INVESTMENT PLAN</h3>
@@ -31,12 +46,66 @@
             @endforeach
         </div>
     </div>
-    @if(!empty($banners['center']))
-        <div class="banner banner-center mb-3">
-            @php($bannerCenter = $banners['center']->random(1)->first())
-            <img src="{{ asset('storage/banner/' . $bannerCenter->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
-            <img src="{{ asset('storage/banner/' . $bannerCenter->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+    <div class="area-invest-activing form-radius mt-3 mb-3 pt-2">
+        <h2>List Package Invest Activing</h2>
+        <div class="table-list-invest">
+            <table class="table text-center mb-0">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Invest Package</th>
+                    <th scope="col">Amount Buy</th>
+                    <th scope="col">Profit</th>
+                    <th scope="col">Days Left</th>
+                </tr>
+                </thead>
+                <tbody>
+                @php($stt = 1)
+                @foreach($invest_bought_activing as $package)
+                    @php($diffDay = $package->days - diffDaysWithNow($package->created_at))
+                    <tr>
+                        <th scope="row">{{ $stt++ }}</th>
+                        <td>{{ ucfirst($package->type) }}</td>
+                        <td>{{ $package->money_buy }}</td>
+                        <td>{{ $package->profit }} %</td>
+                        @if($package->days == 0)
+                            <td>Forever</td>
+                        @else
+                            <td>{{ $diffDay }} {{ $diffDay > 1 ? 'days' : 'day' }}</td>
+                        @endif
+
+                    </tr>
+                @endforeach
+                @if($invest_bought_activing->count() <= 0)
+                    <tr>
+                        <th colspan="5">No see any package activing!</th>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
         </div>
+    </div>
+    @if(!empty($banners['center']))
+        @if(count($banners['center']) > 1)
+            <section class="mb-3 splide splide-banner splide-banner-center" aria-label="Banner Center Slide">
+                <div class="splide__track">
+                    <ul class="splide__list align-items-center">
+                        @foreach($banners['center'] as $banner)
+                            <li class="splide__slide" style="overflow: hidden; border-radius: 14px">
+                                <img src="{{ asset('storage/banner/' . $banner->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
+                                <img src="{{ asset('storage/banner/' . $banner->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </section>
+        @else
+            <div class="banner banner-center mb-3">
+                @php($bannerCenter = $banners['center']->first())
+                <img src="{{ asset('storage/banner/' . $bannerCenter->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
+                <img src="{{ asset('storage/banner/' . $bannerCenter->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+            </div>
+        @endif
     @endif
     @if(user()->role == 'user')
         <div class="user-profile-card d-flex justify-content-around mb-3">
@@ -89,7 +158,19 @@
 
 @section('script')
     <script>
-        $('.btn-buy-investment').on('click', function() {
+        $('.splide-banner').each(function () {
+            new Splide(this, {
+                type: 'loop',
+                perPage: 1,
+                autoplay: true,
+                interval: 3000,
+                pagination: false,
+                arrows: false,
+                pauseOnHover: false
+            }).mount();
+        });
+
+        $('.btn-buy-investment').on('click', function () {
             const type = $(this).attr('data-type');
             const minAmount = $(this).attr('data-min-amount');
             const modal = $('#buyInvestmentModal');

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('alertifyjs/css/alertify.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('alertifyjs/css/themes/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('splidejs/css/splide-default.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adm.css') }}">
@@ -60,6 +61,7 @@
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('js/QRCode/qrcode.min.js') }}"></script>
 <script src="{{ asset('alertifyjs/alertify.min.js') }}"></script>
+<script src="{{ asset('splidejs/js/splide.min.js') }}"></script>
 <script src="{{ asset('js/request.js') }}"></script>
 <script src="{{ asset('js/global.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
