@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\UserException;
 use App\Http\Services\AdminService;
 use App\Models\BannerModel;
+use App\Models\BonusLogs;
 use App\Models\LinkDaily;
 use App\Models\Settings;
 use App\Models\SystemSetting;
@@ -21,7 +22,12 @@ class AdminController extends Controller
     public function home()
     {
         session()->flash('menu-active', 'dashboard');
-        return view('admin.home');
+        $totalBonus = BonusLogs::countMoneyBonus();
+        $totalWithdraw = Withdraw::countMoneyWithdraw(true);
+        return view('admin.home', compact(
+            'totalWithdraw',
+            'totalBonus'
+        ));
     }
 
     public function listMember()
@@ -40,6 +46,9 @@ class AdminController extends Controller
      */
     public function money($type = 'deposit')
     {
+        if($type == 'deposit') {
+            return redirect()->route('admin.money.with-type', ['type' => 'withdraw']);
+        }
         session()->flash('menu-active', 'money');
         $withdrawRequest = Withdraw::getWithdrawWorking(10, true);
         return view('admin.money', compact(

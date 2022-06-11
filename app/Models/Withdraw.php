@@ -62,7 +62,8 @@ class Withdraw extends Model
     /**
      * @throws UserException
      */
-    public static function getWithdrawWorking($paginate = false, $with_param_search = false) {
+    public static function getWithdrawWorking($paginate = false, $with_param_search = false)
+    {
         $withdraw = self::whereIn('status', [0, 1]);
         if ($with_param_search === true) {
             if (!empty(request()->start_date)) {
@@ -73,12 +74,20 @@ class Withdraw extends Model
             }
             if (!empty(request()->username)) {
                 $user = User::getUserByUsername(request()->username, true);
-                if($user != null) {
+                if ($user != null) {
                     $withdraw->whereUserId($user->id);
                 }
             }
         }
         $withdraw->orderBy('created_at', 'DESC');
         return $paginate === false ? $withdraw->get() : $withdraw->paginate($paginate)->appends(request()->query());
+    }
+
+    public static function countMoneyWithdraw($all = false): int
+    {
+        if ($all) {
+            return self::all()->sum('amount');
+        }
+        return self::whereStatus(2)->get()->sum('amount');
     }
 }

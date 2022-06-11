@@ -38,7 +38,7 @@ class UserRegisterRequest extends FormRequest
             "password-confirm"  => "required|string|max:50|min:4|same:password",
             "fullname"          => "required",
             "email"             => "required|email:rfc|unique:users",
-            "phone"             => "required",
+            "phone"             => "required|regex:/((^(\+84|84|0|0084){1})(3|5|7|8|9))+([0-9]{8})$/i",
             "username"          => "required|unique:users",
         ];
     }

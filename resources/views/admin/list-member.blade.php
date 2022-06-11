@@ -1,10 +1,12 @@
 @extends('layout')
 @section("contents")
     @php($request = request())
-    <div class="content">
-        <div class="alert-total mt-3">
-            <div class="alert alert-info">TOTAL MEMBER: <b>{{ $totalMember }}</b></div>
-        </div>
+    <div class="content mt-3">
+        @if(is_admin())
+            <div class="alert-total">
+                <div class="alert alert-info">TOTAL MEMBER: <b>{{ $totalMember }}</b></div>
+            </div>
+        @endif
         <div class="area-user">
             <form action="" method="GET">
                 <div class="area-user--search d-flex flex-wrap">

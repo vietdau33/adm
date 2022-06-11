@@ -643,24 +643,18 @@ class UserController extends Controller
      */
     public function personalDetailEdit(Request $request): JsonResponse
     {
-        $params = $request->only(['fullname', 'phone', 'city']);
-        if ($params['fullname'] == '' || $params['phone'] == '' || $params['city'] == '') {
+        $params = $request->only(['fullname', 'phone']);
+        if ($params['fullname'] == '' || $params['phone'] == '') {
             return jsonError("Info save missing data!");
         }
-        if (!preg_match("/^[a-zA-Z\d-' ]*$/", $params['fullname'])) {
-            return jsonError("Fullanme: Only letters and white space allowed!");
+        if (!preg_match("/(^(\+84|84|0|0084)(3|5|7|8|9))+(\d{8})$/i", $params['phone'])) {
+            return jsonError("Phone not correct format!");
         }
-        if (!preg_match("/^0\d{9,10}$/", $params['phone'])) {
-            return jsonError("Fullanme: Phone not correct format!");
-        }
-        $user = User::getUserByEmail(Auth::user()->email);
+        $user = user();
         $user->fullname = $params['fullname'];
         $user->phone = $params['phone'];
-        $user->address = [
-            "city" => $params['city']
-        ];
         $user->save();
-        return jsonSuccess("Chane info success!");
+        return jsonSuccess("Change info success!");
     }
 
     public function uploadDocumentsView()

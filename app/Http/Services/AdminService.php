@@ -103,11 +103,13 @@ class AdminService
         if (empty($request->link)) {
             return jsonError('Missing Link Mission Daily!');
         }
+
         $regex = '/^(https?:\/\/)/';
         $link = trim($request->link);
         if (!preg_match($regex, $link)) {
             return jsonError('Link Mission Daily not correct!');
         }
+
         $checkLink = LinkDaily::whereLink($link)->first();
         if($checkLink != null) {
             return jsonError('Link Mission Daily exists!');

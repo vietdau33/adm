@@ -4,9 +4,9 @@
         <div class="money-tab-list">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="ml-2">&nbsp;</li>
-                <li class="nav-item">
-                    <a class="nav-link {{ $type == 'deposit' ? 'active' : '' }}" data-toggle="tab" href="#deposit" role="tab">Deposit</a>
-                </li>
+                {{--<li class="nav-item">--}}
+                {{--    <a class="nav-link {{ $type == 'deposit' ? 'active' : '' }}" data-toggle="tab" href="#deposit" role="tab">Deposit</a>--}}
+                {{--</li>--}}
                 <li class="nav-item">
                     <a class="nav-link {{ $type == 'withdraw' ? 'active' : '' }}" data-toggle="tab" href="#withdraw" role="tab">Withdraw</a>
                 </li>

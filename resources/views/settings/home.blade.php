@@ -8,12 +8,12 @@
                     <span>PROFILE</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('setting.kyc_account') }}" class="{{ $page == 'kyc_account' ? 'active' : 'active-bg' }}">
-                    <img src="{{ asset('image/adm/icon/bonus-icon.png') }}" alt="KYC ACCOUNT">
-                    <span>KYC ACCOUNT</span>
-                </a>
-            </li>
+            {{--<li>--}}
+            {{--    <a href="{{ route('setting.kyc_account') }}" class="{{ $page == 'kyc_account' ? 'active' : 'active-bg' }}">--}}
+            {{--        <img src="{{ asset('image/adm/icon/bonus-icon.png') }}" alt="KYC ACCOUNT">--}}
+            {{--        <span>KYC ACCOUNT</span>--}}
+            {{--    </a>--}}
+            {{--</li>--}}
             <li>
                 <a href="{{ route('setting.2fa') }}" class="{{ $page == '2fa' ? 'active' : 'active-bg' }}">
                     <img src="{{ asset('image/adm/icon/bonus-icon.png') }}" alt="2FA">
