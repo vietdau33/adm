@@ -1,9 +1,11 @@
 @import url("./font.css");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;0,800;1,200;1,400;1,600;1,700;1,800&display=swap');
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 .height-100vh{
@@ -14,11 +16,9 @@
 }
 
 body{
-    font-family: "Oswald-Regular",sans-serif;
     font-size: 18px;
 }
 .wrapper{
-    font-family: "Oswald-Regular",sans-serif;
     display: flex;
     flex-direction: column;
     transition: ease-in-out .3s;
@@ -114,7 +114,6 @@ body{
     outline: none;
     border: 1px solid #fff;
     border-radius: 5px;
-    font-family:"Oswald-Bold",sans-serif ;
     color:#fff;
     text-transform: uppercase;
     padding: 10px 30px;
@@ -155,7 +154,6 @@ body{
 .main-content .title{
     display: inline-block;
     font-size: 18px;
-    font-family:"Oswald-Bold",sans-serif ;
     padding:10px 30px ;
     border-radius: 5px 5px 0 0;
     margin-bottom: 0;
@@ -248,7 +246,6 @@ body{
     color:#fff;
 }
 .total-wallet{
-    font-family:"Oswald-Bold",sans-serif ;
     color:#c05b11;
     font-size: 40px;
 }
@@ -315,7 +312,6 @@ body{
 }
 .table-content-custom .title{
     display: block;
-    font-family: "Oswald-Regular",sans-serif;
     color:#000;
     background-color: #e4ecef;
     padding:10px 15px;
@@ -432,7 +428,6 @@ body{
     font-size: 22px;
     display: block;
     text-align: center;
-    font-family: "Oswald-Regular",sans-serif;
     padding: 5px;
     position: relative;
     z-index: 1;
