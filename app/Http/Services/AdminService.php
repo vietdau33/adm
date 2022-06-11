@@ -104,9 +104,15 @@ class AdminService
             return jsonError('Missing Link Mission Daily!');
         }
         $regex = '/^(https?:\/\/)/';
-        if (!preg_match($regex, $request->link)) {
+        $link = trim($request->link);
+        if (!preg_match($regex, $link)) {
             return jsonError('Link Mission Daily not correct!');
         }
+        $checkLink = LinkDaily::whereLink($link)->first();
+        if($checkLink != null) {
+            return jsonError('Link Mission Daily exists!');
+        }
+
         $aryDataSave = [
             'user_id' => user()->id,
             'link' => $request->link

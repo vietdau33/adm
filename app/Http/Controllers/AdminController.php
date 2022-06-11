@@ -8,6 +8,7 @@ use App\Models\BannerModel;
 use App\Models\LinkDaily;
 use App\Models\Settings;
 use App\Models\SystemSetting;
+use App\Models\Transfer;
 use App\Models\User;
 use App\Models\Withdraw;
 use Illuminate\Http\JsonResponse;
@@ -50,7 +51,8 @@ class AdminController extends Controller
     public function reportTransfer()
     {
         session()->flash('menu-active', 'report-transfer');
-        return view('admin.report-transfer');
+        $histories = Transfer::getHistoriesAll(10, true);
+        return view('admin.report-transfer', compact('histories'));
     }
 
     public function banner()

@@ -21,7 +21,7 @@
                         <td>{{ $count++ }}</td>
                         <td>{{ $link->link }}</td>
                         <td>
-                            <select class="form-control status_link m-auto" style="width: 65px;" data-id="{{ $link->id }}">
+                            <select class="form-control status_link m-auto" style="width: 85px;" data-id="{{ $link->id }}">
                                 <option value="0" {{ $link->active === 0 ? 'selected' : '' }}>Off</option>
                                 <option value="1" {{ $link->active === 1 ? 'selected' : '' }}>On</option>
                             </select>
@@ -78,9 +78,10 @@
             const formData = new FormData($form[0]);
 
             Request.ajax('{{ route('admin.link-mission.create') }}', formData, function (result) {
-                alert(result.message);
                 if (result.success) {
-                    location.reload();
+                    alertify.alertSuccess('Success', result.message, () => location.reload());
+                } else {
+                    alertify.alertDanger("Error", result.message);
                 }
             });
         });
@@ -89,7 +90,7 @@
             const status = $(this).val();
             Request.requestHidden().ajax('{{ route('admin.link-mission.active') }}', { id, status }, function (result) {
                 if (!result.success) {
-                    alert(result.message);
+                    alertify.alertDanger("Error", result.message);
                 }
             });
         });
@@ -99,9 +100,10 @@
             }
             const id = $(this).attr('data-id');
             Request.ajax('{{ route('admin.link-mission.delete') }}', { id }, function (result) {
-                alert(result.message);
                 if (result.success) {
-                    location.reload();
+                    alertify.alertSuccess('Success', result.message, () => location.reload());
+                } else {
+                    alertify.alertDanger("Error", result.message);
                 }
             });
         });
