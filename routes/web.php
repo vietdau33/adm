@@ -51,6 +51,7 @@ Route::middleware('logined')->group(function () {
     Route::get("/crypto-withdraw-history", [UserController::class, "cryptoWithdrawHistory"])->name("user.crypto-withdraw-history.get");
     Route::post("/crypto-withdraw-history/search", [UserController::class, "cryptoWithdrawHistorySearch"])->name("user.crypto-withdraw-history-search.post");
     Route::post("/interest-rate-history/search", [UserController::class, "interestRateHistorySearch"])->name("user.interest-rate-history-search.post");
+    Route::post('/get-link-daily', [HomeController::class, 'getLinkDaily'])->name('get-link-daily');
 
     Route::prefix('money')->name('money.')->group(function () {
         Route::get('/', [MoneyController::class, 'deposit'])->name('home');
@@ -77,6 +78,7 @@ Route::middleware('logined')->group(function () {
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::post('buy-invest', [MoneyController::class, 'buyInvestment'])->name('buy-invest');
+        Route::post('daily-mission', [UserController::class, 'dailyMission'])->name('daily-mission');
 
         Route::prefix('transfer')->name('transfer.')->group(function(){
             Route::post('bonus', [MoneyController::class, 'transferBonusToWallet'])->name('bonus');

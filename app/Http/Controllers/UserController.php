@@ -6,10 +6,13 @@ use App\Exceptions\UserException;
 use App\Http\Helpers\MailHelper;
 use App\Http\Helpers\OtpHelpers;
 use App\Http\Helpers\UserHelper;
+use App\Http\Services\ModelService;
 use App\Models\CryptoDeposit;
 use App\Models\CryptoWithdraw;
+use App\Models\DailyMissionLogs;
 use App\Models\HistoryIb;
 use App\Models\InternalTransferHistory;
+use App\Models\LinkDaily;
 use App\Models\SystemSetting;
 use App\Models\TransferToAdmin;
 use App\Models\User;
@@ -673,5 +676,27 @@ class UserController extends Controller
             return jsonSuccessData(['fullname' => $user->fullname ?? 'Not Found User']);
         }
         return jsonSuccessData(['fullname' => 'Not Found User']);
+    }
+
+    public function dailyMission(Request $request) {
+        $link = $request->link;
+        $linkDaily = session()->pull('link_daily');
+        if(empty($linkDaily)) {
+            return jsonError('You need view daily mission video before!');
+        }
+        if(empty($link) || $link != $linkDaily) {
+            return jsonError('Link Daily Mission not correct!');
+        }
+        $linkModel = LinkDaily::whereLink($link)->whereActive(1)->first();
+        if($linkModel == null) {
+            return jsonError('Link Daily Mission not see in server. Please reload page and try again!');
+        }
+
+        ModelService::insert(DailyMissionLogs::class, [
+            'user_id' => user()->id,
+            'link_id' => $linkModel->id
+        ]);
+
+        return jsonSuccess('Daily Mission success!');
     }
 }

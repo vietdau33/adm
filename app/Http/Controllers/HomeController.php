@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\UserException;
 use App\Models\BannerModel;
+use App\Models\DailyMissionLogs;
 use App\Models\HistorySystemSetting;
 use App\Models\InvestmentBought;
+use App\Models\LinkDaily;
 use App\Models\Settings;
 use App\Models\SystemSetting;
 use Illuminate\Http\JsonResponse;
@@ -17,16 +19,19 @@ use App\Http\Helpers\HistoryHelper;
 
 class HomeController extends Controller
 {
-    public function home(){
+    public function home()
+    {
         session()->flash('menu-active', 'dashboard');
         $banners = BannerModel::getBanners();
         $settingProfit = Settings::getSettings()['profit']->setting;
         $invest_bought_activing = InvestmentBought::getInvestBought(user()->id);
+        $isDailyToday = DailyMissionLogs::isDailyToday();
 
         return view('home', compact(
             'banners',
             'settingProfit',
-            'invest_bought_activing'
+            'invest_bought_activing',
+            'isDailyToday'
         ));
     }
 
@@ -37,9 +42,10 @@ class HomeController extends Controller
 
     /**
      */
-    public function userList(){
+    public function userList()
+    {
         session()->flash('menu-active', 'list-member');
-        if(empty(request()->level)) {
+        if (empty(request()->level)) {
             request()->merge([
                 'level' => 1
             ]);
@@ -61,7 +67,7 @@ class HomeController extends Controller
         $sizePagination = $request->get('size', $defaultSize);
         $user = User::getUserById($parent);
         $superParent = json_decode($user->super_parent, 1);
-        if(Auth::user()->role == 'user' && !in_array(Auth::user()->reflink, $superParent)){
+        if (Auth::user()->role == 'user' && !in_array(Auth::user()->reflink, $superParent)) {
             return jsonError("Permission Denied!");
         }
         $userList = User::where(['upline_by' => $user->reflink, 'is_delete' => 0])->paginate($sizePagination);
@@ -74,7 +80,7 @@ class HomeController extends Controller
         $html = view('pages.user-list.table', compact('userList'))->render();
 
         //$userParentTree
-        $userTree = User::getUserByArrayReflink($superParent)->map(function($_u){
+        $userTree = User::getUserByArrayReflink($superParent)->map(function ($_u) {
             return ['username' => $_u->username, 'email' => $_u->email];
         })->toArray();
 
@@ -88,26 +94,27 @@ class HomeController extends Controller
         ]);
     }
 
-    public function searchUser(Request $request){
+    public function searchUser(Request $request)
+    {
         $defaultSize = SystemSetting::getDefaultSizePagination();
-        $size        = $request->get("size", $defaultSize);
-        $username   = $request->get('username');
-        $fromDate   = $request->get('from_date', '');
-        $toDate     = $request->get('to_date', '');
+        $size = $request->get("size", $defaultSize);
+        $username = $request->get('username');
+        $fromDate = $request->get('from_date', '');
+        $toDate = $request->get('to_date', '');
 
-        if($toDate != '' && $fromDate == ''){
+        if ($toDate != '' && $fromDate == '') {
             $fromDate = $toDate;
         }
 
-        if($fromDate != ''){
+        if ($fromDate != '') {
             $fromDate = __d($fromDate, "Y/m/d") . " 00:00:00";
         }
 
-        if($toDate != ''){
+        if ($toDate != '') {
             $toDate = __d($toDate, "Y/m/d") . " 23:59:59";
         }
 
-        if($username == null && $fromDate == null && $toDate == null){
+        if ($username == null && $fromDate == null && $toDate == null) {
             return response()->json([
                 'success' => false,
                 'message' => "Value search empty!"
@@ -115,10 +122,10 @@ class HomeController extends Controller
         }
 
         $userList = User::where(['is_delete' => 0]);
-        if($username != null){
+        if ($username != null) {
             $userList->where(['username' => $username]);
         }
-        if($fromDate != '' && $toDate != ''){
+        if ($fromDate != '' && $toDate != '') {
             $userList->whereBetween('created_at', [$fromDate, $toDate]);
         }
 
@@ -128,10 +135,10 @@ class HomeController extends Controller
         $html = view('pages.user-list.table', compact('userList'))->render();
         $userTree = [];
 
-        if($userListGet->count() == 1){
+        if ($userListGet->count() == 1) {
             $superParent = json_decode($userListGet->first()->super_parent, 1);
             //$userParentTree
-            $userTree = User::getUserByArrayReflink($superParent)->map(function($_u){
+            $userTree = User::getUserByArrayReflink($superParent)->map(function ($_u) {
                 return $_u->username;
             })->toArray();
         }
@@ -149,20 +156,33 @@ class HomeController extends Controller
     /**
      * @throws UserException
      */
-    public function getInfoUser($ref){
+    public function getInfoUser($ref)
+    {
         $aryKeyResponse = ['fullname', 'birthday', 'phone', 'email'];
         /**
          * $user User
          */
         $user = User::getUserByReflink($ref, true, $aryKeyResponse);
-        if($user == null){
+        if ($user == null) {
             return jsonError("User not found!");
         }
         $user->birthday = date("d/m/Y", strtotime($user->birthday));
         return jsonSuccessData($user->toArray());
     }
 
-    public function homePage(){
+    public function homePage()
+    {
         return view("home-page.base");
+    }
+
+    public function getLinkDaily(): JsonResponse
+    {
+        $link = LinkDaily::getLinkDailyRandom()->link ?? null;
+        if (!empty($link)) {
+            session()->flash('link_daily', $link);
+        }
+        return jsonSuccessData([
+            'link' => $link ?? ''
+        ]);
     }
 }

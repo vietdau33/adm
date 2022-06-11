@@ -34,29 +34,32 @@ class UserRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "password"          => "required|string|max:50|min:4",
-            "password-confirm"  => "required|string|max:50|min:4|same:password",
-            "fullname"          => "required",
-            "email"             => "required|email:rfc|unique:users",
-            "phone"             => "required|regex:/((^(\+84|84|0|0084){1})(3|5|7|8|9))+([0-9]{8})$/i",
-            "username"          => "required|unique:users",
+            "password" => "required|string|max:50|min:4",
+            "password-confirm" => "required|string|max:50|min:4|same:password",
+            "fullname" => "required",
+            "email" => "required|email:rfc|unique:users",
+            "phone" => [
+                'required',
+                'regex:/(^(\+84|84|0|0084)(3|5|7|8|9))+(\d{8})$/i'
+            ],
+            "username" => "required|unique:users",
         ];
     }
 
     public function messages(): array
     {
         return [
-            'password.required'     => Lang::get("auth.password_required"),
-            'password.min'          => Lang::get("auth.password_min"),
-            'password.max'          => Lang::get("auth.password_max"),
+            'password.required' => Lang::get("auth.password_required"),
+            'password.min' => Lang::get("auth.password_min"),
+            'password.max' => Lang::get("auth.password_max"),
             "password-confirm.same" => Lang::get("auth.password_not_same"),
-            'fullname.required'     => Lang::get("auth.fullname_required"),
-            'email.required'        => Lang::get("auth.email_required"),
-            'email.email'           => Lang::get("auth.email_fail_type"),
-            'email.unique'          => 'Email has exists!',
-            'phone.required'        => Lang::get("auth.phone_required"),
-            'username.required'     => 'Username is required!',
-            'username.unique'       => 'Username has exists!',
+            'fullname.required' => Lang::get("auth.fullname_required"),
+            'email.required' => Lang::get("auth.email_required"),
+            'email.email' => Lang::get("auth.email_fail_type"),
+            'email.unique' => 'Email has exists!',
+            'phone.required' => Lang::get("auth.phone_required"),
+            'username.required' => 'Username is required!',
+            'username.unique' => 'Username has exists!',
         ];
     }
 }

@@ -14,11 +14,32 @@
                     </ul>
                 </div>
             </section>
-        @else
-            <div class="banner banner-top mb-3">
+        @elseif(count($banners['top']) == 1)
+            <div class="banner banner-top mb-3 position-relative">
                 @php($bannerTop = $banners['top']->first())
                 <img src="{{ asset('storage/banner/' . $bannerTop->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
                 <img src="{{ asset('storage/banner/' . $bannerTop->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+                @if(!$isDailyToday)
+                    <div class="overlay-daily-mission">
+                        <h3>Daily Mission</h3>
+                        <button class="btn btn-primary btn-gradient text-uppercase btn-view-daily">View</button>
+                        <div class="close-icon">
+                            <img src="{{ asset('image/adm/icon/close.svg') }}" class="w-100" alt="Close">
+                        </div>
+                    </div>
+                @endif
+            </div>
+        @elseif(!$isDailyToday)
+            <div class="banner banner-top mb-3 position-relative">
+                <img src="{{ asset('image/adm/ai_bg.png') }}" alt="Bg 1" class="w-100 d-lg-none">
+                <img src="{{ asset('image/adm/ai_bg_pc.png') }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+                <div class="overlay-daily-mission">
+                    <h3>Daily Mission</h3>
+                    <button class="btn btn-primary btn-gradient text-uppercase btn-view-daily">View</button>
+                    <div class="close-icon">
+                        <img src="{{ asset('image/adm/icon/close.svg') }}" class="w-100" alt="Close">
+                    </div>
+                </div>
             </div>
         @endif
     @endif
@@ -182,6 +203,33 @@
             modal.find('.modal-header').removeClassStartWith('btn-buy-investment--').addClass('btn-buy-investment--' + type);
             modal.find('.btn-submit-buy-invest').removeClassStartWith('btn-buy-investment--').addClass('btn-buy-investment--' + type);
             modal.modal();
+        });
+
+        $('.overlay-daily-mission .close-icon').on('click', function() {
+            const parent = $(this).parent();
+            parent.fadeOut(300, function() {
+                parent.remove();
+            });
+        });
+
+        $('.btn-view-daily').on('click', function() {
+            const callbackDaily = function(link) {
+                Request.ajax('{{ route('user.daily-mission') }}', { link }, function(result) {
+                    if(result.success) {
+                        alertify.alertSuccess('Success', result.message, () => location.reload());
+                    }else{
+                        alertify.alertDanger("Error", result.message);
+                    }
+                });
+            }
+            Request.ajax('{{ route('get-link-daily') }}', function(result) {
+                const link = result.datas.link;
+                if(link == '') {
+                    return alertify.alertDanger('Error', 'Link daily not exists! Please contact to ADMIN!');
+                }
+                window.open(link);
+                callbackDaily(link);
+            });
         });
     </script>
 @endsection
