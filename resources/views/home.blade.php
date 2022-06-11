@@ -46,43 +46,45 @@
             @endforeach
         </div>
     </div>
-    <div class="area-invest-activing form-radius mt-3 mb-3 pt-2">
-        <h2>List Package Invest Activing</h2>
-        <div class="table-list-invest">
-            <table class="table text-center mb-0">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Invest Package</th>
-                    <th scope="col">Amount Buy</th>
-                    <th scope="col">Profit</th>
-                    <th scope="col">Days Left</th>
-                </tr>
-                </thead>
-                <tbody>
-                @php($stt = 1)
-                @foreach($invest_bought_activing as $package)
-                    @php($diffDay = $package->days - diffDaysWithNow($package->created_at))
+    <div class="container">
+        <div class="area-invest-activing form-radius mt-3 mb-3 pt-2">
+            <h3>List Package Invest Activing</h3>
+            <div class="table-list-invest">
+                <table class="table text-center mb-0">
+                    <thead class="thead-light">
                     <tr>
-                        <th scope="row">{{ $stt++ }}</th>
-                        <td>{{ ucfirst($package->type) }}</td>
-                        <td>{{ $package->money_buy }}</td>
-                        <td>{{ $package->profit }} %</td>
-                        @if($package->days == 0)
-                            <td>Forever</td>
-                        @else
-                            <td>{{ $diffDay }} {{ $diffDay > 1 ? 'days' : 'day' }}</td>
-                        @endif
+                        <th scope="col">No.</th>
+                        <th scope="col">Invest Package</th>
+                        <th scope="col">Amount Buy</th>
+                        <th scope="col">Profit</th>
+                        <th scope="col">Days Left</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php($stt = 1)
+                    @foreach($invest_bought_activing as $package)
+                        @php($diffDay = $package->days - diffDaysWithNow($package->created_at))
+                        <tr>
+                            <th scope="row">{{ $stt++ }}</th>
+                            <td>{{ ucfirst($package->type) }}</td>
+                            <td>{{ $package->money_buy }}</td>
+                            <td>{{ $package->profit }} %</td>
+                            @if($package->days == 0)
+                                <td>Forever</td>
+                            @else
+                                <td>{{ $diffDay }} {{ $diffDay > 1 ? 'days' : 'day' }}</td>
+                            @endif
 
-                    </tr>
-                @endforeach
-                @if($invest_bought_activing->count() <= 0)
-                    <tr>
-                        <th colspan="5">No see any package activing!</th>
-                    </tr>
-                @endif
-                </tbody>
-            </table>
+                        </tr>
+                    @endforeach
+                    @if($invest_bought_activing->count() <= 0)
+                        <tr>
+                            <th colspan="5">No see any package activing!</th>
+                        </tr>
+                    @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     @if(!empty($banners['center']))

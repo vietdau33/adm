@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 style="color: #fff">Buy Investment: <span class="name-invest"></span></h3>
+                <h3 style="color: #fff" class="mb-0">Buy Investment: <span class="name-invest"></span></h3>
             </div>
             <div class="modal-body">
                 <div class="area-content">

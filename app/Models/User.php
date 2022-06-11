@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Seshac\Otp\Otp;
 
 class User extends Authenticatable
@@ -232,7 +233,12 @@ class User extends Authenticatable
         return $numDayBlock - $difference;
     }
 
-    public function getMoneyAttribute() {
+    public function getMoneyAttribute() //dont delete
+    {
         return $this->belongsTo(MoneyModel::class, 'id', 'user_id')->first();
+    }
+
+    public static function countMoneyInvest($user_id) {
+        return InvestmentBought::whereUserId($user_id)->get()->sum('money_buy');
     }
 }

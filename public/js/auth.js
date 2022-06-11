@@ -32,13 +32,14 @@ const Auth = {
                 callback(result);
             }
             if (result.success == false) {
-                return alert(result.message);
+                form.find('p.error').remove();
+                return alertify.alertDanger('Error', result.message);
             }
             if (typeof result.redirect == "undefined") {
                 result.redirect = "";
             }
             if (typeof result.message != 'undefined' && urlReq.indexOf("/auth/login") == -1) {
-                alert(result.message);
+                alertify.alertSuccess(result.message);
             }
             switch (result.redirect) {
                 case "login" :
@@ -53,7 +54,7 @@ const Auth = {
         Request.ajax(urlReq, formData, succFunc).fail(function(error){
             $(btn).prop('disabled', false);
             if(typeof error != "object"){
-                return alert("Unable to register at this time. Please reload the page and try again. Or report to the admin!");
+                return alertify.alertDanger("Unable to register at this time. Please reload the page and try again. Or report to the admin!");
             }
             const errors = error.responseJSON.errors;
             const $p = $('<p />').addClass('error mb-0 pl-3');

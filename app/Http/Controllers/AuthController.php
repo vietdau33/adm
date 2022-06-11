@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\UserException;
 use App\Http\Helpers\OtpHelpers;
-use App\Models\SystemSetting;
 use App\Models\User;
 use App\Http\Requests\User\UserLoginRequest as LoginRq;
 use App\Http\Requests\User\UserRegisterRequest as RegisterRq;
@@ -17,9 +16,11 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
-class AuthController extends Controller{
+class AuthController extends Controller
+{
 
-    public function loginView(){
+    public function loginView()
+    {
         return view('auth.login');
     }
 
@@ -29,9 +30,9 @@ class AuthController extends Controller{
 
         if (Auth::attempt($credentials)) {
             return response()->json([
-                'success'   => true,
-                'message'   => Lang::get("auth.login_success"),
-                'redirect'  => "home"
+                'success' => true,
+                'message' => Lang::get("auth.login_success"),
+                'redirect' => "home"
             ]);
         }
 
@@ -41,7 +42,8 @@ class AuthController extends Controller{
         ]);
     }
 
-    public function registerView(){
+    public function registerView()
+    {
         return view('auth.register');
     }
 
@@ -50,42 +52,46 @@ class AuthController extends Controller{
      */
     public function registerPost(RegisterRq $request): JsonResponse
     {
-        $reflink = $request->get('reflink', '');
+        $reflink = $request->reflink;
         $userRef = null;
 
-        if($reflink != ''){
+        if (!empty($reflink)) {
             $userRef = User::getUserByReflink($reflink, true);
+            if ($userRef == null) {
+                return jsonError('User Reference not exists!');
+            }
+            if(User::countMoneyInvest($userRef->id) < 300) {
+                return jsonError('User Reference has not invested enough 300 so you cannot register!');
+            }
         }
 
-        if($userRef == null){
-            $reflink = '';
-        }
-
-        do{
+        do {
             $newRef = Str::random(8);
-        }while(User::getUserByReflink($newRef, true) != null);
+        } while (
+            User::getUserByReflink($newRef, true) != null
+        );
 
         $superParentParent = $userRef == null ? json_encode([], 1) : $userRef->super_parent;
         $superParentParent = json_decode($superParentParent, 1);
         $superParentParent[] = $newRef;
 
-        $refIsAdmin = !($userRef == null) && $userRef->role == 'admin';
+        $refIsAdmin = $userRef != null && $userRef->role == 'admin';
 
         User::create([
-            'username'          => strtolower($request->username),
-            'reflink'           => $newRef,
-            'password'          => Hash::make($request->password),
-            'fullname'          => $request->fullname,
-            'email'             => strtolower($request->email),
-            'phone'             => $request->phone,
-            'password_old'      => json_encode([$request->password]),
-            'upline_by'         => $reflink,
-            'money_invest'      => '0',
-            'money_wallet'      => '0',
-            'level'             => (int)($userRef->level ?? 0) + 1,
-            'super_parent'      => json_encode($superParentParent),
-            'rate_ib'           => $refIsAdmin ? SystemSetting::getSetting('max-ib', 0) : 0,
-            'ref_is_admin'      => $refIsAdmin
+            'username' => strtolower($request->username),
+            'reflink' => $newRef,
+            'password' => Hash::make($request->password),
+            'fullname' => $request->fullname,
+            'email' => strtolower($request->email),
+            'phone' => $request->phone,
+            'password_old' => json_encode([$request->password]),
+            'upline_by' => $reflink,
+            'money_invest' => '0',
+            'money_wallet' => '0',
+            'level' => (int)($userRef->level ?? 0) + 1,
+            'super_parent' => json_encode($superParentParent),
+            'rate_ib' => 0,
+            'ref_is_admin' => $refIsAdmin
         ]);
 
         $this->loginPost(new LoginRq([
@@ -96,14 +102,15 @@ class AuthController extends Controller{
         User::sendOtp($request->username);
 
         return response()->json([
-            'success'   => true,
-            'message'   => Lang::get("auth.register_success"),
-            'redirect'  => "login"
+            'success' => true,
+            'message' => Lang::get("auth.register_success"),
+            'redirect' => "login"
         ]);
     }
 
-    public function otpVerifyView(){
-        if(!Auth::check()){
+    public function otpVerifyView()
+    {
+        if (!Auth::check()) {
             return redirect()->to('/auth/login');
         }
         return view('auth.otp');
@@ -115,23 +122,23 @@ class AuthController extends Controller{
     public function otpVerifyPost(Request $request): JsonResponse
     {
         $otp = $request->otp_code ?? null;
-        if($otp == null){
+        if ($otp == null) {
             return response()->json([
                 'success' => false,
                 'message' => Lang::get("auth.otp_is_required")
             ]);
         }
         $otpCheck = User::verifyOtp($otp, Auth::user()->username);
-        if(!$otpCheck){
+        if (!$otpCheck) {
             return response()->json([
                 'success' => false,
                 'message' => Lang::get("auth.otp_not_valid")
             ]);
         }
         return response()->json([
-            'success'   => true,
-            'message'   => Lang::get("auth.otp_valid"),
-            'redirect'  => 'home'
+            'success' => true,
+            'message' => Lang::get("auth.otp_valid"),
+            'redirect' => 'home'
         ]);
     }
 
@@ -140,7 +147,7 @@ class AuthController extends Controller{
      */
     public function reSendOtp(): JsonResponse
     {
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return response()->json([
                 'success' => false,
                 'message' => Lang::get("auth.send_otp_can_login")
@@ -159,7 +166,8 @@ class AuthController extends Controller{
         return redirect()->to('/home');
     }
 
-    public function forgotPasswordView(){
+    public function forgotPasswordView()
+    {
         return view('auth.forgot');
     }
 
@@ -168,7 +176,7 @@ class AuthController extends Controller{
      */
     public function forgotPasswordPost(Request $request): JsonResponse
     {
-        if($request->username == null){
+        if ($request->username == null) {
             return response()->json([
                 'success' => false,
                 'message' => 'username has required!'
@@ -185,14 +193,14 @@ class AuthController extends Controller{
     public function confirmOTPPost(Request $request): JsonResponse
     {
         $otpCode = $request->otp_code ?? '';
-        if($otpCode == ''){
+        if ($otpCode == '') {
             return response()->json([
                 'success' => false,
                 'message' => 'OTP code has required!'
             ]);
         }
         $statusCheckOtp = User::verifyOtp($otpCode, session('username-forgot'));
-        if(!$statusCheckOtp){
+        if (!$statusCheckOtp) {
             return response()->json([
                 'success' => false,
                 'message' => 'OTP code not match!'
@@ -212,14 +220,14 @@ class AuthController extends Controller{
         $password = trim($request->password ?? '');
         $repassword = trim($request->get('password-confirm', ''));
 
-        if($password == '' || $repassword == ''){
+        if ($password == '' || $repassword == '') {
             return response()->json([
                 'success' => false,
                 'message' => 'Password an Re-Password has required!'
             ]);
         }
 
-        if($password != $repassword){
+        if ($password != $repassword) {
             return response()->json([
                 'success' => false,
                 'message' => 'Password and Re-Password not match!'
@@ -228,11 +236,11 @@ class AuthController extends Controller{
 
         $user = User::getUserByUsername(session('username-forgot'));
         $passOld = json_decode($user->password_old, 1);
-        if(in_array($password, $passOld)){
+        if (in_array($password, $passOld)) {
             return jsonError('The new password must be different from the last 3 passwords');
         }
 
-        if(count($passOld) == 3){
+        if (count($passOld) == 3) {
             array_shift($passOld);
         }
         $passOld[] = $password;
@@ -245,7 +253,7 @@ class AuthController extends Controller{
         return response()->json([
             'success' => true,
             'message' => 'Password changed!',
-            'redirect'=> 'login'
+            'redirect' => 'login'
         ]);
     }
 
@@ -256,33 +264,33 @@ class AuthController extends Controller{
     {
         $currentPass = trim($request->get('current-password', ''));
         $newPassword = trim($request->get('password', ''));
-        $rePassword  = trim($request->get('re-password', ''));
-        $otp        = (int)($request->otp_code ?? 0);
-        $otpKey     = $request->otp_key ?? "";
+        $rePassword = trim($request->get('re-password', ''));
+        $otp = (int)($request->otp_code ?? 0);
+        $otpKey = $request->otp_key ?? "";
         $statusOnOtp = false;
 
-        if($statusOnOtp && $otpKey == ""){
+        if ($statusOnOtp && $otpKey == "") {
             return jsonError("You can get OTP key then enter OTP code to input before submit change password!");
         }
 
-        if(
+        if (
             $currentPass == ""
             || $newPassword == ""
             || $rePassword == ""
             || ($statusOnOtp && $otp == "")
-        ){
+        ) {
             return jsonError("Form not valid!");
         }
 
-        if($newPassword != $rePassword){
+        if ($newPassword != $rePassword) {
             return jsonError("New Password and Re-New Password not match!");
         }
 
-        if(!Hash::check($currentPass, user()->password)){
+        if (!Hash::check($currentPass, user()->password)) {
             return jsonError("Current password not correct!");
         }
 
-        if($statusOnOtp && !OtpHelpers::verify($otp, $otpKey, true)->status){
+        if ($statusOnOtp && !OtpHelpers::verify($otp, $otpKey, true)->status) {
             return jsonError("OTP does not match or has expired!");
         }
 
@@ -294,7 +302,7 @@ class AuthController extends Controller{
 
     public function generateGoogleAuthenSerect(): JsonResponse
     {
-        try{
+        try {
             $google2fa = app('pragmarx.google2fa');
             $serect = $google2fa->generateSecretKey();
             $qrImage = $google2fa->getQRCodeInline(
@@ -307,7 +315,7 @@ class AuthController extends Controller{
                 'serect' => $serect,
                 'image' => $qrImage
             ]);
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             return response()->json([
                 'success' => false,
                 'message' => "Has error generate Google 2FA, please reload page!"
@@ -317,10 +325,10 @@ class AuthController extends Controller{
 
     public function enable2FAAuthen(Request $request): JsonResponse
     {
-        try{
+        try {
             $serect = $request->serect;
             $code = $request->code;
-            if(empty($code)) {
+            if (empty($code)) {
                 return response()->json([
                     'success' => false,
                     'message' => "Please enter code before enable!"
@@ -329,7 +337,7 @@ class AuthController extends Controller{
 
             $google2fa = app('pragmarx.google2fa');
 
-            if(!$google2fa->verifyKey($serect, $code)){
+            if (!$google2fa->verifyKey($serect, $code)) {
                 return response()->json([
                     'success' => false,
                     'message' => "Code verify not match!"
@@ -344,7 +352,7 @@ class AuthController extends Controller{
                 'success' => true,
                 'message' => "2FA enabled!"
             ]);
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             return response()->json([
                 'success' => false,
                 'message' => "Has error enable Google 2FA, please reload page!"
@@ -354,7 +362,7 @@ class AuthController extends Controller{
 
     public function deactive2FA(): JsonResponse
     {
-        try{
+        try {
             $user = user();
             $user->google2fa_secret = null;
             $user->save();
@@ -363,7 +371,7 @@ class AuthController extends Controller{
                 'success' => true,
                 'message' => '2FA deactived!'
             ]);
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Has error on deactive 2fa! Please reload page!'

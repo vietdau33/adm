@@ -30,7 +30,7 @@ class UserRegisterRequest extends FormRequest
             "password"          => "required|string|max:50|min:4",
             "password-confirm"  => "required|string|max:50|min:4|same:password",
             "fullname"          => "required",
-            "email"             => "required|email:rfc,dns|unique:users",
+            "email"             => "required|email:rfc|unique:users",
             "phone"             => "required",
             "username"          => "required|unique:users",
         ];
