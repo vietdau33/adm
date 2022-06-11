@@ -9,6 +9,7 @@ use App\Models\CryptoWithdraw;
 use App\Models\LinkDaily;
 use App\Models\Settings;
 use App\Models\SystemSetting;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\TransferToAdmin;
@@ -25,7 +26,12 @@ class AdminController extends Controller
     public function listMember()
     {
         session()->flash('menu-active', 'list-member');
-        return view('admin.list-member');
+        $totalMember = User::all()->count();
+        $users = User::getUserWithParamCondition(10);
+        return view('admin.list-member', compact(
+            'totalMember',
+            'users'
+        ));
     }
 
     public function money()

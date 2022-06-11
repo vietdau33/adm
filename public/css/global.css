@@ -96,3 +96,15 @@ input.number-only::-webkit-inner-spin-button {
 input.number-only {
     -moz-appearance: textfield;
 }
+
+.w-auto {
+    width: auto !important;
+}
+
+.datepicker td, .datepicker th {
+    padding: 4px 8px;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}

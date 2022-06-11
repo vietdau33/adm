@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\MoneyService;
-use App\Models\InvestmentBought;
-use App\Models\MoneyModel;
-use App\Models\Settings;
-use Exception;
+use App\Models\Withdraw;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class MoneyController extends Controller
 {
@@ -21,7 +17,8 @@ class MoneyController extends Controller
 
     public function deposit()
     {
-        return $this->home('deposit');
+        //return $this->home('deposit');
+        return $this->withdraw();
     }
 
     public function withdraw()
@@ -34,41 +31,24 @@ class MoneyController extends Controller
         return $this->home('transfer');
     }
 
-    private function transferToWallet(Request $request, $type): JsonResponse
+    public function withdrawPost(Request $request): JsonResponse
     {
-        if (empty($request->amount)) {
-            return jsonError('Amount money transfer error!');
-        }
+        return MoneyService::createWithdraw($request);
+    }
 
-        $amount = (double)$request->amount;
-        if ($amount < 100) {
-            return jsonError('Amount money minimum transfer is: 100');
-        }
-
-        try {
-            $userMoney = user()->money;
-            if ($amount > $userMoney->{$type}) {
-                return jsonError("Amount money is bigger than money $type you have!");
-            }
-
-            $userMoney->{$type} -= $amount;
-            $userMoney->wallet += $amount;
-            $userMoney->save();
-
-            return jsonSuccess('Transfer ' . ucfirst($type) . ' to Wallet success!');
-        } catch (Exception $exception) {
-            return jsonError("Cannot transfer $type to wallet. Please reload page and try again!");
-        }
+    public function transferPost(Request $request): JsonResponse
+    {
+        return MoneyService::createTransfer($request);
     }
 
     public function transferBonusToWallet(Request $request): JsonResponse
     {
-        return $this->transferToWallet($request, 'bonus');
+        return MoneyService::transferToWallet($request, 'bonus');
     }
 
     public function transferProfitToWallet(Request $request): JsonResponse
     {
-        return $this->transferToWallet($request, 'profit');
+        return MoneyService::transferToWallet($request, 'profit');
     }
 
     public function buyInvestment(Request $request): JsonResponse

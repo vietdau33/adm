@@ -38,16 +38,18 @@ class HomeController extends Controller
     /**
      */
     public function userList(){
-        $defaultSizePage = SystemSetting::getDefaultSizePagination();
-        if(Auth::user()->role == 'admin'){
-            $userList = User::where(['level' => 0, 'role' => 'admin', 'is_delete' => 0]);
-        }else{
-            $userList = User::where(['username' => Auth::user()->username, 'is_delete' => 0]);
-        }
-        $userList = $userList->paginate($defaultSizePage);
-        $userTree = [['username' => '', 'email' => '']];
         session()->flash('menu-active', 'list-member');
-        return view('pages.user-list', compact('userList', 'userTree'));
+        if(empty(request()->level)) {
+            request()->merge([
+                'level' => 1
+            ]);
+        }
+        $totalMember = User::all()->count();
+        $users = User::getUserWithParamCondition(10);
+        return view('pages.user-list', compact(
+            'totalMember',
+            'users'
+        ));
     }
 
     /**

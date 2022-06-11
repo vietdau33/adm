@@ -20,6 +20,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
     $('.number-only').each(function () {
         numberOnly(this);
     });
+
+    if(typeof $.fn.datepicker != 'undefined') {
+        $(".bs-datepicker").datepicker({
+            format: 'yyyy-mm-dd',
+            todayHighlight: true,
+            autoclose: true,
+            clearBtn: true
+        });
+    }
+
+    $('[type="reset"]').on('click', function() {
+        setTimeout(() => {
+            const $form = $(this).closest('form');
+            $form.find('input').each(function() {
+                this.value = null;
+            });
+            $form.trigger('submit');
+        }, 100)
+    })
 });
 
 $.prototype.removeClassPattern = function (pattern) {
@@ -46,4 +65,3 @@ if(typeof alertify != 'undefined') {
         $('.alertify').removeClassStartWith('alertify--').addClass('alertify--danger');
     }
 }
-

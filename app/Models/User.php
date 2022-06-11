@@ -100,6 +100,20 @@ class User extends Authenticatable
         return true;
     }
 
+    public function userUpline(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'upline_by', 'reflink');
+    }
+
+    public function getInvestmentAttribute()
+    {
+        $invest = InvestmentBought::whereUserId($this->id)->get()->groupBy('user_id');
+        if ($invest->count() <= 0) {
+            return null;
+        }
+        return $invest[$this->id];
+    }
+
     /**
      * @throws UserException
      */
@@ -255,5 +269,45 @@ class User extends Authenticatable
             return 0;
         }
         return self::countNumberF1ByRef($user->reflink);
+    }
+
+    public static function getUserWithCondition(array $conditions, $paginate = false)
+    {
+        $users = User::whereIsDelete(0);
+        if (isset($conditions['username'])) {
+            $users->whereUsername($conditions['username']);
+        }
+        if (isset($conditions['start_date'])) {
+            $users->where('created_at', '>=', $conditions['start_date'] . ' 00:00:00');
+        }
+        if (isset($conditions['end_date'])) {
+            $users->where('created_at', '<=', $conditions['end_date'] . ' 23:59:59');
+        }
+        if (isset($conditions['level'])) {
+            $users->whereLevel($conditions['level']);
+        }
+        if(is_user()) {
+            $users->whereJsonContains('super_parent', user()->reflink);
+        }
+        return $paginate === false ? $users->get() : $users->paginate($paginate)->appends(request()->query());
+    }
+
+    public static function getUserWithParamCondition($paginate = false)
+    {
+        $request = request();
+        $condition = [];
+        if (!empty($request->username)) {
+            $condition['username'] = $request->username;
+        }
+        if (!empty($request->start_date)) {
+            $condition['start_date'] = $request->start_date;
+        }
+        if (!empty($request->end_date)) {
+            $condition['end_date'] = $request->end_date;
+        }
+        if (!empty($request->level)) {
+            $condition['level'] = user()->level + (int)$request->level;
+        }
+        return self::getUserWithCondition($condition, $paginate);
     }
 }

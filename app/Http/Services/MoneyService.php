@@ -2,11 +2,12 @@
 
 namespace App\Http\Services;
 
-use App\Exceptions\UserException;
 use App\Models\BonusLogs;
 use App\Models\InvestmentBought;
 use App\Models\Settings;
+use App\Models\Transfer;
 use App\Models\User;
+use App\Models\Withdraw;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -118,5 +119,136 @@ class MoneyService
             return;
         }
         self::__callInterestBonus__($parentUser, $user, 1, $money);
+    }
+
+    public static function transferToWallet(Request $request, $type): JsonResponse
+    {
+        if (empty($request->amount)) {
+            return jsonError('Amount money transfer error!');
+        }
+
+        $amount = (double)$request->amount;
+        if ($amount < 100) {
+            return jsonError('Amount money minimum transfer is: 100');
+        }
+
+        DB::beginTransaction();
+        try {
+            $userMoney = user()->money;
+            if ($amount > $userMoney->{$type}) {
+                return jsonError("Amount money is bigger than money $type you have!");
+            }
+
+            $userMoney->{$type} -= $amount;
+            $userMoney->wallet += $amount;
+            $userMoney->save();
+
+            DB::commit();
+            return jsonSuccess('Transfer ' . ucfirst($type) . ' to Wallet success!');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return jsonError("Cannot transfer $type to wallet. Please reload page and try again!");
+        }
+    }
+
+    public static function createWithdraw(Request $request): JsonResponse
+    {
+        if (empty($request->amount)) {
+            return jsonError('Amount money withdraw error!');
+        }
+        $amount = (double)$request->amount;
+        if ($amount < 100) {
+            return jsonError('The withdraw amount minimum is: 100!');
+        }
+        if ($amount > user()->money->wallet) {
+            return jsonError('The withdraw amount is larger than the available amount!');
+        }
+        if (empty($request->address)) {
+            return jsonError('Address withdraw error!');
+        }
+        if (empty($request->get('2fa_code'))) {
+            return jsonError('2FA code error!');
+        }
+        if (
+            !app('pragmarx.google2fa')->verifyKey(
+                user()->google2fa_secret,
+                $request->get('2fa_code')
+            )
+        ) {
+            return jsonError('Code 2FA verify not match!');
+        }
+        DB::beginTransaction();
+        try {
+            $userMoney = user()->money;
+            $userMoney->wallet -= $amount;
+            $userMoney->save();
+
+            ModelService::insert(Withdraw::class, [
+                'user_id' => user()->id,
+                'amount' => $amount,
+                'address' => $request->address
+            ]);
+
+            DB::commit();
+            return jsonSuccess('Create request withdraw success!');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return jsonError('Cannot create request withdraw! Please reload page and try again!');
+        }
+    }
+
+    public static function createTransfer(Request $request): JsonResponse
+    {
+        if (empty($request->amount)) {
+            return jsonError('Amount money transfer error!');
+        }
+        $amount = (double)$request->amount;
+        if ($amount < 10) {
+            return jsonError('The withdraw transfer minimum is: 10!');
+        }
+        if ($amount > user()->money->wallet) {
+            return jsonError('The transfer amount is larger than the available amount!');
+        }
+        if (empty($request->username_receive)) {
+            return jsonError('User Receive not found!');
+        }
+        if (empty($request->get('2fa_code'))) {
+            return jsonError('2FA code error!');
+        }
+        if (
+            !app('pragmarx.google2fa')->verifyKey(
+                user()->google2fa_secret,
+                $request->get('2fa_code')
+            )
+        ) {
+            return jsonError('Code 2FA verify not match!');
+        }
+        $userReceive = User::whereUsername($request->username_receive)->first();
+        if($userReceive == null) {
+            return jsonError('User Receive not exists!');
+        }
+
+        DB::beginTransaction();
+        try {
+            $userMoney = user()->money;
+            $userMoney->wallet -= $amount;
+            $userMoney->save();
+
+            $userReceiveMoney = $userReceive->money;
+            $userReceiveMoney->wallet += $amount;
+            $userReceiveMoney->save();
+
+            ModelService::insert(Transfer::class, [
+                'user_id' => user()->id,
+                'amount' => $amount,
+                'username_receive' => $request->username_receive
+            ]);
+
+            DB::commit();
+            return jsonSuccess('Transfer success!');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return jsonError('Cannot create request transfer! Please reload page and try again!');
+        }
     }
 }

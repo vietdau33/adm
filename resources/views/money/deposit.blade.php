@@ -4,7 +4,7 @@
         <div class="small-box">
             <h2 class="text-center">Choose coin Deposit</h2>
             <p class="mb-0">Minimum deposit 20 USDT</p>
-            <p class="mb-0">Only send USDT BEP20,BNB BEP20 to this address.</p>
+            <p class="mb-0">Only send USDT BEP20, BNB BEP20 to this address.</p>
             <p class="mb-0">Sending any other asset to this address may result in the loss of your deposit!</p>
             <div class="qr-code-box">
                 <div
