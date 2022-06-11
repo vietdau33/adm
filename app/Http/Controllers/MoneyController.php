@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\MoneyService;
 use App\Models\InvestmentBought;
 use App\Models\MoneyModel;
 use App\Models\Settings;
@@ -72,48 +73,6 @@ class MoneyController extends Controller
 
     public function buyInvestment(Request $request): JsonResponse
     {
-        DB::beginTransaction();
-        try {
-            $amount = trim($request->amount ?? '');
-            if (empty($amount)) {
-                return jsonError('Amount cannot empty!');
-            }
-
-            $amount = (double)$amount;
-            $type = $request->type;
-            if (!in_array($type, ['bronze', 'silver', 'gold', 'platinum'])) {
-                return jsonError('Package Investment not correct!');
-            }
-
-            $setting = Settings::getSettings()['profit']->setting->{$type};
-            $minAmount = (double)$setting->min_amount;
-            if ($amount < $minAmount) {
-                return jsonError("Amount minimum is: $minAmount");
-            }
-
-            $userMoney = user()->money;
-            if ((double)$userMoney->wallet < $amount) {
-                return jsonError('The amount left in the account is not enough to buy!');
-            }
-
-            $userMoney->wallet = (double)$userMoney->wallet - $amount;
-            $userMoney->save();
-
-            $investment = new InvestmentBought();
-            $investment->user_id = user()->id;
-            $investment->type = $type;
-            $investment->money_buy = $amount;
-            $investment->profit = $setting->profit;
-            $investment->days = $setting->days;
-            $investment->min_amount = $setting->min_amount;
-            $investment->max_withdraw = $setting->max_withdraw;
-            $investment->save();
-
-            DB::commit();
-            return jsonSuccess('You have successfully purchased the package! We\'ll do a page reload!');
-        } catch (Exception $exception) {
-            DB::rollBack();
-            return jsonError('There was an error during the purchase of the package. please reload the page and try again');
-        }
+        return MoneyService::buyInvestment($request);
     }
 }

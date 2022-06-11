@@ -18,6 +18,13 @@ class UserRegisterRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'username' => strtolower($this->username),
+            'email' => strtolower($this->email)
+        ]);
+    }
 
     /**
      * Get the validation rules that apply to the request.

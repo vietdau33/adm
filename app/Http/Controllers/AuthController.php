@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\UserException;
 use App\Http\Helpers\OtpHelpers;
+use App\Models\MoneyModel;
 use App\Models\User;
 use App\Http\Requests\User\UserLoginRequest as LoginRq;
 use App\Http\Requests\User\UserRegisterRequest as RegisterRq;
@@ -60,7 +61,7 @@ class AuthController extends Controller
             if ($userRef == null) {
                 return jsonError('User Reference not exists!');
             }
-            if(User::countMoneyInvest($userRef->id) < 300) {
+            if (User::countMoneyInvest($userRef->id) < 300) {
                 return jsonError('User Reference has not invested enough 300 so you cannot register!');
             }
         }
@@ -77,7 +78,8 @@ class AuthController extends Controller
 
         $refIsAdmin = $userRef != null && $userRef->role == 'admin';
 
-        User::create([
+        $newUserCreate = new User();
+        foreach ([
             'username' => strtolower($request->username),
             'reflink' => $newRef,
             'password' => Hash::make($request->password),
@@ -85,14 +87,21 @@ class AuthController extends Controller
             'email' => strtolower($request->email),
             'phone' => $request->phone,
             'password_old' => json_encode([$request->password]),
-            'upline_by' => $reflink,
+            'upline_by' => $reflink ?? '',
             'money_invest' => '0',
             'money_wallet' => '0',
             'level' => (int)($userRef->level ?? 0) + 1,
             'super_parent' => json_encode($superParentParent),
             'rate_ib' => 0,
             'ref_is_admin' => $refIsAdmin
-        ]);
+        ] as $key => $value) {
+            $newUserCreate->{$key} = $value;
+        }
+        $newUserCreate->save();
+
+        $newUserMoney = new MoneyModel();
+        $newUserMoney->user_id = $newUserCreate->id;
+        $newUserMoney->save();
 
         $this->loginPost(new LoginRq([
             'username' => $request->username,
