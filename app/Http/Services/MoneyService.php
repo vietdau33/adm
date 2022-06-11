@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Exceptions\UserException;
+use App\Models\BonusLogs;
 use App\Models\InvestmentBought;
 use App\Models\Settings;
 use App\Models\User;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 
 class MoneyService
 {
+    protected static $settings = null;
+
     public static function buyInvestment(Request $request): JsonResponse
     {
         DB::beginTransaction();
@@ -51,6 +54,8 @@ class MoneyService
             $investment->max_withdraw = $setting->max_withdraw;
             $investment->save();
 
+            MoneyService::calcBonusInterest(user(), $amount);
+
             DB::commit();
             return jsonSuccess('You have successfully purchased the package! We\'ll do a page reload!');
         } catch (Exception $exception) {
@@ -59,15 +64,59 @@ class MoneyService
         }
     }
 
-    public static function calcBonusInterest($user_id, $money)
+    protected static function getSettings($type)
     {
-        $settings = Settings::getSettings()['bonus']->setting;
-        $user = User::whereUserId($user_id)->first();
-        if ($user == null) {
-            return false;
+        if (self::$settings == null) {
+            self::$settings = Settings::getSettings();
         }
-        $calcCallback = function ($level) use ($settings) {
-            //
-        };
+        return self::$settings[$type]->setting;
+    }
+
+    private static function __callInterestBonus__(User $user, User $userFrom, int $level = 1, $money = 0): void
+    {
+        $settings = self::getSettings('bonus');
+        $settingLevel = $settings->{"level_$level"} ?? null;
+
+        if ($settingLevel == null) {
+            return;
+        }
+
+        $countNumberF1 = User::countNumberF1ByRef($user->reflink);
+        if ($settingLevel->condition_f1 > $countNumberF1) {
+            return;
+        }
+
+        $moneyBonus = $money * (double)$settingLevel->bonus / 100;
+        $userMoney = $user->money;
+        $userMoney->bonus += $moneyBonus;
+        $userMoney->save();
+
+        ModelService::insert(BonusLogs::class, [
+            'user_id' => $user->id,
+            'user_id_from' => $userFrom->id,
+            'rate' => (double)$settingLevel->bonus,
+            'condition_f1' => (int)$settingLevel->condition_f1,
+            'money_bonus' => $moneyBonus,
+        ]);
+
+        if ($level >= 5) {
+            return;
+        }
+
+        $parentUser = User::whereReflink($user->upline_by)->first();
+        if ($parentUser == null) {
+            return;
+        }
+
+        self::__callInterestBonus__($parentUser, $userFrom, $level + 1, $money);
+    }
+
+    public static function calcBonusInterest(User $user, $money): void
+    {
+        $parentUser = User::whereReflink($user->upline_by)->first();
+        if ($parentUser == null) {
+            return;
+        }
+        self::__callInterestBonus__($parentUser, $user, 1, $money);
     }
 }

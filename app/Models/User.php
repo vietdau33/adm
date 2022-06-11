@@ -238,7 +238,22 @@ class User extends Authenticatable
         return $this->belongsTo(MoneyModel::class, 'id', 'user_id')->first();
     }
 
-    public static function countMoneyInvest($user_id) {
+    public static function countMoneyInvest($user_id)
+    {
         return InvestmentBought::whereUserId($user_id)->get()->sum('money_buy');
+    }
+
+    public static function countNumberF1ByRef($reflink): int
+    {
+        return self::whereUplineBy($reflink)->get()->count();
+    }
+
+    public static function countNumberF1ById($id): int
+    {
+        $user = self::whereId($id)->first();
+        if ($user == null) {
+            return 0;
+        }
+        return self::countNumberF1ByRef($user->reflink);
     }
 }
