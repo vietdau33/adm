@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transfer extends Model
 {
@@ -14,6 +15,11 @@ class Transfer extends Model
     public function getUserReceiveAttribute()
     {
         return User::whereUsername($this->username_receive)->first();
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public static function getHistories($paginate = false, $with_param_search = false)

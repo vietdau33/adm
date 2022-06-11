@@ -2,9 +2,11 @@
 <div class="withdraw--box text-center">
     <div class="d-flex justify-content-center">
         <div class="small-box text-left p-3">
-            @if(!empty(user()->google2fa_secret))
+            @if(is_admin() || !empty(user()->google2fa_secret))
                 <form action="" method="POST" onsubmit="return SubmitTransfer.apply(this)">
-                    <div class="alert alert-info">You current Wallet: <b>{{ user()->money->wallet }}</b></div>
+                    @if(is_user())
+                        <div class="alert alert-info">You current Wallet: <b>{{ user()->money->wallet }}</b></div>
+                    @endif
                     <div class="form-group">
                         <label for="amount">Amount</label>
                         <input type="text" name="amount" id="amount" class="form-control" placeholder="0.00">
@@ -24,12 +26,14 @@
                         <label for="fullname">Fullname</label>
                         <input type="text" id="fullname" class="form-control" readonly>
                     </div>
-                    <div class="form-group">
-                        <label for="2fa_code">Auth Code (2FA)</label>
-                        <input type="text" name="2fa_code" id="2fa_code" class="form-control" placeholder="Enter 2FA code">
-                    </div>
+                    @if(is_user())
+                        <div class="form-group">
+                            <label for="2fa_code">Auth Code (2FA)</label>
+                            <input type="text" name="2fa_code" id="2fa_code" class="form-control" placeholder="Enter 2FA code">
+                        </div>
+                    @endif
                     <div class="text-center">
-                        <button class="btn btn-success btn-gradient">Confirm</button>
+                        <button class="btn btn-success btn-gradient">Transfer</button>
                     </div>
                 </form>
             @else
@@ -67,7 +71,7 @@
             </div>
         </form>
         <div class="form-radius">
-            <table class="table table-responsive-md">
+            <table class="table table-responsive-md mb-0">
                 <thead>
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>
@@ -84,7 +88,13 @@
                     <tr>
                         <td>{{ $count++ }}</td>
                         <td>{{ $isSend ? 'Send' : 'Receive' }}</td>
-                        <td>{{ $history->user_receive->username ?? '' }}</td>
+                        <td>
+                            @if($isSend)
+                                {{ $history->user_receive->username ?? '' }}
+                            @else
+                                {{ $history->user->role == 'admin' ? 'ADMINISTATOR' : $history->user->username ?? '' }}
+                            @endif
+                        </td>
                         <td>
                             @if($isSend)
                                 <span class="text-danger">-{{ $history->amount }}</span>

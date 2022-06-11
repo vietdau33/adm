@@ -17,6 +17,8 @@ Route::get('/', function () {
 Route::post('generate-google-authen-serect', [AuthController::class, 'generateGoogleAuthenSerect'])->name('generate-gg-auth');
 Route::post('enable-google-authen-serect', [AuthController::class, 'enable2FAAuthen'])->name('enable-gg-auth');
 Route::post('deactive-google-authen-serect', [AuthController::class, 'deactive2FA'])->name('deactive-gg-auth');
+Route::post('user/get-fullname', [UserController::class, 'getFullname'])->name('user.get-fullname');
+Route::post('money/transfer', [MoneyController::class, 'transferPost'])->name('money.transfer.post');
 
 Route::middleware('logined')->group(function () {
     Route::get('/home', [HomeController::class, 'home'])->name("home.page");
@@ -54,7 +56,6 @@ Route::middleware('logined')->group(function () {
         Route::get('/', [MoneyController::class, 'deposit'])->name('home');
         Route::get('/deposit', [MoneyController::class, 'deposit'])->name('deposit');
         Route::get('/transfer', [MoneyController::class, 'transfer'])->name('transfer');
-        Route::post('/transfer', [MoneyController::class, 'transferPost'])->name('transfer.post');
         Route::get('/withdraw', [MoneyController::class, 'withdraw'])->name('withdraw');
         Route::post('/withdraw', [MoneyController::class, 'withdrawPost'])->name('withdraw.post');
     });
@@ -76,7 +77,6 @@ Route::middleware('logined')->group(function () {
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::post('buy-invest', [MoneyController::class, 'buyInvestment'])->name('buy-invest');
-        Route::post('get-fullname', [UserController::class, 'getFullname'])->name('get-fullname');
 
         Route::prefix('transfer')->name('transfer.')->group(function(){
             Route::post('bonus', [MoneyController::class, 'transferBonusToWallet'])->name('bonus');

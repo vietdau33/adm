@@ -38,6 +38,9 @@ class MoneyController extends Controller
 
     public function transferPost(Request $request): JsonResponse
     {
+        if (is_admin()) {
+            return MoneyService::adminCreateTransfer($request);
+        }
         return MoneyService::createTransfer($request);
     }
 

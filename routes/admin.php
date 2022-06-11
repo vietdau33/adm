@@ -8,7 +8,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('', [AdminController::class, 'home'])->name('home');
     Route::get('list-member', [AdminController::class, 'listMember'])->name('list-member');
     Route::get('money', [AdminController::class, 'money'])->name('money');
+    Route::get('money/{type}', [AdminController::class, 'money'])->name('money.with-type');
     Route::get('report-transfer', [AdminController::class, 'reportTransfer'])->name('report-transfer');
+    Route::post('status-withdraw', [AdminController::class, 'changeStatusWithdraw'])->name('status.withdraw');
 
     Route::prefix('banner')->group(function() {
         Route::get('', [AdminController::class, 'banner'])->name('banner');
@@ -31,7 +33,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
     });
 });
 
-//Route::get("/admin/settings", [AdminController::class, "settingsView"])->name("admin.settings.get");
 Route::post("/admin/save-system-setting", [AdminController::class, "saveSystemSetting"])->name("admin.settings.save-system-setting");
 Route::post("/change-setting", [AdminController::class, "changeSetting"])->name("admin.change-setting.post");
 Route::get("/request-liquidity", [AdminController::class, "requestLiquidity"])->name("admin.request-liquidity.get");

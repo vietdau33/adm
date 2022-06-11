@@ -227,6 +227,9 @@ class MoneyService
         if($userReceive == null) {
             return jsonError('User Receive not exists!');
         }
+        if($userReceive->role == 'admin') {
+            return jsonError('You cannot transfer to ADMIN!');
+        }
 
         DB::beginTransaction();
         try {
@@ -234,6 +237,42 @@ class MoneyService
             $userMoney->wallet -= $amount;
             $userMoney->save();
 
+            $userReceiveMoney = $userReceive->money;
+            $userReceiveMoney->wallet += $amount;
+            $userReceiveMoney->save();
+
+            ModelService::insert(Transfer::class, [
+                'user_id' => user()->id,
+                'amount' => $amount,
+                'username_receive' => $request->username_receive
+            ]);
+
+            DB::commit();
+            return jsonSuccess('Transfer success!');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return jsonError('Cannot create request transfer! Please reload page and try again!');
+        }
+    }
+    public static function adminCreateTransfer(Request $request): JsonResponse
+    {
+        if (empty($request->amount)) {
+            return jsonError('Amount money transfer error!');
+        }
+        $amount = (double)$request->amount;
+        if ($amount < 10) {
+            return jsonError('The withdraw transfer minimum is: 10!');
+        }
+        if (empty($request->username_receive)) {
+            return jsonError('User Receive not found!');
+        }
+        $userReceive = User::whereUsername($request->username_receive)->first();
+        if($userReceive == null) {
+            return jsonError('User Receive not exists!');
+        }
+
+        DB::beginTransaction();
+        try {
             $userReceiveMoney = $userReceive->money;
             $userReceiveMoney->wallet += $amount;
             $userReceiveMoney->save();

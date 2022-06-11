@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Exceptions\UserException;
 use App\Http\Services\AdminService;
 use App\Models\BannerModel;
-use App\Models\CryptoWithdraw;
 use App\Models\LinkDaily;
 use App\Models\Settings;
 use App\Models\SystemSetting;
 use App\Models\User;
+use App\Models\Withdraw;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\TransferToAdmin;
@@ -34,10 +34,17 @@ class AdminController extends Controller
         ));
     }
 
-    public function money()
+    /**
+     * @throws UserException
+     */
+    public function money($type = 'deposit')
     {
         session()->flash('menu-active', 'money');
-        return view('admin.money');
+        $withdrawRequest = Withdraw::getWithdrawWorking(10, true);
+        return view('admin.money', compact(
+            'type',
+            'withdrawRequest'
+        ));
     }
 
     public function reportTransfer()
@@ -170,29 +177,7 @@ class AdminController extends Controller
 
     public function requestCryptoWithdrawPost(Request $request): JsonResponse
     {
-        $typeRequest = strtolower($request->type ?? '');
-        $id = (int)($request->code ?? 0);
-
-        if (!in_array($typeRequest, ['agree', 'cancel'])) {
-            return jsonError("Type request error!");
-        }
-
-        $transfer = CryptoWithdraw::getCryptoById($id);
-        if ($transfer == null) {
-            return jsonError("Transfer cannot find in database!");
-        }
-
-        if ($typeRequest == 'cancel') {
-            $statusBackMoney = CryptoWithdraw::backAmountInCancelRequest($id);
-            if ($statusBackMoney === false) {
-                return jsonError("Back money to user error!");
-            }
-        }
-
-        $transfer->status = $typeRequest == 'agree' ? 1 : 2;
-        $transfer->save();
-
-        return jsonSuccess(ucfirst($typeRequest) . " success!");
+        return AdminService::requestCryptoWithdrawPost($request);
     }
 
     public function settingsView()
@@ -203,26 +188,11 @@ class AdminController extends Controller
 
     public function saveSystemSetting(Request $request): JsonResponse
     {
-        $type = $request->type ?? false;
-        if ($type === false) {
-            return jsonError("Not found type system setting!");
-        }
-        switch ($type) {
-            case "interest-rate" :
-                $result = SystemSetting::saveInterestRateSolo($request);
-                break;
-            case "bonus" :
-                $result = SystemSetting::saveBonusSolo($request);
-                break;
-            case "withdraw" :
-                $result = SystemSetting::saveWithdrawSolo($request);
-                break;
-            default :
-                return jsonError("Type setting error!");
-        }
-        if ($result['success'] === true) {
-            return jsonSuccess("Save success!");
-        }
-        return jsonError("Save fail: " . $result['message']);
+        return AdminService::saveSystemSetting($request);
+    }
+
+    public function changeStatusWithdraw(Request $request): JsonResponse
+    {
+        return AdminService::changeStatusWithdraw($request);
     }
 }

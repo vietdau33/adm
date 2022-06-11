@@ -673,8 +673,11 @@ class UserController extends Controller
      */
     public function getFullname(Request $request): JsonResponse
     {
-        $username = $request->username;
-        $user = User::getUserByUsername($username, true);
-        return jsonSuccessData(['fullname' => $user->fullname ?? 'Not Found User']);
+        if (logined()) {
+            $username = $request->username;
+            $user = User::getUserByUsername($username, true);
+            return jsonSuccessData(['fullname' => $user->fullname ?? 'Not Found User']);
+        }
+        return jsonSuccessData(['fullname' => 'Not Found User']);
     }
 }

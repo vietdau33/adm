@@ -3,11 +3,15 @@
 namespace App\Http\Services;
 
 use App\Models\BannerModel;
+use App\Models\CryptoWithdraw;
 use App\Models\LinkDaily;
 use App\Models\Settings;
+use App\Models\SystemSetting;
+use App\Models\Withdraw;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminService
 {
@@ -164,5 +168,95 @@ class AdminService
         } catch (Exception $exception) {
             return jsonError("Cannot save setting $type. Please reload page and try again!");
         }
+    }
+
+    public static function saveSystemSetting(Request $request): JsonResponse
+    {
+        $type = $request->type ?? false;
+        if ($type === false) {
+            return jsonError("Not found type system setting!");
+        }
+        switch ($type) {
+            case "interest-rate" :
+                $result = SystemSetting::saveInterestRateSolo($request);
+                break;
+            case "bonus" :
+                $result = SystemSetting::saveBonusSolo($request);
+                break;
+            case "withdraw" :
+                $result = SystemSetting::saveWithdrawSolo($request);
+                break;
+            default :
+                return jsonError("Type setting error!");
+        }
+        if ($result['success'] === true) {
+            return jsonSuccess("Save success!");
+        }
+        return jsonError("Save fail: " . $result['message']);
+    }
+
+    public static function changeStatusWithdraw(Request $request): JsonResponse
+    {
+        $withdrawId = $request->id;
+        $status = (int)($request->status ?? 9);
+
+        if (empty($withdrawId)) {
+            return jsonError('Not see withdraw id!');
+        }
+
+        if (!in_array($status, [1, 2, 3])) {
+            return jsonError('Status not correct!');
+        }
+
+        $withdraw = Withdraw::whereId($withdrawId)->first();
+        if ($withdraw == null) {
+            return jsonError('Withdraw not exists!');
+        }
+
+        DB::beginTransaction();
+        try {
+            $withdraw->status = $status;
+            $withdraw->save();
+
+            if ($status === 3) {
+                $user = $withdraw->user;
+                $userMoney = $user->money;
+                $userMoney->wallet += (double)$withdraw->amount;
+                $userMoney->save();
+            }
+
+            DB::commit();
+            return jsonSuccess('Change status withdraw success!');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return jsonError('Cannot change status!');
+        }
+    }
+
+    public static function requestCryptoWithdrawPost(): JsonResponse
+    {
+        $typeRequest = strtolower($request->type ?? '');
+        $id = (int)($request->code ?? 0);
+
+        if (!in_array($typeRequest, ['agree', 'cancel'])) {
+            return jsonError("Type request error!");
+        }
+
+        $transfer = CryptoWithdraw::getCryptoById($id);
+        if ($transfer == null) {
+            return jsonError("Transfer cannot find in database!");
+        }
+
+        if ($typeRequest == 'cancel') {
+            $statusBackMoney = CryptoWithdraw::backAmountInCancelRequest($id);
+            if ($statusBackMoney === false) {
+                return jsonError("Back money to user error!");
+            }
+        }
+
+        $transfer->status = $typeRequest == 'agree' ? 1 : 2;
+        $transfer->save();
+
+        return jsonSuccess(ucfirst($typeRequest) . " success!");
     }
 }
