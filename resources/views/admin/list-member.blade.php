@@ -51,7 +51,7 @@
             </form>
             <div class="area-user--list mt-3">
                 <div class="form-radius text-center">
-                    <table class="table table-responsive mb-0">
+                    <table class="table table-responsive-xl mb-0">
                         <thead>
                         <tr>
                             <th class="border-top-0" scope="col">No.</th>
