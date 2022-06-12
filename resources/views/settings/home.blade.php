@@ -16,19 +16,19 @@
             {{--</li>--}}
             <li>
                 <a href="{{ route('setting.2fa') }}" class="{{ $page == '2fa' ? 'active' : 'active-bg' }}">
-                    <img src="{{ asset('image/adm/icon/bonus-icon.png') }}" alt="2FA">
+                    <img src="{{ asset('image/adm/icon/profile-icon.png') }}" alt="2FA">
                     <span>2FA</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('setting.change_password') }}" class="{{ $page == 'change_password' ? 'active' : 'active-bg' }}">
-                    <img src="{{ asset('image/adm/icon/bonus-icon.png') }}" alt="CHANGE PASSWORD">
+                    <img src="{{ asset('image/adm/icon/profile-icon.png') }}" alt="CHANGE PASSWORD">
                     <span>CHANGE PASSWORD</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('setting.kyc_withdraw') }}" class="{{ $page == 'kyc_withdraw' ? 'active' : 'active-bg' }}">
-                    <img src="{{ asset('image/adm/icon/bonus-icon.png') }}" alt="KYC WITHDRAW">
+                    <img src="{{ asset('image/adm/icon/profile-icon.png') }}" alt="KYC WITHDRAW">
                     <span>KYC WITHDRAW</span>
                 </a>
             </li>
