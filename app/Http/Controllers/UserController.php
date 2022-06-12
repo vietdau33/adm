@@ -12,13 +12,17 @@ use App\Models\CryptoWithdraw;
 use App\Models\DailyMissionLogs;
 use App\Models\HistoryIb;
 use App\Models\InternalTransferHistory;
+use App\Models\InvestmentBought;
 use App\Models\LinkDaily;
 use App\Models\SystemSetting;
 use App\Models\TransferToAdmin;
 use App\Models\User;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\HistorySystemSetting;
 
@@ -678,25 +682,57 @@ class UserController extends Controller
         return jsonSuccessData(['fullname' => 'Not Found User']);
     }
 
-    public function dailyMission(Request $request) {
+    public function dailyMission(Request $request): JsonResponse
+    {
         $link = $request->link;
         $linkDaily = session()->pull('link_daily');
-        if(empty($linkDaily)) {
+        if (empty($linkDaily)) {
             return jsonError('You need view daily mission video before!');
         }
-        if(empty($link) || $link != $linkDaily) {
+        if (empty($link) || $link != $linkDaily) {
             return jsonError('Link Daily Mission not correct!');
         }
         $linkModel = LinkDaily::whereLink($link)->whereActive(1)->first();
-        if($linkModel == null) {
+        if ($linkModel == null) {
             return jsonError('Link Daily Mission not see in server. Please reload page and try again!');
         }
 
-        ModelService::insert(DailyMissionLogs::class, [
-            'user_id' => user()->id,
-            'link_id' => $linkModel->id
-        ]);
+        DB::beginTransaction();
+        try {
+            ModelService::insert(DailyMissionLogs::class, [
+                'user_id' => user()->id,
+                'link_id' => $linkModel->id
+            ]);
 
-        return jsonSuccess('Daily Mission success!');
+            $now = Carbon::now();
+            $hourNow = (int)$now->format('H');
+            foreach (InvestmentBought::getInvestBought(user()->id) as $invest) {
+                $dateCreate = Carbon::parse($invest->created_at);
+                $diffTime = $dateCreate->diff($now);
+                if(diffDaysWithNow($invest->created_at) > $invest->days) {
+                    continue;
+                }
+                if ($diffTime->y + $diffTime->m + $diffTime->d > 0) {
+                    $invest->daily_today = 1;
+                    $invest->save();
+                }
+                if ($hourNow >= 7 && (int)$dateCreate->format('H') < 7) {
+                    $invest->daily_today = 1;
+                    $invest->save();
+                }
+                if (
+                    (int)$dateCreate->format('d') < $now->format('d')
+                    && (int)$dateCreate->format('H') < 7
+                ) {
+                    $invest->daily_today = 1;
+                    $invest->save();
+                }
+            }
+            DB::commit();
+            return jsonSuccess('Daily Mission success!');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return jsonError('Cannot daily Mission. Please reload page and try again!');
+        }
     }
 }

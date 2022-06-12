@@ -9,6 +9,7 @@ use App\Models\DailyMissionLogs;
 use App\Models\InvestmentBought;
 use App\Models\ProfitLogs;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -59,6 +60,9 @@ class CalcProfitUser extends Command
                     $userMoney->profit += $profit;
                     $userMoney->save();
 
+                    $invest->daily_today = 0;
+                    $invest->save();
+
                     ModelService::insert(ProfitLogs::class, [
                         'user_id' => $invest->user_id,
                         'profit_calc' => $invest->profit,
@@ -69,7 +73,7 @@ class CalcProfitUser extends Command
                 }
             }
             DB::commit();
-        }catch (\Exception $exception) {
+        }catch (Exception $exception) {
             DB::rollBack();
             logger($exception->getMessage());
             $mail = new LogMail($exception->getMessage());
@@ -86,6 +90,6 @@ class CalcProfitUser extends Command
             ->get();
     }
     private function getInvestmentBought($user_id) {
-        return InvestmentBought::whereUserId($user_id)->get();
+        return InvestmentBought::whereUserId($user_id)->whereDailyToday(1)->get();
     }
 }

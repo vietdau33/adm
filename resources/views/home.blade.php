@@ -19,7 +19,7 @@
                 @php($bannerTop = $banners['top']->first())
                 <img src="{{ asset('storage/banner/' . $bannerTop->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
                 <img src="{{ asset('storage/banner/' . $bannerTop->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
-                @if(!$isDailyToday)
+                @if($showDailyToday)
                     <div class="overlay-daily-mission">
                         <h3>Daily Mission</h3>
                         <button class="btn btn-primary btn-gradient text-uppercase btn-view-daily">View</button>
@@ -29,7 +29,7 @@
                     </div>
                 @endif
             </div>
-        @elseif(!$isDailyToday)
+        @elseif($showDailyToday)
             <div class="banner banner-top mb-3 position-relative">
                 <img src="{{ asset('image/adm/ai_bg.png') }}" alt="Bg 1" class="w-100 d-lg-none">
                 <img src="{{ asset('image/adm/ai_bg_pc.png') }}" alt="Bg 1" class="w-100 d-none d-lg-block">

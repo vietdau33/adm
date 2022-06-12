@@ -25,13 +25,13 @@ class HomeController extends Controller
         $banners = BannerModel::getBanners();
         $settingProfit = Settings::getSettings()['profit']->setting;
         $invest_bought_activing = InvestmentBought::getInvestBought(user()->id);
-        $isDailyToday = DailyMissionLogs::isDailyToday();
+        $showDailyToday = DailyMissionLogs::showDailyToday();
 
         return view('home', compact(
             'banners',
             'settingProfit',
             'invest_bought_activing',
-            'isDailyToday'
+            'showDailyToday'
         ));
     }
 

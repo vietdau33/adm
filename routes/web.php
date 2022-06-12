@@ -11,7 +11,11 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    return redirect()->to('/welcome');
+    $d = '2022-05-12 09:48:19';
+    $date = \Carbon\Carbon::parse($d)->diffInDays(\Carbon\Carbon::now());
+//    $date2 = \Carbon\Carbon::today()->format('Y-m-d H:i:s');
+    dd($date);
+//    return redirect()->to('/welcome');
 })->name("home-page");
 
 Route::post('generate-google-authen-serect', [AuthController::class, 'generateGoogleAuthenSerect'])->name('generate-gg-auth');
