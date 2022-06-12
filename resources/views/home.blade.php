@@ -29,19 +29,19 @@
                     </div>
                 @endif
             </div>
-        @elseif($showDailyToday)
-            <div class="banner banner-top mb-3 position-relative">
-                <img src="{{ asset('image/adm/ai_bg.png') }}" alt="Bg 1" class="w-100 d-lg-none">
-                <img src="{{ asset('image/adm/ai_bg_pc.png') }}" alt="Bg 1" class="w-100 d-none d-lg-block">
-                <div class="overlay-daily-mission">
-                    <h3>Daily Mission</h3>
-                    <button class="btn btn-primary btn-gradient text-uppercase btn-view-daily">View</button>
-                    <div class="close-icon">
-                        <img src="{{ asset('image/adm/icon/close.svg') }}" class="w-100" alt="Close">
-                    </div>
+        @endif
+    @elseif($showDailyToday)
+        <div class="banner banner-top mb-3 position-relative">
+            <img src="{{ asset('image/adm/ai_bg.png') }}" alt="Bg 1" class="w-100 d-lg-none">
+            <img src="{{ asset('image/adm/ai_bg_pc.png') }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+            <div class="overlay-daily-mission">
+                <h3>Daily Mission</h3>
+                <button class="btn btn-primary btn-gradient text-uppercase btn-view-daily">View</button>
+                <div class="close-icon close-banner">
+                    <img src="{{ asset('image/adm/icon/close.svg') }}" class="w-100" alt="Close">
                 </div>
             </div>
-        @endif
+        </div>
     @endif
     <div class="area-investment">
         <h3 class="invest-title">INVESTMENT PLAN</h3>
@@ -207,7 +207,8 @@
         });
 
         $('.overlay-daily-mission .close-icon').on('click', function() {
-            const parent = $(this).parent();
+            const closeBanner = $(this).hasClass('close-banner');
+            const parent = closeBanner ? $(this).closest('.banner') : $(this).parent();
             parent.fadeOut(300, function() {
                 parent.remove();
             });

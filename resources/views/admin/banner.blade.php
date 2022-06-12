@@ -29,7 +29,7 @@
                         </td>
                         <td rowspan="2">{{ strtoupper($banner->position) }}</td>
                         <td rowspan="2">
-                            <select class="form-control status_banner m-auto" style="width: 65px;" data-id="{{ $banner->id }}">
+                            <select class="form-control status_banner m-auto" style="width: 75px;" data-id="{{ $banner->id }}">
                                 <option value="0" {{ $banner->active === 0 ? 'selected' : '' }}>Off</option>
                                 <option value="1" {{ $banner->active === 1 ? 'selected' : '' }}>On</option>
                             </select>
