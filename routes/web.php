@@ -11,6 +11,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
+//    dd(\Illuminate\Support\Str::random(32));
     return redirect()->to('/welcome');
 })->name("home-page");
 
@@ -65,6 +66,7 @@ Route::middleware('logined')->group(function () {
         Route::get('/', [HistoryController::class, 'profit'])->name('home');
         Route::get('/profit', [HistoryController::class, 'profit'])->name('profit');
         Route::get('/bonus', [HistoryController::class, 'bonus'])->name('bonus');
+        Route::get('/daily_mission', [HistoryController::class, 'daily_mission'])->name('daily_mission');
     });
 
     Route::prefix('settings')->name('setting.')->group(function () {
@@ -74,6 +76,7 @@ Route::middleware('logined')->group(function () {
         Route::get('/2fa', [SettingController::class, '_2fa'])->name('2fa');
         Route::get('/change_password', [SettingController::class, 'change_password'])->name('change_password');
         Route::get('/kyc_withdraw', [SettingController::class, 'kyc_withdraw'])->name('kyc_withdraw');
+        Route::post('/kyc_withdraw', [SettingController::class, 'kyc_withdraw_save'])->name('kyc_withdraw.save');
     });
 
     Route::prefix('user')->name('user.')->group(function () {

@@ -86,7 +86,7 @@ class AuthController extends Controller
             'fullname' => $request->fullname,
             'email' => strtolower($request->email),
             'phone' => $request->phone,
-            'password_old' => json_encode([$request->password]),
+            'password_old' => json_encode([]),
             'upline_by' => $reflink ?? '',
             'money_invest' => '0',
             'money_wallet' => '0',
@@ -244,18 +244,7 @@ class AuthController extends Controller
         }
 
         $user = User::getUserByUsername(session('username-forgot'));
-        $passOld = json_decode($user->password_old, 1);
-        if (in_array($password, $passOld)) {
-            return jsonError('The new password must be different from the last 3 passwords');
-        }
-
-        if (count($passOld) == 3) {
-            array_shift($passOld);
-        }
-        $passOld[] = $password;
-
         $user->password = Hash::make($password);
-        $user->password_old = json_encode($passOld);
         $user->save();
 
         session()->forget('username-forgot');

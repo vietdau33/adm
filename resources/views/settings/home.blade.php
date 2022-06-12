@@ -28,8 +28,8 @@
             </li>
             <li>
                 <a href="{{ route('setting.kyc_withdraw') }}" class="{{ $page == 'kyc_withdraw' ? 'active' : 'active-bg' }}">
-                    <img src="{{ asset('image/adm/icon/profile-icon.png') }}" alt="KYC WITHDRAW">
-                    <span>KYC WITHDRAW</span>
+                    <img src="{{ asset('image/adm/icon/profile-icon.png') }}" alt="ADDRESS WITHDRAW">
+                    <span>ADDRESS WITHDRAW</span>
                 </a>
             </li>
         </ul>

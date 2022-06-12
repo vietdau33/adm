@@ -8,6 +8,7 @@ use App\Http\Helpers\OtpHelpers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -52,14 +53,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected string $custom_key_2fa = 'jo99dBUvBjOugMjSS62cOUTKns2nDKLn';
+
     public function setGoogle2faSecretAttribute($value): void
     {
-        $this->attributes['google2fa_secret'] = empty($value) ? null : encrypt($value);
+        $encrypter = new Encrypter($this->custom_key_2fa, config('app.cipher'));
+        $this->attributes['google2fa_secret'] = empty($value) ? null : $encrypter->encrypt($value);
     }
 
     public function getGoogle2faSecretAttribute($value)
     {
-        return empty($value) ? null : decrypt($value);
+        $encrypter = new Encrypter($this->custom_key_2fa, config('app.cipher'));
+        return empty($value) ? null : $encrypter->decrypt($value);
     }
 
     /**

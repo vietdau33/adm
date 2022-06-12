@@ -14,6 +14,12 @@
                     <span>DOWNLINE BONUS</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ $page == 'daily_mission' ? '#' : route('history.daily_mission') }}" class="{{ $page == 'daily_mission' ? 'active' : 'active-bg' }}">
+                    <img src="{{ asset('image/adm/icon/profit-icon.png') }}" alt="DAILY MISSION">
+                    <span>DAILY MISSION</span>
+                </a>
+            </li>
         </ul>
     </div>
     <div class="content-history">

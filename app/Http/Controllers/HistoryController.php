@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BonusLogs;
-use Illuminate\Http\Request;
-
 class HistoryController extends Controller
 {
     public function home($page)
@@ -21,5 +18,10 @@ class HistoryController extends Controller
     public function bonus()
     {
         return $this->home('bonus');
+    }
+
+    public function daily_mission()
+    {
+        return $this->home('daily_mission');
     }
 }
