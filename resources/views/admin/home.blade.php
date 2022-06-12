@@ -11,7 +11,7 @@
         </div>
         <div class="box-info total-profit">
             <h3>TOTAL PROFIT</h3>
-            <h4>3,059,129.00</h4>
+            <h4>{{ number_format($totalProfit, 2) }}</h4>
         </div>
         <div class="box-info total-bonus">
             <h3>TOTAL BONUS</h3>

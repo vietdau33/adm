@@ -11,13 +11,19 @@ class ProfitLogs extends Model
 
     protected $table = 'profit_logs';
 
-    public static function getProfitHistories($paginate = false, $with_param_search = false) {
+    public static function getTotalProfit(): int
+    {
+        return self::all()->sum('profit');
+    }
+
+    public static function getProfitHistories($paginate = false, $with_param_search = false)
+    {
         $histories = self::whereUserId(user()->id);
-        if($with_param_search !== false) {
-            if(!empty(request()->start_date)) {
+        if ($with_param_search !== false) {
+            if (!empty(request()->start_date)) {
                 $histories->where('created_at', '>=', request()->start_date . ' 00:00:00');
             }
-            if(!empty(request()->end_date)) {
+            if (!empty(request()->end_date)) {
                 $histories->where('created_at', '<=', request()->end_date . ' 23:59:59');
             }
         }

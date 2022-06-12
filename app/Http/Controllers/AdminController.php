@@ -7,6 +7,7 @@ use App\Http\Services\AdminService;
 use App\Models\BannerModel;
 use App\Models\BonusLogs;
 use App\Models\LinkDaily;
+use App\Models\ProfitLogs;
 use App\Models\Settings;
 use App\Models\SystemSetting;
 use App\Models\Transfer;
@@ -24,9 +25,11 @@ class AdminController extends Controller
         session()->flash('menu-active', 'dashboard');
         $totalBonus = BonusLogs::countMoneyBonus();
         $totalWithdraw = Withdraw::countMoneyWithdraw(true);
+        $totalProfit = ProfitLogs::getTotalProfit();
         return view('admin.home', compact(
             'totalWithdraw',
-            'totalBonus'
+            'totalBonus',
+            'totalProfit'
         ));
     }
 
