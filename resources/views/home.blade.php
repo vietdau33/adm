@@ -79,6 +79,7 @@
                         <th scope="col">Amount Buy</th>
                         <th scope="col">Profit</th>
                         <th scope="col">Days Left</th>
+                        <th scope="col">Buy Date</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -95,7 +96,7 @@
                             @else
                                 <td>{{ $diffDay }} {{ $diffDay > 1 ? 'days' : 'day' }}</td>
                             @endif
-
+                            <td>{{ __d($package->created_at, 'Y-m-d H:i:s') }}</td>
                         </tr>
                     @endforeach
                     @if($invest_bought_activing->count() <= 0)
