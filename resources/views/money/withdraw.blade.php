@@ -25,6 +25,8 @@
                             class="form-control"
                             placeholder="0x2676fxxxx"
                             autocomplete="off"
+                            value="{{ user()->addr_crypto ?? '' }}"
+                            onfocus="this.select()"
                         />
                     </div>
                     <div class="form-group">
