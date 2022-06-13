@@ -26,7 +26,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             format: 'yyyy-mm-dd',
             todayHighlight: true,
             autoclose: true,
-            clearBtn: true
+            clearBtn: true,
+            disableTouchKeyboard: true,
         });
     }
 
