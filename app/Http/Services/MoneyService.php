@@ -157,9 +157,6 @@ class MoneyService
             return jsonError('Amount money withdraw error!');
         }
         $amount = (double)$request->amount;
-        if ($amount < 100) {
-            return jsonError('The withdraw amount minimum is: 100!');
-        }
         if ($amount > user()->money->wallet) {
             return jsonError('The withdraw amount is larger than the available amount!');
         }
