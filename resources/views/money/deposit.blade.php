@@ -1,25 +1,31 @@
-@php($stringRandom = \Illuminate\Support\Str::random(32))
+@php($usdt = user()->usdt)
 <div class="deposit--box text-center">
     <div class="d-flex justify-content-center">
         <div class="small-box">
-            <h2 class="text-center">Choose coin Deposit</h2>
-            <p class="mb-0">Minimum deposit 20 USDT</p>
-            <p class="mb-0">Only send USDT BEP20, BNB BEP20 to this address.</p>
-            <p class="mb-0">Sending any other asset to this address may result in the loss of your deposit!</p>
-            <div class="qr-code-box">
-                <div
-                    class="d-flex justify-content-center mt-3 mb-3"
-                    data-qr-width="160"
-                    data-qr-height="160"
-                    data-qr="{{ $stringRandom }}"></div>
-                <h3>QR CODE</h3>
-            </div>
-            <div class="input-canable-copy group-deposit-text">
-                <input type="text" id="btn-deposit-text" class="form-control" value="{{ $stringRandom }}" disabled>
-                <button onclick="Home.copyTextRaw('{{ $stringRandom }}', () => alertify.success('Copy Success'))">
-                    <img src="{{ asset('image/adm/icon/copy-icon.png') }}" alt="Copy" class="w-100">
-                </button>
-            </div>
+            @if($usdt == null)
+                <div class="alert alert-info">
+                    We are creating a wallet for you, please wait a moment!
+                </div>
+            @else
+                <h2 class="text-center">Choose coin Deposit</h2>
+                <p class="mb-0">Minimum deposit 20 USDT</p>
+                <p class="mb-0">Only send USDT BEP20, BNB BEP20 to this address.</p>
+                <p class="mb-0">Sending any other asset to this address may result in the loss of your deposit!</p>
+                <div class="qr-code-box">
+                    <div
+                        class="d-flex justify-content-center mt-3 mb-3"
+                        data-qr-width="160"
+                        data-qr-height="160"
+                        data-qr="{{ $usdt->token }}"></div>
+                    <h3>QR CODE</h3>
+                </div>
+                <div class="input-canable-copy group-deposit-text">
+                    <input type="text" id="btn-deposit-text" class="form-control" value="{{ $usdt->token }}" disabled>
+                    <button onclick="Home.copyTextRaw('{{ $usdt->token }}', () => alertify.success('Copy Success'))">
+                        <img src="{{ asset('image/adm/icon/copy-icon.png') }}" alt="Copy" class="w-100">
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
     <div class="deposit-history">

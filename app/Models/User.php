@@ -257,6 +257,11 @@ class User extends Authenticatable
         return $this->belongsTo(MoneyModel::class, 'id', 'user_id')->first();
     }
 
+    public function usdt(): BelongsTo
+    {
+        return $this->belongsTo(UserUsdt::class, 'id', 'user_id');
+    }
+
     public static function countMoneyInvest($user_id)
     {
         return InvestmentBought::whereUserId($user_id)->get()->sum('money_buy');
