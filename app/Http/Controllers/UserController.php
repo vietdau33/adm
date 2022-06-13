@@ -14,6 +14,7 @@ use App\Models\HistoryIb;
 use App\Models\InternalTransferHistory;
 use App\Models\InvestmentBought;
 use App\Models\LinkDaily;
+use App\Models\ProfitLogs;
 use App\Models\SystemSetting;
 use App\Models\TransferToAdmin;
 use App\Models\User;
@@ -709,23 +710,38 @@ class UserController extends Controller
             foreach (InvestmentBought::getInvestBought(user()->id) as $invest) {
                 $dateCreate = Carbon::parse($invest->created_at);
                 $diffTime = $dateCreate->diff($now);
+                $accept_daily = false;
                 if($invest->days > 0 && diffDaysWithNow($invest->created_at) > $invest->days) {
                     continue;
                 }
                 if ($diffTime->y + $diffTime->m + $diffTime->d > 0) {
-                    $invest->daily_today = 1;
-                    $invest->save();
+                    $accept_daily = true;
                 }
                 if ($hourNow >= 7 && (int)$dateCreate->format('H') < 7) {
-                    $invest->daily_today = 1;
-                    $invest->save();
+                    $accept_daily = true;
                 }
                 if (
                     (int)$dateCreate->format('d') < $now->format('d')
                     && (int)$dateCreate->format('H') < 7
                 ) {
+                    $accept_daily = true;
+                }
+                if($accept_daily) {
                     $invest->daily_today = 1;
                     $invest->save();
+
+                    $userMoney = $invest->user->money;
+                    $profit = $invest->profit * $invest->money_buy / 100;
+                    $userMoney->profit += $profit;
+                    $userMoney->save();
+
+                    ModelService::insert(ProfitLogs::class, [
+                        'user_id' => $invest->user_id,
+                        'profit_calc' => $invest->profit,
+                        'money_calc' => $invest->money_buy,
+                        'type_invest' => $invest->type,
+                        'profit' => $profit,
+                    ]);
                 }
             }
             DB::commit();
