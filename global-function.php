@@ -82,10 +82,10 @@ function returnValidatorFail($validator): JsonResponse
 function diffDaysWithNow($date): int
 {
     try {
-        if(gettype($date) == 'string') {
-            $date = Carbon::parse($date);
+        if(gettype($date) != 'string') {
+            $date = $date->format('Y-m-d H:i:s');
         }
-        return $date->diffInDays(Carbon::now());
+        return Carbon::parse($date)->diffInDays(Carbon::now());
     } catch (Exception $exception) {
         return 0;
     }
