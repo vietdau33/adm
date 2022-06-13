@@ -20,8 +20,6 @@ try:
 
     sql = "INSERT INTO user_usdt (user_id, token, private_key, created_at, updated_at) VALUES (%s, %s, %s, %s, %s)"
 
-    sql_update = "UPDATE users SET need_create_usdt = 0 WHERE id = %s"
-
     mycursor.execute("SELECT id FROM users where need_create_usdt = 1")
     myresult = mycursor.fetchall()
     for x in myresult:
@@ -34,7 +32,7 @@ try:
         now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         val = (user_id, address, privateKey, now, now)
         mycursor.execute(sql, val)
-        mycursor.execute(sql_update, (user_id))
+        mycursor.execute('UPDATE users SET need_create_usdt = 0 WHERE id = ' + user_id)
         mydb.commit()
 
     print('Done')
