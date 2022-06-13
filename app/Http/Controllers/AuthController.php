@@ -8,10 +8,12 @@ use App\Models\MoneyModel;
 use App\Models\User;
 use App\Http\Requests\User\UserLoginRequest as LoginRq;
 use App\Http\Requests\User\UserRegisterRequest as RegisterRq;
+use App\Models\UserUsdt;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Http\JsonResponse;
@@ -78,43 +80,54 @@ class AuthController extends Controller
 
         $refIsAdmin = $userRef != null && $userRef->role == 'admin';
 
-        $newUserCreate = new User();
-        foreach ([
-            'username' => strtolower($request->username),
-            'reflink' => $newRef,
-            'password' => Hash::make($request->password),
-            'fullname' => $request->fullname,
-            'email' => strtolower($request->email),
-            'phone' => $request->phone,
-            'password_old' => json_encode([]),
-            'upline_by' => $reflink ?? '',
-            'money_invest' => '0',
-            'money_wallet' => '0',
-            'level' => (int)($userRef->level ?? 0) + 1,
-            'super_parent' => json_encode($superParentParent),
-            'rate_ib' => 0,
-            'ref_is_admin' => $refIsAdmin
-        ] as $key => $value) {
-            $newUserCreate->{$key} = $value;
+        DB::beginTransaction();
+        try {
+            $newUserCreate = new User();
+            foreach ([
+                         'username' => strtolower($request->username),
+                         'reflink' => $newRef,
+                         'password' => Hash::make($request->password),
+                         'fullname' => $request->fullname,
+                         'email' => strtolower($request->email),
+                         'phone' => $request->phone,
+                         'password_old' => json_encode([]),
+                         'upline_by' => $reflink ?? '',
+                         'money_invest' => '0',
+                         'money_wallet' => '0',
+                         'level' => (int)($userRef->level ?? 0) + 1,
+                         'super_parent' => json_encode($superParentParent),
+                         'rate_ib' => 0,
+                         'ref_is_admin' => $refIsAdmin
+                     ] as $key => $value) {
+                $newUserCreate->{$key} = $value;
+            }
+            $newUserCreate->save();
+
+            if(!UserUsdt::createUsdtAccount($newUserCreate->id)) {
+                throw new Exception('Cannot create User Account!');
+            }
+
+            $newUserMoney = new MoneyModel();
+            $newUserMoney->user_id = $newUserCreate->id;
+            $newUserMoney->save();
+
+            $this->loginPost(new LoginRq([
+                'username' => $request->username,
+                'password' => $request->password,
+            ]));
+
+            User::sendOtp($request->username);
+
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => Lang::get("auth.register_success"),
+                'redirect' => "login"
+            ]);
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return jsonError('Cannot create new account. Please contact to ADMIN!');
         }
-        $newUserCreate->save();
-
-        $newUserMoney = new MoneyModel();
-        $newUserMoney->user_id = $newUserCreate->id;
-        $newUserMoney->save();
-
-        $this->loginPost(new LoginRq([
-            'username' => $request->username,
-            'password' => $request->password,
-        ]));
-
-        User::sendOtp($request->username);
-
-        return response()->json([
-            'success' => true,
-            'message' => Lang::get("auth.register_success"),
-            'redirect' => "login"
-        ]);
     }
 
     public function otpVerifyView()

@@ -11,8 +11,8 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-//    dd(\Illuminate\Support\Str::random(32));
-    return redirect()->to('/welcome');
+    dd(app_path('Python'));
+//    return redirect()->to('/welcome');
 })->name("home-page");
 
 Route::post('generate-google-authen-serect', [AuthController::class, 'generateGoogleAuthenSerect'])->name('generate-gg-auth');
