@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class UserUsdt extends Model
 {
@@ -22,10 +24,14 @@ class UserUsdt extends Model
     {
         try {
             $path = app_path('Python/create_account.py');
-            $output = shell_exec("$path $user_id 2>&1");
-            dd($output);
-            return $output[0] == 'Done';
+            $process = new Process(['python3', "$path $user_id"]);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+            dd($process->getOutput());
         } catch (Exception $exception) {
+            dd($exception->getMessage());
             return false;
         }
     }
