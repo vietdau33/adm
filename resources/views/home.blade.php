@@ -145,7 +145,7 @@
             <div class="area-qr-code">
                 <div class="title-qr text-center">Referral Program</div>
                 <div
-                    class="box-qr"
+                    class="box-qr d-flex justify-content-center"
                     data-qr="{{ route('reflink', user()->reflink) }}"
                     data-qr-width="290"
                     data-qr-height="290"></div>
