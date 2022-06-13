@@ -2,18 +2,27 @@
 @section("contents")
     @if(!empty($banners['top']))
         @if(count($banners['top']) > 1)
-            <section class="mb-3 splide splide-banner splide-banner-top" aria-label="Banner Top Slide">
-                <div class="splide__track">
-                    <ul class="splide__list align-items-center">
-                        @foreach($banners['top'] as $banner)
-                            <li class="splide__slide" style="overflow: hidden; border-radius: 14px">
-                                <img src="{{ asset('storage/banner/' . $banner->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
-                                <img src="{{ asset('storage/banner/' . $banner->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
-                            </li>
-                        @endforeach
-                    </ul>
+            <div class="banner banner-top mb-3 position-relative">
+                <section class="splide splide-banner splide-banner-top" aria-label="Banner Top Slide">
+                    <div class="splide__track">
+                        <ul class="splide__list align-items-center">
+                            @foreach($banners['top'] as $banner)
+                                <li class="splide__slide" style="overflow: hidden; border-radius: 14px">
+                                    <img src="{{ asset('storage/banner/' . $banner->sp_path) }}" alt="Bg 1" class="w-100 d-lg-none">
+                                    <img src="{{ asset('storage/banner/' . $banner->pc_path) }}" alt="Bg 1" class="w-100 d-none d-lg-block">
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </section>
+                <div class="overlay-daily-mission">
+                    <h3>Daily Mission</h3>
+                    <button class="btn btn-primary btn-gradient text-uppercase btn-view-daily">View</button>
+                    <div class="close-icon">
+                        <img src="{{ asset('image/adm/icon/close.svg') }}" class="w-100" alt="Close">
+                    </div>
                 </div>
-            </section>
+            </div>
         @elseif(count($banners['top']) == 1)
             <div class="banner banner-top mb-3 position-relative">
                 @php($bannerTop = $banners['top']->first())
