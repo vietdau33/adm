@@ -42,7 +42,7 @@ class DailyMissionLogs extends Model
         foreach (InvestmentBought::getInvestBought(user()->id) as $invest) {
             $dateCreate = Carbon::parse($invest->created_at);
             $diffTime = $dateCreate->diff($now);
-            if(diffDaysWithNow($invest->created_at) > $invest->days) {
+            if($invest->days > 0 && diffDaysWithNow($invest->created_at) > $invest->days) {
                 continue;
             }
 

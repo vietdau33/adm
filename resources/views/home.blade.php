@@ -71,7 +71,7 @@
         <div class="area-invest-activing form-radius mt-3 mb-3 pt-2">
             <h3>List Package Invest Activing</h3>
             <div class="table-list-invest">
-                <table class="table text-center mb-0">
+                <table class="table table-responsive-md text-center mb-0">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">No.</th>
@@ -184,10 +184,11 @@
     <script>
         $('.splide-banner').each(function () {
             new Splide(this, {
-                type: 'loop',
+                type: 'fade',
                 perPage: 1,
                 autoplay: true,
-                interval: 3000,
+                interval: 3500,
+                rewind: true,
                 pagination: false,
                 arrows: false,
                 pauseOnHover: false
