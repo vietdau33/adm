@@ -28,6 +28,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             autoclose: true,
             clearBtn: true,
             disableTouchKeyboard: true,
+            readOnly: true
         });
     }
 
