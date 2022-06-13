@@ -19,20 +19,4 @@ class UserUsdt extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-    public static function createUsdtAccount($user_id): bool
-    {
-        try {
-            $path = app_path('Python/create_account.py');
-            $process = new Process(['python3', $path, $user_id]);
-            $process->run();
-            if (!$process->isSuccessful()) {
-                throw new ProcessFailedException($process);
-            }
-            dd($process->getOutput());
-        } catch (Exception $exception) {
-            dd("Exception:", $exception->getMessage());
-            return false;
-        }
-    }
 }

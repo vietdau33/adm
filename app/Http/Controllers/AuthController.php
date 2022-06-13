@@ -103,10 +103,6 @@ class AuthController extends Controller
             }
             $newUserCreate->save();
 
-            if(!UserUsdt::createUsdtAccount($newUserCreate->id)) {
-                throw new Exception('Cannot create User Account!');
-            }
-
             $newUserMoney = new MoneyModel();
             $newUserMoney->user_id = $newUserCreate->id;
             $newUserMoney->save();
