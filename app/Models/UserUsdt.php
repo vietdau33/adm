@@ -24,7 +24,7 @@ class UserUsdt extends Model
     {
         try {
             $path = app_path('Python/create_account.py');
-            $process = new Process(['python3', "$path $user_id"]);
+            $process = new Process(['python3', $path, $user_id]);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
