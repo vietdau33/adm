@@ -15,13 +15,15 @@
                         </ul>
                     </div>
                 </section>
-                <div class="overlay-daily-mission">
-                    <h3>Daily Mission</h3>
-                    <button class="btn btn-primary btn-gradient text-uppercase btn-view-daily">View</button>
-                    <div class="close-icon">
-                        <img src="{{ asset('image/adm/icon/close.svg') }}" class="w-100" alt="Close">
+                @if($showDailyToday)
+                    <div class="overlay-daily-mission">
+                        <h3>Daily Mission</h3>
+                        <button class="btn btn-primary btn-gradient text-uppercase btn-view-daily">View</button>
+                        <div class="close-icon">
+                            <img src="{{ asset('image/adm/icon/close.svg') }}" class="w-100" alt="Close">
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         @elseif(count($banners['top']) == 1)
             <div class="banner banner-top mb-3 position-relative">
