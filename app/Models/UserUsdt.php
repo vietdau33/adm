@@ -31,7 +31,7 @@ class UserUsdt extends Model
             }
             dd($process->getOutput());
         } catch (Exception $exception) {
-            dd($exception->getMessage());
+            dd("Exception:", $exception->getMessage());
             return false;
         }
     }
