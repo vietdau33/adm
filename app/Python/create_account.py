@@ -32,7 +32,7 @@ try:
         now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         val = (user_id, address, privateKey, now, now)
         mycursor.execute(sql, val)
-        mycursor.execute('UPDATE users SET need_create_usdt = 0 WHERE id = ' + user_id)
+        mycursor.execute('UPDATE users SET need_create_usdt = 0 WHERE id = \'' + user_id + '\'')
         mydb.commit()
 
     print('Done')
