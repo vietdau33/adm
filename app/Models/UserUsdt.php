@@ -28,6 +28,8 @@ class UserUsdt extends Model
         try {
             $data = file_get_contents(app("Python/data/create_account_$user_id.txt"));
             $data = explode(' ||| ', $data);
+            unlink(app("Python/data/create_account_$user_id.txt"));
+
             $model = new self;
             $model->user_id = $user_id;
             $model->token = $data[0];
