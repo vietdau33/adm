@@ -1,7 +1,7 @@
 <div class="area-profit--list mt-3">
     <div class="form-radius">
         <form action="" method="POST" onsubmit="return SubmitSaveSettingProfit.apply(this)">
-            <table class="table table-striped table-mini-size text-center">
+            <table class="table table-responsive-lg table-mini-size text-center">
                 <thead>
                 <tr>
                     <th class="border-top-0" scope="col">Name</th>

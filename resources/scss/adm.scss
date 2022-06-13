@@ -135,6 +135,7 @@
 
 .settings-display {
     margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
 .multi-steps {
@@ -249,9 +250,13 @@ $bgBoxMoney: (
     "ib": "bonus_bg.png"
 );
 
-@each $type, $icon in $bgBoxMoney {
-    .box-money.money-#{$type} {
-        background-image: url("/image/adm/#{$icon}");
+.box-money {
+    margin-bottom: 5px !important;
+
+    @each $type, $icon in $bgBoxMoney {
+        &.money-#{$type} {
+            background-image: url("/image/adm/#{$icon}");
+        }
     }
 }
 
@@ -273,6 +278,7 @@ $bgInvestBox: (
     .investment-plan {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
 
         .invest-box {
             width: calc(100% / 4 - 20px);
@@ -284,6 +290,14 @@ $bgInvestBox: (
             margin: 10px 10px 1.75rem;
             border-radius: 10px;
             position: relative;
+
+            @media (max-width: 991px) {
+                width: calc(100% / 2 - 20px);
+            }
+
+            @media (max-width: 575px) {
+                width: calc(100% - 20px);
+            }
 
             h5 {
                 text-align: center;
@@ -349,12 +363,21 @@ $bgInvestBox: (
         overflow: hidden;
         padding: 30px;
 
+        @media (max-width: 991px) {
+            max-width: 100%;
+            padding: 15px;
+        }
+
         .title-qr {
             font-size: 20px;
         }
 
         .box-qr {
             padding: 10px 0;
+        }
+
+        p {
+            word-break: break-word;
         }
     }
 }
@@ -461,6 +484,7 @@ $bgInvestBox: (
             h3 {
                 color: #d30808;
                 margin-top: 0.75rem;
+                word-break: break-word;
             }
         }
 
@@ -491,6 +515,44 @@ $bgInvestBox: (
 
         li {
             margin: 4px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        position: fixed;
+        top: 0;
+        right: 0;
+        max-width: 300px;
+        width: 100vw;
+        height: 100vh;
+        background: rgb(239 246 255 / 90%);
+        box-shadow: 0 0 4px 1px rgb(0 0 0 / 30%);
+        transition: all .3s;
+        transform: translateX(110%);
+
+        &.show {
+            transform: translateX(0);
+        }
+
+        ul {
+            flex-direction: column;
+            align-items: center;
+
+            li {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+
+        .close-menu-icon {
+            text-align: right;
+
+            .icon {
+                display: inline-block;
+                width: 54px;
+                padding: 10px;
+                cursor: pointer;
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 <div class="setting--box container">
     <form action="" method="POST" onsubmit="return SubmitChangeUserProfile.apply(this)">
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-4 col-12">
                 <div class="box-info">
                     <div class="box-avatar text-center">
                         <div class="box-avatar--img">
@@ -14,7 +14,7 @@
                     {{--</div>--}}
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-lg-8 col-12 mt-3 mt-lg-0">
                 <div class="form-info">
                     <div class="form-group">
                         <label for="reflink">Reflink</label>
@@ -32,7 +32,7 @@
                         <label for="phone">Phone Number</label>
                         <input type="text" class="form-control" id="phone" name="phone" value="{{ user()->phone }}">
                     </div>
-                    <div class="text-right">
+                    <div class="text-center">
                         <button class="btn btn-primary btn-gradient">Update</button>
                     </div>
                 </div>

@@ -29,6 +29,11 @@
                 <img src="{{ asset('image/adm/ai_bg.png') }}" alt="AI">
             </div>
             <div class="menu-header">
+                <div class="close-menu-icon d-lg-none" onclick="this.parentNode.classList.remove('show')">
+                    <div class="icon">
+                        <img src="{{ asset('image/adm/icon/close.svg') }}" class="w-100" alt="Close">
+                    </div>
+                </div>
                 @if(is_admin())
                     @include('menu-header.admin')
                 @else
@@ -36,9 +41,9 @@
                 @endif
             </div>
             {{--<a class="btn-logout" href="{{ route('auth.logout.get') }}">Logout</a>--}}
-            {{--<div class="menu-icon-bars" onclick="Main.showLeftMenu()">--}}
-            {{--    <i class="fas fa-bars"></i>--}}
-            {{--</div>--}}
+            <div class="menu-icon-bars" onclick="this.previousElementSibling.classList.add('show')">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
         <div class="container-fluid main-content pt-3 pb-3" id="main-content">
             @yield('contents')

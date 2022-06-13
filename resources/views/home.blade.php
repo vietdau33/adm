@@ -78,7 +78,7 @@
             @endforeach
         </div>
     </div>
-    <div class="container">
+    <div class="container p-0">
         <div class="area-invest-activing form-radius mt-3 mb-3 pt-2">
             <h3>List Package Invest Activing</h3>
             <div class="table-list-invest">
@@ -107,7 +107,7 @@
                             @else
                                 <td>{{ $diffDay }} {{ $diffDay > 1 ? 'days' : 'day' }}</td>
                             @endif
-                            <td>{{ __d($package->created_at, 'Y-m-d H:i:s') }}</td>
+                            <td style="min-width: 140px;">{{ __d($package->created_at, 'Y-m-d H:i:s') }}</td>
                         </tr>
                     @endforeach
                     @if($invest_bought_activing->count() <= 0)

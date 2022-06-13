@@ -80,7 +80,7 @@
             <div class="form-group text-center">
                 <button class="btn btn-primary btn-gradient" onclick="Auth.register(this)">{{ __('auth.btn_create') }}</button>
             </div>
-            <div class="form-group mb-0 text-right">
+            <div class="form-group mb-0 text-center">
                 <a href="{{ route('auth.login.view') }}" class="color-href">{{ __("auth.has_one_account") }}</a>
             </div>
         </form>

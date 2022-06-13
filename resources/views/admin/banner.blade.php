@@ -5,7 +5,7 @@
             <button class="btn btn-success btn-gradient btn-create-banner">Create Banner</button>
         </div>
         <div class="area-banner form-radius mt-2">
-            <table class="table table-mini-size text-center">
+            <table class="table table-responsive-lg table-mini-size text-center">
                 <thead>
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>

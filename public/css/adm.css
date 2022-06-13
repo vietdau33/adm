@@ -118,6 +118,7 @@
 
 .settings-display {
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 .multi-steps {
@@ -210,18 +211,18 @@
   border-radius: 14px;
 }
 
+.box-money {
+  margin-bottom: 5px !important;
+}
 .box-money.money-invest {
   background-image: url("/image/adm/wallet_bg.png");
 }
-
 .box-money.money-wallet {
   background-image: url("/image/adm/wallet_bg.png");
 }
-
 .box-money.money-profit {
   background-image: url("/image/adm/profit_bg.png");
 }
-
 .box-money.money-ib {
   background-image: url("/image/adm/bonus_bg.png");
 }
@@ -235,6 +236,7 @@
 .area-investment .investment-plan {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .area-investment .investment-plan .invest-box {
   width: calc(25% - 20px);
@@ -246,6 +248,16 @@
   margin: 10px 10px 1.75rem;
   border-radius: 10px;
   position: relative;
+}
+@media (max-width: 991px) {
+  .area-investment .investment-plan .invest-box {
+    width: calc(50% - 20px);
+  }
+}
+@media (max-width: 575px) {
+  .area-investment .investment-plan .invest-box {
+    width: calc(100% - 20px);
+  }
 }
 .area-investment .investment-plan .invest-box h5 {
   text-align: center;
@@ -309,11 +321,20 @@
   overflow: hidden;
   padding: 30px;
 }
+@media (max-width: 991px) {
+  .user-profile-card .area-qr-code {
+    max-width: 100%;
+    padding: 15px;
+  }
+}
 .user-profile-card .area-qr-code .title-qr {
   font-size: 20px;
 }
 .user-profile-card .area-qr-code .box-qr {
   padding: 10px 0;
+}
+.user-profile-card .area-qr-code p {
+  word-break: break-word;
 }
 
 .menu-inline-blue ul {
@@ -401,6 +422,7 @@
 .content-setting .setting--box .box-info h3 {
   color: #d30808;
   margin-top: 0.75rem;
+  word-break: break-word;
 }
 .content-setting .setting--box .row-upload-image {
   display: flex;
@@ -425,6 +447,40 @@
 }
 .menu-header ul li {
   margin: 4px;
+}
+@media (max-width: 991px) {
+  .menu-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    max-width: 300px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(239, 246, 255, 0.9);
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    transform: translateX(110%);
+  }
+  .menu-header.show {
+    transform: translateX(0);
+  }
+  .menu-header ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  .menu-header ul li {
+    width: 100%;
+    max-width: 250px;
+  }
+  .menu-header .close-menu-icon {
+    text-align: right;
+  }
+  .menu-header .close-menu-icon .icon {
+    display: inline-block;
+    width: 54px;
+    padding: 10px;
+    cursor: pointer;
+  }
 }
 
 .alertify.alertify--success .ajs-header {

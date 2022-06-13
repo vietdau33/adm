@@ -2,11 +2,11 @@
 <div class="profit--box text-center">
     <div class="profit-history mt-3">
         <form action="" method="GET">
-            <div class="d-flex mb-3">
+            <div class="d-flex flex-wrap mb-3">
                 <input
                     type="text"
                     style="width: 210px; max-width: 100%"
-                    class="form-control mr-2 bs-datepicker"
+                    class="form-control mr-2 mb-1 bs-datepicker"
                     placeholder="Start date"
                     name="start_date"
                     value="{{ request()->start_date ?? '' }}"
@@ -15,14 +15,14 @@
                 <input
                     type="text"
                     style="width: 210px; max-width: 100%"
-                    class="form-control mr-2 bs-datepicker"
+                    class="form-control mr-2 mb-1 bs-datepicker"
                     placeholder="End date"
                     name="end_date"
                     value="{{ request()->end_date ?? '' }}"
                     autocomplete="off"
                 />
-                <button class="btn btn-success btn-gradient">Search</button>
-                <button type="reset" class="btn btn-secondary btn-gradient ml-1">Clear</button>
+                <button class="btn btn-success btn-gradient mb-1">Search</button>
+                <button type="reset" class="btn btn-secondary btn-gradient ml-1 mb-1">Clear</button>
             </div>
         </form>
         <div class="form-radius">
@@ -42,7 +42,7 @@
                 @foreach($histories->items() as $history)
                     <tr>
                         <td>{{ $count++ }}</td>
-                        <td>{{ __d($history->created_at) }}</td>
+                        <td style="min-width: 140px">{{ __d($history->created_at) }}</td>
                         <td>{{ $history->money_calc }}</td>
                         <td>{{ ucfirst($history->type_invest) }}</td>
                         <td>{{ $history->profit_calc }}%</td>

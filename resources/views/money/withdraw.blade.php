@@ -55,11 +55,11 @@
             <h3 class="mb-0">HISTORY WITHDRAW</h3>
         </div>
         <form action="" method="GET">
-            <div class="d-flex mb-3">
+            <div class="d-flex flex-wrap mb-3">
                 <input
                     type="text"
                     style="width: 210px; max-width: 100%"
-                    class="form-control mr-2 bs-datepicker"
+                    class="form-control mr-2 mb-1 bs-datepicker"
                     placeholder="Start date"
                     name="start_date"
                     value="{{ request()->start_date ?? '' }}"
@@ -68,18 +68,18 @@
                 <input
                     type="text"
                     style="width: 210px; max-width: 100%"
-                    class="form-control mr-2 bs-datepicker"
+                    class="form-control mr-2 mb-1 bs-datepicker"
                     placeholder="End date"
                     name="end_date"
                     value="{{ request()->end_date ?? '' }}"
                     autocomplete="off"
                 />
-                <button class="btn btn-success btn-gradient">Search</button>
-                <button type="reset" class="btn btn-secondary btn-gradient ml-1">Clear</button>
+                <button class="btn btn-success btn-gradient mb-1">Search</button>
+                <button type="reset" class="btn btn-secondary btn-gradient ml-1 mb-1">Clear</button>
             </div>
         </form>
         <div class="form-radius pb-1">
-            <table class="table table-responsive-mg mb-0">
+            <table class="table table-responsive-md mb-0">
                 <thead>
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>
@@ -97,7 +97,7 @@
                         <td>{{ $history->amount }}</td>
                         <td>{{ $history->address }}</td>
                         <td>{!! $history->getStatus() !!}</td>
-                        <td>{{ __d($history->created_at, 'Y-m-d H:i') }}</td>
+                        <td style="min-width: 140px;">{{ __d($history->created_at, 'Y-m-d H:i') }}</td>
                     </tr>
                 @endforeach
                 @if($histories->count() <= 0)

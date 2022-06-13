@@ -75,3 +75,11 @@
     left: 5px;
     color: #636e72;
 }
+
+
+@media (max-width: 455px) {
+    .auth-smartphone-style {
+        flex-direction: column;
+        align-items: center;
+    }
+}

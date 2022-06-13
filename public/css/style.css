@@ -612,16 +612,13 @@ button:disabled{
 .left-menu-mobile .header-nav .logo-header img {
     width: 120px;
 }
-.left-menu-mobile .header-nav .menu-icon-bars{
-    display: none;
-}
 
 .left-menu-mobile .header-nav .menu-icon-bars i{
     display: inline-block;
     height: 100%;
     padding: 7px 22px;
     font-size: 32px;
-    color: #fff;
+    color: #242424;
     cursor: pointer;
 }
 
@@ -680,30 +677,6 @@ button:disabled{
         width: 100%;
         max-width: 100%;
     }
-    .left-menu-mobile .header-nav .menu-icon-bars{
-        display: block;
-    }
-    .left-menu-mobile .left-navigation{
-        position: fixed;
-        left: 0;
-        top: 0;
-        transition: ease-in-out .3s;
-        transform: translateX(-100%);
-        z-index: 2020;
-    }
-    .left-menu-mobile-open .left-navigation{
-        transform: translateX(0);
-    }
-
-    .left-menu-mobile-open .overlay-left-menu{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0,0,0,0.3);
-        z-index: 2019;
-    }
 }
 
 @media (max-width: 820px) {
@@ -755,11 +728,7 @@ button:disabled{
 
 @media (max-width: 535px){
     .settings-display .box-money{
-        margin: 0 !important;
         width: 100% !important;
-    }
-    .box-money.money-invest, .box-money.money-ib{
-        margin-bottom: 5px !important;
     }
 }
 

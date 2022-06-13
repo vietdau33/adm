@@ -16,7 +16,7 @@
             <div class="form-group text-center">
                 <button class="btn btn-primary btn-gradient" onclick="Auth.login(this)">{{ __('auth.btn_login') }}</button>
             </div>
-            <div class="form-group mb-0 d-flex justify-content-between">
+            <div class="form-group mb-0 d-flex justify-content-between auth-smartphone-style">
                 <a href="{{ route('auth.forgotpassword.get') }}" class="color-href">{{ __("auth.forgot_password") }}</a>
                 @if(config('app.show-register', false))
                     <a href="{{ route('auth.register.view') }}" class="color-href">{{ __("auth.create_new_account") }}</a>

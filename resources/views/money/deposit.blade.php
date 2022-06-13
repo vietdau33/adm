@@ -33,22 +33,23 @@
             <img src="{{ asset('image/adm/icon/history.png') }}" alt="History" style="width: 42px">
             <h3 class="mb-0">HISTORY DEPOSIT</h3>
         </div>
-        <div class="d-flex mb-3">
-            <input type="text" style="width: 210px; max-width: 100%" class="form-control mr-2" value="{{ date('Y-m-d') }}">
-            <input type="text" style="width: 210px; max-width: 100%" class="form-control mr-2" value="{{ date('Y-m-d') }}">
-            <button class="btn btn-success btn-gradient">Search</button>
+        <div class="d-flex flex-wrap mb-3">
+            <input type="text" style="width: 210px; max-width: 100%" class="form-control mr-2 mb-1" value="{{ date('Y-m-d') }}">
+            <input type="text" style="width: 210px; max-width: 100%" class="form-control mr-2 mb-1" value="{{ date('Y-m-d') }}">
+            <button class="btn btn-success btn-gradient mb-1">Search</button>
         </div>
-        <table class="table table-striped" style="background: #fff">
-            <thead>
-            <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Note</th>
-                <th scope="col">Status</th>
-                <th scope="col">Created Date</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="form-radius">
+            <table class="table table-responsive mb-0">
+                <thead>
+                <tr>
+                    <th class="border-top-0" scope="col">No.</th>
+                    <th class="border-top-0" scope="col">Amount</th>
+                    <th class="border-top-0" scope="col">Note</th>
+                    <th class="border-top-0" scope="col">Status</th>
+                    <th class="border-top-0" scope="col">Created Date</th>
+                </tr>
+                </thead>
+                <tbody>
                 {{--@php($count = 1)--}}
                 {{--@foreach($histories->items() as $history)--}}
                 {{--    <tr>--}}
@@ -56,7 +57,7 @@
                 {{--        <td>{{ $history->amount }}</td>--}}
                 {{--        <td>{{ $history->note }}</td>--}}
                 {{--        <td>{{ $history->status }}</td>--}}
-                {{--        <td>{{ __d($user->created_at) }}</td>--}}
+                {{--        <td style="min-width: 140px">{{ __d($user->created_at) }}</td>--}}
                 {{--    </tr>--}}
                 {{--@endforeach--}}
                 {{--@if($histories->count() <= 0)--}}
@@ -67,8 +68,8 @@
                 <tr>
                     <td colspan="5">No History</td>
                 </tr>
-            </tbody>
-        </table>
-        {{--{!! view('pages.pagination', ['datas' => $histories])->render() !!}--}}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

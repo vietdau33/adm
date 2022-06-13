@@ -5,7 +5,7 @@
             <button class="btn btn-success btn-gradient btn-create-link">Create Link</button>
         </div>
         <div class="area-link form-radius mt-2">
-            <table class="table table-striped table-mini-size text-center">
+            <table class="table table-responsive-md table-mini-size text-center">
                 <thead>
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>
@@ -19,7 +19,7 @@
                 @foreach($links->items() as $link)
                     <tr>
                         <td>{{ $count++ }}</td>
-                        <td>{{ $link->link }}</td>
+                        <td style="max-width: 550px;min-width:250px;word-break: break-word">{{ $link->link }}</td>
                         <td>
                             <select class="form-control status_link m-auto" style="width: 85px;" data-id="{{ $link->id }}">
                                 <option value="0" {{ $link->active === 0 ? 'selected' : '' }}>Off</option>
