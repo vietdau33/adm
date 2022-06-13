@@ -20,7 +20,7 @@ try:
 
     sql = "INSERT INTO user_usdt (user_id, token, private_key, created_at, updated_at) VALUES (%s, %s, %s, %s, %s)"
 
-    sql_update = "UPDATE users SET need_create_usdt = 0 WHERE id = '%s'"
+    sql_update = "UPDATE users SET need_create_usdt = 0 WHERE id = %s"
 
     mycursor.execute("SELECT id FROM users where need_create_usdt = 1")
     myresult = mycursor.fetchall()
