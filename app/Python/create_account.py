@@ -32,5 +32,5 @@ try:
     mydb.commit()
 
     print('Done')
-except:
-    print('Fail')
+except Exception as e:
+    print(e)

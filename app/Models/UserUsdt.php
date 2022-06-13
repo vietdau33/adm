@@ -22,7 +22,7 @@ class UserUsdt extends Model
     {
         try {
             $path = app_path('Python/create_account.py');
-            $output = shell_exec("python3 $path $user_id");
+            $output = shell_exec("$path $user_id");
             dd($output);
             return $output[0] == 'Done';
         } catch (Exception $exception) {
