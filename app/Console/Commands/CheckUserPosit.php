@@ -54,7 +54,7 @@ class CheckUserPosit extends Command
                 logger($contents);
                 if ($contents['status'] == '0') {
                     logger('status 0');
-                    if($contents['message'] == 'NOTOK' && strpos('Max rate limit reached', $contents['result']) === 0) {
+                    if($contents['message'] == 'NOTOK' && strpos($contents['result'], 'Max rate limit reached') === 0) {
                         sleep(2);
                         logger('try again!');
                         goto try_again;
