@@ -20,6 +20,10 @@ class IsAdminMiddleware
         if(is_admin()){
             return $next($request);
         }
+        if(!logined()) {
+            session()->put('prev_path', '/' . request()->path());
+            return redirect()->to('/auth/login');
+        }
         if(!$request->ajax()){
             return redirect()->to('/home');
         }

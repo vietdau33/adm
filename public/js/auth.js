@@ -46,6 +46,10 @@ const Auth = {
                     case "home" :
                         window.location.href = '/home';
                         break;
+                    default:
+                        if(result.redirect.trim() != '') {
+                            window.location.href = result.redirect.trim();
+                        }
                 }
             });
         };

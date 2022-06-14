@@ -30,12 +30,12 @@ class AuthController extends Controller
     public function loginPost(LoginRq $request): JsonResponse
     {
         $credentials = $request->only('username', 'password');
-
+        $prevPath = session()->pull('prev_path', 'home');
         if (Auth::attempt($credentials)) {
             return response()->json([
                 'success' => true,
                 'message' => Lang::get("auth.login_success"),
-                'redirect' => "home"
+                'redirect' => $prevPath
             ]);
         }
 
