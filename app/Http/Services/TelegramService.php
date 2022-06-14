@@ -20,7 +20,7 @@ class TelegramService {
                 Telegram::sendMessage([
                     'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
                     'parse_mode' => 'HTML',
-                    'text' => '=================='
+                    'text' => '========NEW=====WITHDRAW========'
                 ]);
                 Telegram::sendMessage([
                     'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
