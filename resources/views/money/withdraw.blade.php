@@ -1,10 +1,12 @@
 @php($histories = \App\Models\Withdraw::getHistories(10, true))
+@php($maxWithdraw = \App\Models\Withdraw::getMaxWithdraw())
 <div class="withdraw--box text-center">
     <div class="d-flex justify-content-center">
         <div class="small-box text-left p-3">
             @if(!empty(user()->google2fa_secret))
                 <form action="" method="POST" onsubmit="return SubmitWithdraw.apply(this)">
                     <div class="alert alert-info">You current Wallet: <b>{{ user()->money->wallet }}</b></div>
+                    <div class="alert alert-warning">Amount withdraw maximum is: <b>{{ $maxWithdraw }}</b></div>
                     <div class="form-group">
                         <label for="amount">Amount</label>
                         <input

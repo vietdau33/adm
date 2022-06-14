@@ -59,6 +59,17 @@ class Withdraw extends Model
         return $paginate === false ? $histories->get() : $histories->paginate($paginate)->appends(request()->query());
     }
 
+    public static function getMaxWithdraw () {
+        $maxWithdraw = InvestmentBought::getInvestBought(user()->id)->map(function($invest) {
+            $invest->max_withdraw = $invest->money_buy * $invest->max_withdraw / 100;
+            return $invest;
+        })->sum('max_withdraw');
+
+        $totalWithdraw = Withdraw::whereUserId(user()->id)->where('status', '<>', 3)->get()->sum('amount');
+
+        return $maxWithdraw - $totalWithdraw;
+    }
+
     /**
      * @throws UserException
      */

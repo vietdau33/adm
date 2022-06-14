@@ -18,7 +18,6 @@ class MoneyController extends Controller
     public function deposit()
     {
         return $this->home('deposit');
-        //return $this->withdraw();
     }
 
     public function withdraw()
