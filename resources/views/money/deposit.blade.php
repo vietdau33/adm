@@ -8,9 +8,8 @@
                 </div>
             @else
                 <h2 class="text-center">Choose coin Deposit</h2>
-                <p class="mb-0">Minimum deposit 20 USDT</p>
-                <p class="mb-0">Only send USDT BEP20, BNB BEP20 to this address.</p>
-                <p class="mb-0">Sending any other asset to this address may result in the loss of your deposit!</p>
+                <div class="alert alert-warning">Minimum deposit 20 USDT</div>
+                <div class="alert alert-warning">Only send USDT BEP20, BNB BEP20 to this address.</div>
                 <div class="qr-code-box">
                     <div
                         class="d-flex justify-content-center mt-3 mb-3"
@@ -19,12 +18,14 @@
                         data-qr="{{ $usdt->token }}"></div>
                     <h3>QR CODE</h3>
                 </div>
-                <div class="input-canable-copy group-deposit-text">
+                <div class="input-canable-copy group-deposit-text mb-3">
                     <input type="text" id="btn-deposit-text" class="form-control" value="{{ $usdt->token }}" disabled>
                     <button onclick="Home.copyTextRaw('{{ $usdt->token }}', () => alertify.success('Copy Success'))">
                         <img src="{{ asset('image/adm/icon/copy-icon.png') }}" alt="Copy" class="w-100">
                     </button>
                 </div>
+                <div class="alert alert-warning">Sending any other asset to this address may result in the loss of your deposit!</div>
+                <div class="alert alert-warning mb-0">After receiving the payment order. It will take a while for us to authenticate. After 5 minutes of not receiving money in your wallet, please contact ADMIN immediately.</div>
             @endif
         </div>
     </div>

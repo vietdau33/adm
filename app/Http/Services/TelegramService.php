@@ -9,7 +9,6 @@ class TelegramService {
     public static function sendMessageWithdraw($params): void
     {
         $try = 0;
-
         do {
             try{
                 $text = "There is a new withdrawal request\n<b>Username: </b>" . $params['username'] . "\n";
@@ -26,6 +25,33 @@ class TelegramService {
                     'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
                     'parse_mode' => 'HTML',
                     'text' => $params['address']
+                ]);
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                break;
+            }catch (Exception $exception) {
+                $try++;
+            }
+        }while($try <= 3);
+    }
+
+    public static function sendMessageDeposit($params): void
+    {
+        $try = 0;
+        do {
+            try{
+                $text = "There is a new deposit request\n<b>Username: </b>" . $params['username'] . "\n";
+                $text .= '<b>Amount</b>: ' . $params['amount'] . "\n";
+                $text .= '<b>Hash</b>: ' . $params['hash'] . "\n";
+                $text .= '<b>From Wallet</b>: ' . $params['from'];
+
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => '========NEW=====DEPOSIT========'
                 ]);
                 Telegram::sendMessage([
                     'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
