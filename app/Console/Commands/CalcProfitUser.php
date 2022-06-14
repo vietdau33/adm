@@ -49,12 +49,15 @@ class CalcProfitUser extends Command
     {
         DB::beginTransaction();
         try{
-            foreach ($this->getInvestmentBought($user->id) as $invest) {
-                if(diffDaysWithNow($invest->created_at) > $invest->days) {
-                    continue;
+            foreach ($this->getDailyToDay() as $daily) {
+                $user = $daily->user;
+                foreach ($this->getInvestmentBought($user->id) as $invest) {
+                    if (diffDaysWithNow($invest->created_at) > $invest->days) {
+                        continue;
+                    }
+                    $invest->daily_today = 0;
+                    $invest->save();
                 }
-                $invest->daily_today = 0;
-                $invest->save();
             }
             DB::commit();
         }catch (Exception $exception) {
