@@ -84,6 +84,7 @@ class CheckUserPosit extends Command
                         'block_hash' => $result['blockHash'],
                         'from' => $result['from'],
                         'amount' => $amount,
+                        'contents' => json_encode($result)
                     ]);
 
                     TelegramService::sendMessageDeposit([
