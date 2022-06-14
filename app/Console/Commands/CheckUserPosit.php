@@ -43,20 +43,15 @@ class CheckUserPosit extends Command
      */
     public function handle(): int
     {
-        logger('Running');
         try{
             foreach (UserUsdt::all() as $usdt) {
                 $userMoney = $usdt->user->money;
 
                 try_again:
                 $contents = $this->getTransactionHistory($usdt->token);
-                logger('Token: ' . $usdt->token);
-                logger($contents);
                 if ($contents['status'] == '0') {
-                    logger('status 0');
                     if($contents['message'] == 'NOTOK' && strpos($contents['result'], 'Max rate limit reached') === 0) {
-                        sleep(2);
-                        logger('try again!');
+                        sleep(3);
                         goto try_again;
                     }
                     continue;
@@ -64,12 +59,10 @@ class CheckUserPosit extends Command
                 $logs = DepositLogs::whereUserId($usdt->user_id)->get()->pluck('hash')->toArray();
                 foreach ($contents['result'] as $result) {
                     if (in_array($result['hash'], $logs)) {
-                        logger('isset hash');
                         continue;
                     }
 
                     if (!isset($result['value'])) {
-                        logger('not see value');
                         continue;
                     }
 
@@ -79,7 +72,10 @@ class CheckUserPosit extends Command
                     //    continue;
                     //}
 
+                    logger('Before: ' . $userMoney->wallet);
                     $userMoney->wallet += $amount;
+                    logger('Plus: ' . $amount);
+                    logger('After: ' . $userMoney->wallet);
 
                     ModelService::insert(DepositLogs::class, [
                         'user_id' => $usdt->user_id,
