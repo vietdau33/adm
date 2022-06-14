@@ -51,6 +51,7 @@ class CheckUserPosit extends Command
                 try_again:
                 $contents = $this->getTransactionHistory($usdt->token);
                 if ($contents['status'] == '0') {
+                    logger($contents['result']);
                     if($contents['message'] == 'NOTOK' && strpos($contents['result'], 'Max rate limit reached') === 0) {
                         sleep(3);
                         goto try_again;
