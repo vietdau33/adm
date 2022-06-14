@@ -6,6 +6,7 @@ use App\Http\Services\ModelService;
 use App\Http\Services\TelegramService;
 use App\Models\DepositLogs;
 use App\Models\UserUsdt;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -43,46 +44,55 @@ class CheckUserPosit extends Command
     public function handle(): int
     {
         logger('Running');
-        foreach (UserUsdt::all() as $usdt) {
-            $contents = $this->getTransactionHistory($usdt->token);
-            $userMoney = $usdt->user->money;
-            if ($contents['status'] == '0') {
-                continue;
-            }
-            $logs = DepositLogs::whereUserId($usdt->user_id)->get()->pluck('hash')->toArray();
-            foreach ($contents['result'] as $result) {
-                if (in_array($result['hash'], $logs)) {
+        try{
+            foreach (UserUsdt::all() as $usdt) {
+                $contents = $this->getTransactionHistory($usdt->token);
+                logger('Token: ' . $usdt->token);
+                logger($contents);
+                $userMoney = $usdt->user->money;
+                if ($contents['status'] == '0') {
+                    logger('status 0');
                     continue;
                 }
+                $logs = DepositLogs::whereUserId($usdt->user_id)->get()->pluck('hash')->toArray();
+                foreach ($contents['result'] as $result) {
+                    if (in_array($result['hash'], $logs)) {
+                        logger('isset hash');
+                        continue;
+                    }
 
-                if (!isset($result['value'])) {
-                    continue;
+                    if (!isset($result['value'])) {
+                        logger('not see value');
+                        continue;
+                    }
+
+                    $amount = (double)$result['value'];
+                    $amount /= 100000000000000000;
+                    //if($amount < 20) {
+                    //    continue;
+                    //}
+
+                    $userMoney->wallet += $amount;
+
+                    ModelService::insert(DepositLogs::class, [
+                        'user_id' => $usdt->user_id,
+                        'hash' => $result['hash'],
+                        'block_hash' => $result['blockHash'],
+                        'from' => $result['from'],
+                        'amount' => $amount,
+                    ]);
+
+                    TelegramService::sendMessageDeposit([
+                        'username' => $usdt->user->username,
+                        'amount' => $amount,
+                        'hash' => $result['hash'],
+                        'from' => $result['from']
+                    ]);
                 }
-
-                $amount = (double)$result['value'];
-                $amount /= 100000000000000000;
-                //if($amount < 20) {
-                //    continue;
-                //}
-
-                $userMoney->wallet += $amount;
-
-                ModelService::insert(DepositLogs::class, [
-                    'user_id' => $usdt->user_id,
-                    'hash' => $result['hash'],
-                    'block_hash' => $result['blockHash'],
-                    'from' => $result['from'],
-                    'amount' => $amount,
-                ]);
-
-                TelegramService::sendMessageDeposit([
-                    'username' => $usdt->user->username,
-                    'amount' => $amount,
-                    'hash' => $result['hash'],
-                    'from' => $result['from']
-                ]);
+                $userMoney->save();
             }
-            $userMoney->save();
+        }catch (Exception $exception) {
+            logger($exception->getMessage());
         }
         return 0;
     }
