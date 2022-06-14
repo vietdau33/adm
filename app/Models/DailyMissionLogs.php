@@ -50,12 +50,13 @@ class DailyMissionLogs extends Model
                 $hasRecordNeedDaily = true;
                 break;
             }
-            if($hourNow >= 7 && (int)$dateCreate->format('H') < 7) {
-                $hasRecordNeedDaily = true;
-                break;
-            }
-            if(
-                (int)$dateCreate->format('d') < $now->format('d')
+            if($hourNow >= 7) {
+                if((int)$dateCreate->format('H') < 7 || (int)$dateCreate->format('d') != $now->format('d')) {
+                    $hasRecordNeedDaily = true;
+                    break;
+                }
+            }elseif(
+                (int)$dateCreate->format('d') != $now->format('d')
                 && (int)$dateCreate->format('H') < 7
             ) {
                 $hasRecordNeedDaily = true;
