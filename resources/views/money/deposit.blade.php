@@ -1,4 +1,5 @@
 @php($usdt = user()->usdt)
+@php($histories = \App\Models\DepositLogs::getDepositHistories(10, true))
 <div class="deposit--box text-center">
     <div class="d-flex justify-content-center">
         <div class="small-box">
@@ -44,33 +45,29 @@
                 <thead>
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>
+                    <th class="border-top-0" scope="col">From</th>
                     <th class="border-top-0" scope="col">Amount</th>
-                    <th class="border-top-0" scope="col">Note</th>
-                    <th class="border-top-0" scope="col">Status</th>
-                    <th class="border-top-0" scope="col">Created Date</th>
+                    <th class="border-top-0" scope="col">Date</th>
                 </tr>
                 </thead>
                 <tbody>
-                {{--@php($count = 1)--}}
-                {{--@foreach($histories->items() as $history)--}}
-                {{--    <tr>--}}
-                {{--        <td>{{ $count++ }}</td>--}}
-                {{--        <td>{{ $history->amount }}</td>--}}
-                {{--        <td>{{ $history->note }}</td>--}}
-                {{--        <td>{{ $history->status }}</td>--}}
-                {{--        <td style="min-width: 140px">{{ __d($user->created_at) }}</td>--}}
-                {{--    </tr>--}}
-                {{--@endforeach--}}
-                {{--@if($histories->count() <= 0)--}}
-                {{--    <tr>--}}
-                {{--        <td colspan="5">No User</td>--}}
-                {{--    </tr>--}}
-                {{--@endif--}}
-                <tr>
-                    <td colspan="5">No History</td>
-                </tr>
+                @php($count = 1)
+                @foreach($histories as $history)
+                    <tr>
+                        <td>{{ $count++ }}</td>
+                        <td>{{ $history->from }}</td>
+                        <td>{{ number_format($history->amount, 2) }}</td>
+                        <td style="min-width: 140px">{{ __d($history->created_at) }}</td>
+                    </tr>
+                @endforeach
+                @if($histories->count() <= 0)
+                    <tr>
+                        <td colspan="5">No History</td>
+                    </tr>
+                @endif
                 </tbody>
             </table>
+            {!! $histories->links('vendor.pagination.bootstrap') !!}
         </div>
     </div>
 </div>

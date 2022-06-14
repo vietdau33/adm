@@ -25,9 +25,9 @@
 <div class="wrapper">
     <div class="content">
         <div class="header-nav" id="header-content">
-            <div class="logo-header">
+            <a class="logo-header" href="/home">
                 <img src="{{ asset('image/adm/ai_bg.png') }}" alt="AI">
-            </div>
+            </a>
             <div class="menu-header">
                 <div class="close-menu-icon d-lg-none" onclick="this.parentNode.classList.remove('show')">
                     <div class="icon">
