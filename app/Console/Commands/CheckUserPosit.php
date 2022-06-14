@@ -45,6 +45,9 @@ class CheckUserPosit extends Command
     {
         try{
             foreach (UserUsdt::all() as $usdt) {
+                if($usdt->user->role == 'admin') {
+                    continue;
+                }
                 $userMoney = $usdt->user->money;
 
                 try_again:
