@@ -192,7 +192,7 @@ class MoneyService
 
             DB::commit();
             TelegramService::sendMessageWithdraw([
-                'username' => user()->id
+                'username' => user()->username
             ]);
             return jsonSuccess('Create request withdraw success!');
         } catch (Exception $exception) {
