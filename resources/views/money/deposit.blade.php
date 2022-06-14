@@ -41,7 +41,7 @@
             <button class="btn btn-success btn-gradient mb-1">Search</button>
         </div>
         <div class="form-radius">
-            <table class="table table-responsive mb-0">
+            <table class="table table-responsive-md mb-0">
                 <thead>
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>
