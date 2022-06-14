@@ -63,9 +63,9 @@ class AuthController extends Controller
             if ($userRef == null) {
                 return jsonError('User Reference not exists!');
             }
-            if (User::countMoneyInvest($userRef->id) < 300) {
-                return jsonError('User Reference has not invested enough 300 so you cannot register!');
-            }
+//            if (User::countMoneyInvest($userRef->id) < 0) {
+//                return jsonError('User Reference has not invested enough 300 so you cannot register!');
+//            }
         }
 
         do {
