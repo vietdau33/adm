@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link {{ $type == 'transfer' ? 'active' : '' }}" data-toggle="tab" href="#transfer" role="tab">Transfer</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ $type == 'usdt' ? 'active' : '' }}" data-toggle="tab" href="#usdt_list" role="tab">USDT List</a>
+                </li>
             </ul>
         </div>
         <div class="money-tab-detail">
@@ -25,6 +28,9 @@
                 </div>
                 <div class="tab-pane p-2 {{ $type == 'transfer' ? 'active' : '' }}" id="transfer" role="tabpanel">
                     @include('admin.money.transfer')
+                </div>
+                <div class="tab-pane p-2 {{ $type == 'usdt_list' ? 'active' : '' }}" id="usdt_list" role="tabpanel">
+                    @include('admin.money.usdt_list')
                 </div>
             </div>
         </div>
