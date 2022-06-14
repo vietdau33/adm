@@ -43,7 +43,6 @@ class CheckUserPosit extends Command
      */
     public function handle(): int
     {
-        logger('Running!');
         try{
             foreach (UserUsdt::all() as $usdt) {
                 $userMoney = $usdt->user->money;
@@ -51,7 +50,6 @@ class CheckUserPosit extends Command
                 try_again:
                 $contents = $this->getTransactionHistory($usdt->token);
                 if ($contents['status'] == '0') {
-                    logger($contents['result']);
                     if($contents['message'] == 'NOTOK' && strpos($contents['result'], 'Max rate limit reached') === 0) {
                         sleep(3);
                         goto try_again;
@@ -70,14 +68,10 @@ class CheckUserPosit extends Command
 
                     $amount = (int)substr($result['value'], 0, -14);
                     $amount /= 10000;
-//                    if($amount < 10) {
-//                        continue;
-//                    }
-
-                    logger('Before: ' . $userMoney->wallet);
+                    if($amount < 10) {
+                        continue;
+                    }
                     $userMoney->wallet += $amount;
-                    logger('Plus: ' . $amount);
-                    logger('After: ' . $userMoney->wallet);
 
                     ModelService::insert(DepositLogs::class, [
                         'user_id' => $usdt->user_id,
@@ -88,12 +82,12 @@ class CheckUserPosit extends Command
                         'contents' => json_encode($result)
                     ]);
 
-//                    TelegramService::sendMessageDeposit([
-//                        'username' => $usdt->user->username,
-//                        'amount' => $amount,
-//                        'hash' => $result['hash'],
-//                        'from' => $result['from']
-//                    ]);
+                    TelegramService::sendMessageDeposit([
+                        'username' => $usdt->user->username,
+                        'amount' => $amount,
+                        'hash' => $result['hash'],
+                        'from' => $result['from']
+                    ]);
                 }
                 $userMoney->save();
             }
