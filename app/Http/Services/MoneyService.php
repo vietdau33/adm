@@ -32,7 +32,10 @@ class MoneyService
                 return jsonError('Package Investment not correct!');
             }
 
-            $setting = Settings::getSettings()['profit']->setting->{$type};
+            $settingAll = Settings::getSettings();
+            $setting = $settingAll['profit']->setting->{$type};
+            $minimumToBonus = (int)$settingAll['bonus']->setting->minimum_to_bonus;
+
             $minAmount = (double)$setting->min_amount;
             if ($amount < $minAmount) {
                 return jsonError("Amount minimum is: $minAmount");
@@ -56,7 +59,9 @@ class MoneyService
             $investment->max_withdraw = $setting->max_withdraw;
             $investment->save();
 
-            MoneyService::calcBonusInterest(user(), $amount);
+            if($amount >= $minimumToBonus) {
+                MoneyService::calcBonusInterest(user(), $amount);
+            }
 
             DB::commit();
             return jsonSuccess('You have successfully purchased the package! We\'ll do a page reload!');
