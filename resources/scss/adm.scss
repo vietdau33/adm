@@ -585,6 +585,11 @@ $bgInvestBox: (
             box-shadow: initial;
         }
     }
+    .ajs-dialog {
+        top: 50%;
+        transform: translateY(-50%);
+        margin: auto;
+    }
 }
 
 

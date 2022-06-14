@@ -502,6 +502,11 @@
   outline: none;
   box-shadow: initial;
 }
+.alertify .ajs-dialog {
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
+}
 
 .form-radius {
   border-radius: 14px;

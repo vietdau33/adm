@@ -1,5 +1,5 @@
 <div class="modal fade" id="buyInvestmentModal" tabindex="-1" role="dialog" aria-labelledby="buyInvestmentModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 style="color: #fff" class="mb-0">Buy Investment: <span class="name-invest"></span></h3>

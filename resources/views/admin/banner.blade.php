@@ -60,7 +60,7 @@
 @endsection
 @section('script')
     <div class="modal fade" id="createBanner" tabindex="-1" role="dialog" aria-labelledby="createBanner" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Create Banner ADS</h4>

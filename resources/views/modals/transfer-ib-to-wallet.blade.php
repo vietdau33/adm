@@ -1,5 +1,5 @@
 <div class="modal fade" id="transferIBToWallet" tabindex="-1" role="dialog" aria-labelledby="transferIBToWallet" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="area-content">
