@@ -9,7 +9,7 @@
                 </div>
             @else
                 <h2 class="text-center">Choose coin Deposit</h2>
-                <div class="alert alert-warning">Minimum deposit 20 USDT</div>
+                <div class="alert alert-warning">Minimum deposit 10 USDT</div>
                 <div class="alert alert-warning">Only send USDT BEP20, BNB BEP20 to this address.</div>
                 <div class="qr-code-box">
                     <div
