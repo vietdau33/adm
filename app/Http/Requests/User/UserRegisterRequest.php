@@ -42,7 +42,11 @@ class UserRegisterRequest extends FormRequest
                 'required',
                 'regex:/(^(\+84|84|0|0084)(3|5|7|8|9))+(\d{8})$/i'
             ],
-            "username" => "required|unique:users",
+            "username" => [
+                'required',
+                'unique:users',
+                'regex:/^(?=[a-zA-Z0-9._]{4,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/i'
+            ],
         ];
     }
 
@@ -60,6 +64,7 @@ class UserRegisterRequest extends FormRequest
             'phone.required' => Lang::get("auth.phone_required"),
             'username.required' => 'Username is required!',
             'username.unique' => 'Username has exists!',
+            'username.regex' => 'Invalid username. Valid username contains only unsigned characters and numbers, no periods and underscores before and after username'
         ];
     }
 }

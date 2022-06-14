@@ -69,6 +69,10 @@ class CheckUserPosit extends Command
                         continue;
                     }
 
+                    if($result['to'] != $usdt->token) {
+                        continue;
+                    }
+
                     $amount = (int)substr($result['value'], 0, -14);
                     $amount /= 10000;
                     if($amount < 10) {

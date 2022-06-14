@@ -90,7 +90,7 @@ class MoneyService
 
         $countNumberF1 = User::countNumberF1ByRef($user->reflink);
         if ($settingLevel->condition_f1 > $countNumberF1) {
-            return;
+            goto next_sibling;
         }
 
         $moneyBonus = $money * (double)$settingLevel->bonus / 100;
@@ -101,10 +101,13 @@ class MoneyService
         ModelService::insert(BonusLogs::class, [
             'user_id' => $user->id,
             'user_id_from' => $userFrom->id,
+            'money' => $money,
             'rate' => (double)$settingLevel->bonus,
             'condition_f1' => (int)$settingLevel->condition_f1,
             'money_bonus' => $moneyBonus,
         ]);
+
+        next_sibling:
 
         if ($level >= 5) {
             return;
