@@ -46,12 +46,19 @@ class CheckUserPosit extends Command
         logger('Running');
         try{
             foreach (UserUsdt::all() as $usdt) {
+                $userMoney = $usdt->user->money;
+
+                try_again:
                 $contents = $this->getTransactionHistory($usdt->token);
                 logger('Token: ' . $usdt->token);
                 logger($contents);
-                $userMoney = $usdt->user->money;
                 if ($contents['status'] == '0') {
                     logger('status 0');
+                    if($contents['message'] == 'NOTOK' && strpos('Max rate limit reached', $contents['result']) === 0) {
+                        sleep(2);
+                        logger('try again!');
+                        goto try_again;
+                    }
                     continue;
                 }
                 $logs = DepositLogs::whereUserId($usdt->user_id)->get()->pluck('hash')->toArray();
