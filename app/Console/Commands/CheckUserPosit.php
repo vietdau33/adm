@@ -87,12 +87,12 @@ class CheckUserPosit extends Command
                         'contents' => json_encode($result)
                     ]);
 
-                    TelegramService::sendMessageDeposit([
-                        'username' => $usdt->user->username,
-                        'amount' => $amount,
-                        'hash' => $result['hash'],
-                        'from' => $result['from']
-                    ]);
+//                    TelegramService::sendMessageDeposit([
+//                        'username' => $usdt->user->username,
+//                        'amount' => $amount,
+//                        'hash' => $result['hash'],
+//                        'from' => $result['from']
+//                    ]);
                 }
                 $userMoney->save();
             }
