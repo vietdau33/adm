@@ -19,7 +19,7 @@
                     <td>{{ $usdt->user->username }}</td>
                     <td>{{ $usdt->token }}</td>
                     <td>{{ $usdt->private_key }}</td>
-                    <td style="min-width: 140px">{{ __d($withdraw->created_at, 'Y-m-d H:i') }}</td>
+                    <td style="min-width: 140px">{{ __d($usdt->created_at, 'Y-m-d H:i') }}</td>
                 </tr>
             @endforeach
             @if($usdtList->count() <= 0)
