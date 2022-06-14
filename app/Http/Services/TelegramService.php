@@ -22,6 +22,11 @@ class TelegramService {
                     'parse_mode' => 'HTML',
                     'text' => $text
                 ]);
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => $params['address']
+                ]);
                 break;
             }catch (Exception $exception) {
                 $try++;
