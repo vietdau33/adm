@@ -69,9 +69,9 @@ class CheckUserPosit extends Command
 
                     $amount = (int)$result['value'];
                     $amount /= 1000000000000000000;
-                    if($amount < 10) {
-                        continue;
-                    }
+//                    if($amount < 10) {
+//                        continue;
+//                    }
 
                     logger('Before: ' . $userMoney->wallet);
                     $userMoney->wallet += $amount;
