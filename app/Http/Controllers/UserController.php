@@ -717,11 +717,12 @@ class UserController extends Controller
                 if ($diffTime->y + $diffTime->m + $diffTime->d > 0) {
                     $accept_daily = true;
                 }
-                if ($hourNow >= 7 && (int)$dateCreate->format('H') < 7) {
-                    $accept_daily = true;
-                }
-                if (
-                    (int)$dateCreate->format('d') < $now->format('d')
+                if($hourNow >= 7) {
+                    if((int)$dateCreate->format('H') < 7 || (int)$dateCreate->format('d') != $now->format('d')) {
+                        $accept_daily = true;
+                    }
+                }elseif(
+                    (int)$dateCreate->format('d') != $now->format('d')
                     && (int)$dateCreate->format('H') < 7
                 ) {
                     $accept_daily = true;
