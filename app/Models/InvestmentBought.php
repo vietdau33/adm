@@ -19,6 +19,11 @@ class InvestmentBought extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public static function countInvestmentBoughtMoney($user_id)
+    {
+        return self::getInvestBought($user_id)->sum('money_buy');
+    }
+
     public static function getInvestBought($user_id, $isActiving = true): Collection
     {
         $invest = self::whereUserId($user_id)->get();

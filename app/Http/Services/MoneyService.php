@@ -34,7 +34,6 @@ class MoneyService
 
             $settingAll = Settings::getSettings();
             $setting = $settingAll['profit']->setting->{$type};
-            $minimumToBonus = (int)$settingAll['bonus']->setting->minimum_to_bonus;
 
             $minAmount = (double)$setting->min_amount;
             if ($amount < $minAmount) {
@@ -59,9 +58,7 @@ class MoneyService
             $investment->max_withdraw = $setting->max_withdraw;
             $investment->save();
 
-            if($amount >= $minimumToBonus) {
-                MoneyService::calcBonusInterest(user(), $amount);
-            }
+            MoneyService::calcBonusInterest(user(), $amount);
 
             DB::commit();
             return jsonSuccess('You have successfully purchased the package! We\'ll do a page reload!');
@@ -89,7 +86,12 @@ class MoneyService
         }
 
         $countNumberF1 = User::countNumberF1ByRef($user->reflink);
-        if ($settingLevel->condition_f1 > $countNumberF1) {
+        if ((int)$settingLevel->condition_f1 > $countNumberF1) {
+            goto next_sibling;
+        }
+
+        $countInvestMoney = InvestmentBought::countInvestmentBoughtMoney($user->id);
+        if($countInvestMoney < (double)$settings->minimum_to_bonus) {
             goto next_sibling;
         }
 
