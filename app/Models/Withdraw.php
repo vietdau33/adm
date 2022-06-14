@@ -30,12 +30,12 @@ class Withdraw extends Model
                 $color = 'primary';
                 break;
             case 2:
-                $status = 'Cancel';
-                $color = 'danger';
-                break;
-            case 3:
                 $status = 'Success';
                 $color = 'success';
+                break;
+            case 3:
+                $status = 'Cancel';
+                $color = 'danger';
                 break;
             default:
                 $status = 'Not Found';

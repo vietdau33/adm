@@ -24,7 +24,7 @@ class AdminController extends Controller
     {
         session()->flash('menu-active', 'dashboard');
         $totalBonus = BonusLogs::countMoneyBonus();
-        $totalWithdraw = Withdraw::countMoneyWithdraw(true);
+        $totalWithdraw = Withdraw::countMoneyWithdraw();
         $totalProfit = ProfitLogs::getTotalProfit();
         return view('admin.home', compact(
             'totalWithdraw',
