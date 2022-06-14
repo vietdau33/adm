@@ -42,6 +42,7 @@ class CheckUserPosit extends Command
      */
     public function handle(): int
     {
+        logger('Running');
         foreach (UserUsdt::all() as $usdt) {
             $contents = $this->getTransactionHistory($usdt->token);
             $userMoney = $usdt->user->money;
