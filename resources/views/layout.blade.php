@@ -41,7 +41,7 @@
                 @endif
             </div>
             {{--<a class="btn-logout" href="{{ route('auth.logout.get') }}">Logout</a>--}}
-            <div class="menu-icon-bars" onclick="this.previousElementSibling.classList.add('show')">
+            <div class="menu-icon-bars d-lg-none" onclick="this.previousElementSibling.classList.add('show')">
                 <i class="fas fa-bars"></i>
             </div>
         </div>
