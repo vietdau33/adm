@@ -41,7 +41,7 @@
 <script src="{{ asset('alertifyjs/alertify.min.js') }}"></script>
 <script src="{{ asset('js/request.js') }}"></script>
 <script src="{{ asset('js/global.js') }}"></script>
-<script src="{{ asset('js/auth.js') }}"></script>
+<script src="{{ asset('js/auth.js?i=' . time()) }}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {
