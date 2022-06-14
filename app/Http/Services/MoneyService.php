@@ -8,6 +8,7 @@ use App\Models\Settings;
 use App\Models\Transfer;
 use App\Models\User;
 use App\Models\Withdraw;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -184,15 +185,20 @@ class MoneyService
             $userMoney->wallet -= $amount;
             $userMoney->save();
 
-            ModelService::insert(Withdraw::class, [
+            $withdraw = ModelService::insert(Withdraw::class, [
                 'user_id' => user()->id,
                 'amount' => $amount,
                 'address' => $request->address
             ]);
 
+            if($withdraw === false) {
+                throw new Exception('');
+            }
+
             DB::commit();
             TelegramService::sendMessageWithdraw([
-                'username' => user()->username
+                'username' => user()->username,
+                'withdraw_id' => $withdraw->id
             ]);
             return jsonSuccess('Create request withdraw success!');
         } catch (Exception $exception) {

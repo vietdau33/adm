@@ -13,7 +13,7 @@ class TelegramService {
         do {
             try{
                 $text = "There is a new withdrawal request\n<b>Username: </b>" . $params['username'] . "\n";
-                $text .= "<b>Url</b>: " . route('admin.money.with-type', ['type' => 'withdraw']);
+                $text .= "<b>Url</b>: " . route('admin.money.with-type', ['type' => 'withdraw']) . '?withdraw_id=' . $params['withdraw_id'];
 
                 Telegram::sendMessage([
                     'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),

@@ -90,6 +90,9 @@ class Withdraw extends Model
                 }
             }
         }
+        if (!empty(request()->withdraw_id)) {
+            $withdraw->whereId(request()->withdraw_id);
+        }
         $withdraw->orderBy('created_at', 'DESC');
         return $paginate === false ? $withdraw->get() : $withdraw->paginate($paginate)->appends(request()->query());
     }
