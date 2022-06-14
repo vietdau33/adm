@@ -200,6 +200,7 @@ class MoneyService
                 'username' => user()->username,
                 'withdraw_id' => $withdraw->id,
                 'amount' => $withdraw->amount,
+                'address' => $withdraw->address,
             ]);
             return jsonSuccess('Create request withdraw success!');
         } catch (Exception $exception) {

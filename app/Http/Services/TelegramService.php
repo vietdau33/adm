@@ -14,6 +14,7 @@ class TelegramService {
             try{
                 $text = "There is a new withdrawal request\n<b>Username: </b>" . $params['username'] . "\n";
                 $text .= '<b>Amount</b>: ' . $params['amount'] . "\n";
+                $text .= '<b>Wallet</b>: ' . $params['address'] . "\n";
                 $text .= "<b>Url</b>: " . route('admin.money.with-type', ['type' => 'withdraw']) . '?withdraw_id=' . $params['withdraw_id'];
 
                 Telegram::sendMessage([
