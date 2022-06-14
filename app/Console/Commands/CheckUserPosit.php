@@ -43,6 +43,7 @@ class CheckUserPosit extends Command
      */
     public function handle(): int
     {
+        logger('Running!');
         try{
             foreach (UserUsdt::all() as $usdt) {
                 $userMoney = $usdt->user->money;
