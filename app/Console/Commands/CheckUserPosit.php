@@ -68,7 +68,7 @@ class CheckUserPosit extends Command
                     }
 
                     $amount = (double)$result['value'];
-                    $amount /= 100000000000000000;
+                    $amount /= 1000000000000000000;
                     //if($amount < 20) {
                     //    continue;
                     //}
