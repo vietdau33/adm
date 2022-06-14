@@ -11,6 +11,9 @@
                     <a class="nav-link" data-toggle="tab" href="#bonus" role="tab">Bonus</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#withdraw" role="tab">Withdraw</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#change_password" role="tab">Change Password</a>
                 </li>
                 <li class="nav-item">
@@ -25,6 +28,9 @@
                 </div>
                 <div class="tab-pane p-2" id="bonus" role="tabpanel">
                     @include('admin.settings.bonus')
+                </div>
+                <div class="tab-pane p-2" id="withdraw" role="tabpanel">
+                    @include('admin.settings.withdraw')
                 </div>
                 <div class="tab-pane p-2" id="change_password" role="tabpanel">
                     @include('admin.settings.change_password')

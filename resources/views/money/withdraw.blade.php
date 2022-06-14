@@ -6,7 +6,11 @@
             @if(!empty(user()->google2fa_secret))
                 <form action="" method="POST" onsubmit="return SubmitWithdraw.apply(this)">
                     <div class="alert alert-info">You current Wallet: <b>{{ user()->money->wallet }}</b></div>
-                    <div class="alert alert-warning">Amount withdraw maximum is: <b>{{ $maxWithdraw }}</b></div>
+                    <div class="alert alert-warning">
+                        Amount withdraw maximum is: <b>{{ $maxWithdraw }}</b>
+                        <br>
+                        Amount withdraw minimum is: <b>20</b>
+                    </div>
                     <div class="form-group">
                         <label for="amount">Amount</label>
                         <input

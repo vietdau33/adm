@@ -109,6 +109,11 @@ class AdminController extends Controller
         return AdminService::saveSettings($request, 'bonus');
     }
 
+    public function saveSettingWithdraw(Request $request): JsonResponse
+    {
+        return AdminService::saveSettings($request, 'withdraw');
+    }
+
     public function linkMission()
     {
         session()->flash('menu-active', 'link-mission');

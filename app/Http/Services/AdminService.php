@@ -164,8 +164,12 @@ class AdminService
     {
         $settings = $request->all();
         $setting = Settings::whereGuard('admin')->whereType($type)->first();
+
         if ($setting == null) {
-            return jsonError('Setting not exists!');
+            $setting = new Settings();
+            $setting->guard = 'admin';
+            $setting->user_id = 0;
+            $setting->type = $type;
         }
 
         try {

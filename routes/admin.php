@@ -30,6 +30,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('', [AdminController::class, 'settings'])->name('settings');
         Route::post('profit', [AdminController::class, 'saveSettingProfit'])->name('settings.profit.save');
         Route::post('bonus', [AdminController::class, 'saveSettingBonus'])->name('settings.bonus.save');
+        Route::post('withdraw', [AdminController::class, 'saveSettingWithdraw'])->name('settings.withdraw.save');
     });
 });
 
