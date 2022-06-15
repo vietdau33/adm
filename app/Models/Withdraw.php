@@ -97,7 +97,7 @@ class Withdraw extends Model
         return $paginate === false ? $withdraw->get() : $withdraw->paginate($paginate)->appends(request()->query());
     }
 
-    public static function countMoneyWithdraw($all = false): int
+    public static function countMoneyWithdraw($all = false)
     {
         if ($all) {
             return self::all()->sum('amount');

@@ -11,7 +11,7 @@ class ProfitLogs extends Model
 
     protected $table = 'profit_logs';
 
-    public static function getTotalProfit(): int
+    public static function getTotalProfit()
     {
         return self::all()->sum('profit');
     }

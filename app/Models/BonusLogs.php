@@ -23,7 +23,7 @@ class BonusLogs extends Model
         return $this->belongsTo(User::class, 'user_id_from', 'id');
     }
 
-    public static function countMoneyBonus(): int
+    public static function countMoneyBonus()
     {
         return self::all()->sum('money_bonus');
     }
