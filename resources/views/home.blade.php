@@ -236,12 +236,13 @@
                     }
                 });
             }
+            const openLink = window.open()
             Request.ajax('{{ route('get-link-daily') }}', function(result) {
                 const link = result.datas.link;
                 if(link == '') {
                     return alertify.alertDanger('Error', 'Link daily not exists! Please contact to ADMIN!');
                 }
-                window.open(link);
+                openLink.location = link;
                 callbackDaily(link);
             });
         });
