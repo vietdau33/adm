@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\UserException;
 use App\Http\Helpers\OtpHelpers;
+use App\Http\Services\TelegramService;
 use App\Models\MoneyModel;
 use App\Models\User;
 use App\Http\Requests\User\UserLoginRequest as LoginRq;
@@ -115,6 +116,9 @@ class AuthController extends Controller
             User::sendOtp($request->username);
 
             DB::commit();
+            TelegramService::sendMessageNewUser([
+                'username' => $request->username
+            ]);
             return response()->json([
                 'success' => true,
                 'message' => Lang::get("auth.register_success"),

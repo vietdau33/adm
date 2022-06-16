@@ -64,4 +64,27 @@ class TelegramService {
             }
         }while($try <= 3);
     }
+
+    public static function sendMessageNewUser($params): void
+    {
+        $try = 0;
+        do {
+            try{
+                $text = "New user just created!\n<b>Username: </b>" . $params['username'];
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => '========NEW=====USER========'
+                ]);
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                break;
+            }catch (Exception $exception) {
+                $try++;
+            }
+        }while($try <= 3);
+    }
 }
