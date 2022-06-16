@@ -53,8 +53,8 @@
                     <tr>
                         <td>{{ $count++ }}</td>
                         <td style="min-width: 140px">{{ __d($history->created_at) }}</td>
-                        <td>{{ $history->money_calc }}</td>
                         <td>{{ $history->user->username }}</td>
+                        <td>{{ $history->money_calc }}</td>
                         <td>{{ ucfirst($history->type_invest) }}</td>
                         <td>{{ $history->profit_calc }}%</td>
                         <td>{{ $history->profit }}</td>
