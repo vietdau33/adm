@@ -61,4 +61,9 @@ class Transfer extends Model
         $histories->latest();
         return $paginate === false ? $histories->get() : $histories->paginate($paginate)->appends(request()->query());
     }
+
+    public static function countMoneyTransfer()
+    {
+        return self::all()->sum('amount');
+    }
 }

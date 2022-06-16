@@ -42,4 +42,9 @@ class DepositLogs extends Model
     {
         return self::all()->sum('amount');
     }
+
+    public static function countTotalMoneyDeposit()
+    {
+        return self::countMoneyDeposit() + Transfer::countMoneyTransfer();
+    }
 }

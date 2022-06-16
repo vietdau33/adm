@@ -27,7 +27,7 @@ class AdminController extends Controller
         $totalBonus = BonusLogs::countMoneyBonus();
         $totalWithdraw = Withdraw::countMoneyWithdraw();
         $totalProfit = ProfitLogs::getTotalProfit();
-        $totalDeposit = DepositLogs::countMoneyDeposit();
+        $totalDeposit = DepositLogs::countTotalMoneyDeposit();
         return view('admin.home', compact(
             'totalWithdraw',
             'totalBonus',
