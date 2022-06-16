@@ -19,7 +19,7 @@ class DepositLogs extends Model
 
     public static function getDepositHistories($paginate = false, $with_param_search = false)
     {
-        $histories = self::whereUserId(user()->id);
+        $histories = is_admin() ? self::query() : self::whereUserId(user()->id);
         if ($with_param_search !== false) {
             if (!empty(request()->start_date)) {
                 $histories->where('created_at', '>=', request()->start_date . ' 00:00:00');
