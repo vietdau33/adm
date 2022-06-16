@@ -6,6 +6,7 @@ use App\Exceptions\UserException;
 use App\Http\Services\AdminService;
 use App\Models\BannerModel;
 use App\Models\BonusLogs;
+use App\Models\DepositLogs;
 use App\Models\LinkDaily;
 use App\Models\ProfitLogs;
 use App\Models\Settings;
@@ -26,10 +27,12 @@ class AdminController extends Controller
         $totalBonus = BonusLogs::countMoneyBonus();
         $totalWithdraw = Withdraw::countMoneyWithdraw();
         $totalProfit = ProfitLogs::getTotalProfit();
+        $totalDeposit = DepositLogs::countMoneyDeposit();
         return view('admin.home', compact(
             'totalWithdraw',
             'totalBonus',
-            'totalProfit'
+            'totalProfit',
+            'totalDeposit'
         ));
     }
 

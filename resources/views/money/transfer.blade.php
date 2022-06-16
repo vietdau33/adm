@@ -76,7 +76,8 @@
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>
                     <th class="border-top-0" scope="col">Flag</th>
-                    <th class="border-top-0" scope="col">From / To</th>
+                    <th class="border-top-0" scope="col">From</th>
+                    <th class="border-top-0" scope="col">To</th>
                     <th class="border-top-0" scope="col">Amount</th>
                     <th class="border-top-0" scope="col">Created Date</th>
                 </tr>
@@ -84,23 +85,13 @@
                 <tbody>
                 @php($count = 1)
                 @foreach($histories->items() as $history)
-                    @php($isSend = $history->user_id == user()->id)
                     <tr>
                         <td>{{ $count++ }}</td>
-                        <td>{{ $isSend ? 'Send' : 'Receive' }}</td>
+                        <td>Send</td>
+                        <td>{{ $history->user->username }}</td>
+                        <td>{{ $history->user_receive->username }}</td>
                         <td>
-                            @if($isSend)
-                                {{ $history->user_receive->username ?? '' }}
-                            @else
-                                {{ $history->user->role == 'admin' ? 'ADMINISTATOR' : $history->user->username ?? '' }}
-                            @endif
-                        </td>
-                        <td>
-                            @if($isSend)
-                                <span class="text-danger">-{{ $history->amount }}</span>
-                            @else
-                                <span class="text-success">+{{ $history->amount }}</span>
-                            @endif
+                            <span class="text-danger">-{{ $history->amount }}</span>
                         </td>
                         <td style="min-width: 140px;">{{ __d($history->created_at, 'Y-m-d H:i') }}</td>
                     </tr>

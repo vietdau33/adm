@@ -24,10 +24,11 @@ class Transfer extends Model
 
     public static function getHistories($paginate = false, $with_param_search = false)
     {
-        $histories = self::where(function ($query) {
-            $query->where('user_id', user()->id);
-            $query->orWhere('username_receive', user()->username);
-        });
+        //$histories = self::where(function ($query) {
+        //    $query->where('user_id', user()->id);
+        //    $query->orWhere('username_receive', user()->username);
+        //});
+        $histories = self::query();
         if ($with_param_search === true) {
             if (!empty(request()->start_date)) {
                 $histories->where('created_at', '>=', request()->start_date . ' 00:00:00');
@@ -57,6 +58,7 @@ class Transfer extends Model
                 $histories->where('created_at', '<=', request()->end_date . ' 23:59:59');
             }
         }
+        $histories->latest();
         return $paginate === false ? $histories->get() : $histories->paginate($paginate)->appends(request()->query());
     }
 }

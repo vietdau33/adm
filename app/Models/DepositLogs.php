@@ -25,4 +25,9 @@ class DepositLogs extends Model
         $histories->orderBy('created_at', 'DESC');
         return $paginate === false ? $histories->get() : $histories->paginate($paginate)->appends(request()->query());
     }
+
+    public static function countMoneyDeposit()
+    {
+        return self::all()->sum('amount');
+    }
 }
