@@ -9,6 +9,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('list-member', [AdminController::class, 'listMember'])->name('list-member');
     Route::get('money', [AdminController::class, 'money'])->name('money');
     Route::get('money/{type}', [AdminController::class, 'money'])->name('money.with-type');
+    Route::get('report', [AdminController::class, 'report'])->name('report');
+    Route::get('report/{type}', [AdminController::class, 'report'])->name('report.with-type');
     Route::get('report-transfer', [AdminController::class, 'reportTransfer'])->name('report-transfer');
     Route::post('status-withdraw', [AdminController::class, 'changeStatusWithdraw'])->name('status.withdraw');
 

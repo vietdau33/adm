@@ -17,10 +17,10 @@
             <span>Money</span>
         </a>
     </li>
-    <li data-active="report-transfer">
-        <a href="{{ route('admin.report-transfer') }}">
+    <li data-active="report">
+        <a href="{{ route('admin.report') }}">
             <img src="{{ asset('image/adm/icon/history.png') }}" alt="Report Transfer">
-            <span>Report Transfer</span>
+            <span>Report</span>
         </a>
     </li>
     <li data-active="settings">

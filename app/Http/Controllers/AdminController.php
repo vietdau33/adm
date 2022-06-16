@@ -63,6 +63,12 @@ class AdminController extends Controller
         ));
     }
 
+    public function report($type = 'deposit')
+    {
+        session()->flash('menu-active', 'report');
+        return view('admin.report', compact('type'));
+    }
+
     public function reportTransfer()
     {
         session()->flash('menu-active', 'report-transfer');

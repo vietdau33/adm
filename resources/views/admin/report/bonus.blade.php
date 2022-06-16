@@ -6,6 +6,15 @@
                 <input
                     type="text"
                     style="width: 210px; max-width: 100%"
+                    class="form-control mr-2 mb-1"
+                    name="username"
+                    value="{{ request()->username ?? '' }}"
+                    autocomplete="off"
+                    placeholder="Username"
+                />
+                <input
+                    type="text"
+                    style="width: 210px; max-width: 100%"
                     class="form-control mr-2 mb-1 bs-datepicker"
                     placeholder="Start date"
                     name="start_date"

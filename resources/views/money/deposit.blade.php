@@ -35,11 +35,30 @@
             <img src="{{ asset('image/adm/icon/history.png') }}" alt="History" style="width: 42px">
             <h3 class="mb-0">HISTORY DEPOSIT</h3>
         </div>
-        <div class="d-flex flex-wrap mb-3">
-            <input type="text" style="width: 210px; max-width: 100%" class="form-control mr-2 mb-1" value="{{ date('Y-m-d') }}">
-            <input type="text" style="width: 210px; max-width: 100%" class="form-control mr-2 mb-1" value="{{ date('Y-m-d') }}">
-            <button class="btn btn-success btn-gradient mb-1">Search</button>
-        </div>
+        <form action="" method="GET">
+            <div class="d-flex flex-wrap mb-3">
+                <input
+                    type="text"
+                    style="width: 210px; max-width: 100%"
+                    class="form-control mr-2 mb-1 bs-datepicker"
+                    placeholder="Start date"
+                    name="start_date"
+                    value="{{ request()->start_date ?? '' }}"
+                    autocomplete="off"
+                />
+                <input
+                    type="text"
+                    style="width: 210px; max-width: 100%"
+                    class="form-control mr-2 mb-1 bs-datepicker"
+                    placeholder="End date"
+                    name="end_date"
+                    value="{{ request()->end_date ?? '' }}"
+                    autocomplete="off"
+                />
+                <button class="btn btn-success btn-gradient mb-1">Search</button>
+                <button type="reset" class="btn btn-secondary btn-gradient mb-1 ml-1">Clear</button>
+            </div>
+        </form>
         <div class="form-radius">
             <table class="table table-responsive-md mb-0">
                 <thead>
@@ -62,7 +81,7 @@
                 @endforeach
                 @if($histories->count() <= 0)
                     <tr>
-                        <td colspan="5">No History</td>
+                        <td colspan="4">No History</td>
                     </tr>
                 @endif
                 </tbody>

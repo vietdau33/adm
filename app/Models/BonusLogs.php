@@ -37,6 +37,12 @@ class BonusLogs extends Model
             if(!empty(request()->end_date)) {
                 $histories->where('created_at', '<=', request()->end_date . ' 23:59:59');
             }
+            if (!empty(request()->username)) {
+                $user = User::getUserByUsername(request()->username, true);
+                if ($user != null) {
+                    $histories->whereUserId($user->id);
+                }
+            }
         }
         $histories->orderBy('created_at', 'DESC');
         return $paginate === false ? $histories->get() : $histories->paginate($paginate)->appends(request()->query());
