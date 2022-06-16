@@ -40,6 +40,7 @@
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>
                     <th class="border-top-0" scope="col">Date</th>
+                    <th class="border-top-0" scope="col">Username</th>
                     <th class="border-top-0" scope="col">Bonus From</th>
                     <th class="border-top-0" scope="col">Level</th>
                     <th class="border-top-0" scope="col">Rate</th>
@@ -52,6 +53,7 @@
                     <tr>
                         <td>{{ $count++ }}</td>
                         <td style="min-width: 140px">{{ __d($history->created_at, 'Y-m-d H:i') }}</td>
+                        <td>{{ $history->user->username }}</td>
                         <td>{{ $history->userForm->username }}</td>
                         <td>{{ $history->userForm->level - user()->level }}</td>
                         <td>{{ $history->rate }} %</td>

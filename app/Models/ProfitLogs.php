@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProfitLogs extends Model
 {
@@ -14,6 +15,11 @@ class ProfitLogs extends Model
     public static function getTotalProfit()
     {
         return self::all()->sum('profit');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public static function getProfitHistories($paginate = false, $with_param_search = false)

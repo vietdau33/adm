@@ -40,6 +40,7 @@
                 <tr>
                     <th class="border-top-0" scope="col">No.</th>
                     <th class="border-top-0" scope="col">Date</th>
+                    <th class="border-top-0" scope="col">Username</th>
                     <th class="border-top-0" scope="col">Amount</th>
                     <th class="border-top-0" scope="col">Investment Plan</th>
                     <th class="border-top-0" scope="col">Rate</th>
@@ -53,6 +54,7 @@
                         <td>{{ $count++ }}</td>
                         <td style="min-width: 140px">{{ __d($history->created_at) }}</td>
                         <td>{{ $history->money_calc }}</td>
+                        <td>{{ $history->user->username }}</td>
                         <td>{{ ucfirst($history->type_invest) }}</td>
                         <td>{{ $history->profit_calc }}%</td>
                         <td>{{ $history->profit }}</td>
