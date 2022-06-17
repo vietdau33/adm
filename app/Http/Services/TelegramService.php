@@ -54,7 +54,7 @@ class TelegramService {
                     'text' => '========NEW=====DEPOSIT========'
                 ]);
                 Telegram::sendMessage([
-                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID_DEPOSIT', ''),
                     'parse_mode' => 'HTML',
                     'text' => $text
                 ]);
