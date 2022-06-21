@@ -25,7 +25,7 @@
 <div class="wrapper">
     <div class="content">
         <div class="header-nav" id="header-content">
-            <a class="logo-header" href="/home">
+            <a class="logo-header" href="/welcome">
                 <img src="{{ asset('image/adm/ai_bg.png') }}" alt="AI">
             </a>
             <div class="menu-header">
