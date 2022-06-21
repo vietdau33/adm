@@ -49,6 +49,7 @@ class CheckUserPosit extends Command
         try{
             foreach (UserUsdt::all() as $usdt) {
                 if($usdt->user->role == 'admin') {
+                    logger('cancel with role admin');
                     continue;
                 }
                 $userMoney = $usdt->user->money;
@@ -60,25 +61,30 @@ class CheckUserPosit extends Command
                         sleep(3);
                         goto try_again;
                     }
+                    logger('max rate 3 time');
                     continue;
                 }
                 $logs = DepositLogs::whereUserId($usdt->user_id)->get()->pluck('hash')->toArray();
                 foreach ($contents['result'] as $result) {
                     if (in_array($result['hash'], $logs)) {
+                        logger('hash logged');
                         continue;
                     }
 
                     if (!isset($result['value'])) {
+                        logger('Not see value');
                         continue;
                     }
 
                     if($result['to'] != $usdt->token) {
+                        logger('not send');
                         continue;
                     }
 
                     $amount = (int)substr($result['value'], 0, -14);
                     $amount /= 10000;
                     if($amount < 10) {
+                        logger('amount < 10');
                         continue;
                     }
                     $userMoney->wallet += $amount;
