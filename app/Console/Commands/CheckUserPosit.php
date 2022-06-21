@@ -56,13 +56,8 @@ class CheckUserPosit extends Command
 
                 try_again:
                 $contents = $this->getTransactionHistory($usdt->token);
-                if ($contents['status'] == '0') {
-                    if($contents['message'] == 'NOTOK' && strpos($contents['result'], 'Max rate limit reached') === 0) {
-                        sleep(3);
-                        goto try_again;
-                    }
-                    logger('max rate 3 time');
-                    continue;
+                if ($contents['status'] == '0' && $contents['message'] == 'NOTOK' && strpos($contents['result'], 'Max rate limit reached') === 0) {
+                    goto try_again;
                 }
                 $logs = DepositLogs::whereUserId($usdt->user_id)->get()->pluck('hash')->toArray();
                 foreach ($contents['result'] as $result) {
