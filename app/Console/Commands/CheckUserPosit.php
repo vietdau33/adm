@@ -71,7 +71,7 @@ class CheckUserPosit extends Command
                         continue;
                     }
 
-                    if($result['to'] != $usdt->token) {
+                    if(strtolower($result['to']) != strtolower($usdt->token)) {
                         logger('not send');
                         continue;
                     }
