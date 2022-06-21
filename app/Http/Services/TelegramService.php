@@ -49,7 +49,7 @@ class TelegramService {
                 $text .= '<b>From Wallet</b>: ' . $params['from'];
 
                 Telegram::sendMessage([
-                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID_DEPOSIT', ''),
                     'parse_mode' => 'HTML',
                     'text' => '========NEW=====DEPOSIT========'
                 ]);
@@ -72,7 +72,7 @@ class TelegramService {
             try{
                 $text = "New user just created!\n<b>Username: </b>" . $params['username'];
                 Telegram::sendMessage([
-                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID_DEPOSIT', ''),
                     'parse_mode' => 'HTML',
                     'text' => '========NEW=====USER========'
                 ]);
