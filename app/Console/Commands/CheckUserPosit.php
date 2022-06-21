@@ -8,6 +8,7 @@ use App\Models\DepositLogs;
 use App\Models\UserUsdt;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class CheckUserPosit extends Command
@@ -43,6 +44,8 @@ class CheckUserPosit extends Command
      */
     public function handle(): int
     {
+        logger('Running check Deposit');
+        DB::beginTransaction();
         try{
             foreach (UserUsdt::all() as $usdt) {
                 if($usdt->user->role == 'admin') {
@@ -98,8 +101,10 @@ class CheckUserPosit extends Command
                 }
                 $userMoney->save();
             }
+            DB::commit();
         }catch (Exception $exception) {
             logger($exception->getMessage());
+            DB::rollBack();
         }
         return 0;
     }
