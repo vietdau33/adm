@@ -171,6 +171,9 @@ class MoneyService
         if ($amount > user()->money->wallet) {
             return jsonError('The withdraw amount is larger than the available amount!');
         }
+        if($amount <= 20) {
+            return jsonError('The withdraw amount minximum is: 20');
+        }
         $maxWithdraw = Withdraw::getMaxWithdraw();
         if($amount > $maxWithdraw) {
             return jsonError('The withdraw amount maximum is: ' . $maxWithdraw);
