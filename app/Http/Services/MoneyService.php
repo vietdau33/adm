@@ -139,9 +139,9 @@ class MoneyService
         }
 
         $amount = (double)$request->amount;
-        if ($amount < 100) {
-            return jsonError('Amount money minimum transfer is: 100');
-        }
+        //if ($amount < 100) {
+        //    return jsonError('Amount money minimum transfer is: 100');
+        //}
 
         DB::beginTransaction();
         try {
