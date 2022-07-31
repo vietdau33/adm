@@ -11,10 +11,10 @@
 </head>
 <body>
 <div class="wrapper maintenance ready">
-    <div class="main-content" id="main-content">
+    <div class="main-content d-flex justify-content-center align-items-center" id="main-content" style="min-height: 100vh">
         <div class="img-main">
             <img src="{{ asset('image/main_maintenance.png') }}" alt="Main">
-            <img src="{{ asset('image/f_main_maintenance.png') }}" alt="Main" class="mt-3">
+            {{--<img src="{{ asset('image/f_main_maintenance.png') }}" alt="Main" class="mt-3">--}}
         </div>
     </div>
 </div>
