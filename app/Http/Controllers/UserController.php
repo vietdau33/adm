@@ -708,6 +708,10 @@ class UserController extends Controller
             $now = Carbon::now();
             $hourNow = (int)$now->format('H');
             foreach (InvestmentBought::getInvestBought(user()->id) as $invest) {
+                if ($invest->daily_today === 1) {
+                    continue;
+                }
+
                 $dateCreate = Carbon::parse($invest->created_at);
                 $diffTime = $dateCreate->diff($now);
                 $accept_daily = false;
